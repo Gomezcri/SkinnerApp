@@ -26,6 +26,7 @@ public class MainActivity2 extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
+        //algo
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
