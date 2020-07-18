@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/134122742/SkinnerApp.iml" filepath="$PROJECT_DIR$/.idea/modules/134122742/SkinnerApp.iml" group="SkinnerApp" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app.iml" group="SkinnerApp/app" />
+    </modules>
+  </component>
+</project>
