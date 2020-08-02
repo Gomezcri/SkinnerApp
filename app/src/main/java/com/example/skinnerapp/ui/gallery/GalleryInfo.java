@@ -14,22 +14,16 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.skinnerapp.R;
 
-public class GalleryFragment extends Fragment {
+public class GalleryInfo extends Fragment {
 
-    private GalleryViewModel galleryViewModel;
+    private GalleryInfoModel galleryViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         galleryViewModel =
-                ViewModelProviders.of(this).get(GalleryViewModel.class);
+                ViewModelProviders.of(this).get(GalleryInfoModel.class);
         View root = inflater.inflate(R.layout.fragment_info, container, false);
-        /*final TextView textView = root.findViewById(R.id.text_gallery);
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });*/
+
         setupHyperlink(root);
 
         return root;
@@ -41,15 +35,11 @@ public class GalleryFragment extends Fragment {
         aspavitlink.setClickable(true);
         aspavitlink.setMovementMethod(LinkMovementMethod.getInstance());
         aspavitlink.setText(Html.fromHtml("<u><b><font color='blue' ><a href='http://www.aspavit.org/' >http://www.aspavit.org/" + "</a></font></b></u>"));
-        //aspavitlink.setText(Html.fromHtml("<a href='http://www.aspavit.org/' > <font color='red'>http://www.aspavit.org/</font> </a>"));
-
-
 
         TextView aepsolink =(TextView)root.findViewById(R.id.aepsolink);
         aepsolink.setClickable(true);
         aepsolink.setMovementMethod(LinkMovementMethod.getInstance());
         aepsolink.setText(Html.fromHtml("<u><b><font color='blue' ><a href='https://www.aepso.org/' >https://www.aepso.org/" + "</a></font></b></u>"));
-
 
         TextView soarpsolink =(TextView)root.findViewById(R.id.soarpsolink);
         soarpsolink.setClickable(true);

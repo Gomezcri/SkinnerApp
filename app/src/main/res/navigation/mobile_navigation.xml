@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/nav_info"
-        android:name="com.example.skinnerapp.ui.gallery.GalleryFragment"
+        android:name="com.example.skinnerapp.ui.gallery.GalleryInfo"
         android:label="@string/menu_info"
         tools:layout="@layout/fragment_info" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.example.skinnerapp.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:name="com.example.skinnerapp.ui.slideshow.UserRegisterFragment"
+        android:label="@string/menu_registrar"
+        tools:layout="@layout/fragment_user_register" />
 </navigation>

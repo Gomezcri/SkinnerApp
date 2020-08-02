@@ -53,6 +53,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.app.Activity.RESULT_OK;
+import static util.Util.dismissLoadingDialog;
+import static util.Util.getConnection;
+import static util.Util.showLoadingDialog;
 
 public class HomeFragment extends Fragment {
 
@@ -68,7 +71,6 @@ public class HomeFragment extends Fragment {
     private String bodyPart;
     private String section;
     private String encodedImage;
-    private ProgressDialog progress;
     private Button btngaleria;
     private View root;
 
@@ -127,22 +129,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void callService() {
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(1, TimeUnit.MINUTES)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.4:8080/")
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+         Retrofit retrofit = getConnection();
         final String[] textoRespuesta = {""};
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
-        showLoadingDialog();
+        showLoadingDialog(getContext(),"Analizando","Skinner está analizando su imagen, aguarde un momento.");
         AnalizarImagenRequest req = new AnalizarImagenRequest(encodedImage,bodyPart,section,"skinner@gmail.com");
-        Call<AnalizarImagenResponse> call= service.savePost(req);
+        Call<AnalizarImagenResponse> call= service.getAnalisisImagen(req);
         call.enqueue(new Callback<AnalizarImagenResponse>() {
             @Override
             public void onResponse(Call<AnalizarImagenResponse> call, Response<AnalizarImagenResponse> response) {
@@ -343,22 +335,5 @@ public class HomeFragment extends Fragment {
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
-    }
-
-    public void showLoadingDialog() {
-
-        if (progress == null) {
-            progress = new ProgressDialog(getContext());
-            progress.setTitle("Analizador");
-            progress.setMessage("Skinner está analizando su imagen, aguarde un momento.");
-        }
-        progress.show();
-    }
-
-    public void dismissLoadingDialog() {
-
-        if (progress != null && progress.isShowing()) {
-            progress.dismiss();
-        }
     }
 }

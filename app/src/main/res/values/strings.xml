@@ -10,8 +10,15 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_info">Info</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_registrar">Mis datos</string>
     <string name="title_activity_test">TestActivity</string>
+    <!-- Strings de alta y modificacion de usuarios-->
+    <string name="nombre">Ingrese su nombre</string>
+    <string name="apellido">Ingrese su apellido</string>
+    <string name="telefono">Ingrese su teléfono</string>
+    <string name="direccion">Ingrese su dirección</string>
+    <string name="registrar">Registrar usuario</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
