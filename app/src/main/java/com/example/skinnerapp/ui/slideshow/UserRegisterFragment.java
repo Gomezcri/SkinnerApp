@@ -1,7 +1,6 @@
 package com.example.skinnerapp.ui.slideshow;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,26 +15,21 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
 import com.example.skinnerapp.Model.ActualizarUsuarioResponse;
-import com.example.skinnerapp.Model.AnalizarImagenRequest;
-import com.example.skinnerapp.Model.AnalizarImagenResponse;
 import com.example.skinnerapp.Model.ObtenerUsuarioResponse;
 import com.example.skinnerapp.Model.RegistrarUsuarioRequest;
 import com.example.skinnerapp.Model.RegistrarUsuarioResponse;
 import com.example.skinnerapp.R;
-import com.example.skinnerapp.ResponseActivity;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static util.Util.dismissLoadingDialog;
 import static util.Util.getConnection;
+import static util.Util.obtenerUserIdApp;
 import static util.Util.showLoadingDialog;
 
 public class UserRegisterFragment extends Fragment {
@@ -63,12 +57,7 @@ public class UserRegisterFragment extends Fragment {
         text_direccion = (EditText) root.findViewById(R.id.text_direccion);
         text_telefono = (EditText) root.findViewById(R.id.text_telefono);
 
-       /* View.OnFocusChangeListener ofcListener = new MyFocusChangeListener();
-        text_nombre.setOnFocusChangeListener(ofcListener);
-        text_apellido.setOnFocusChangeListener(ofcListener);
-        text_direccion.setOnFocusChangeListener(ofcListener);
-        text_telefono.setOnFocusChangeListener(ofcListener);*/
-        obtenerUserIdApp();
+        userid = obtenerUserIdApp();
 
         if(userid != null)
         {
@@ -162,11 +151,6 @@ public class UserRegisterFragment extends Fragment {
         dismissLoadingDialog();
     }
 
-    private void obtenerUserIdApp() {
-        userid = 8; //reemplazar por user id persistido en la app
-    }
-
-
     private void registrarUsuario(){
         if(datosValidos()){
 
@@ -175,16 +159,16 @@ public class UserRegisterFragment extends Fragment {
             JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
 
             RegistrarUsuarioRequest req = new RegistrarUsuarioRequest(text_nombre.getText().toString(),text_apellido.getText().toString(),text_direccion.getText().toString(),text_telefono.getText().toString());
-            Call<ArrayList<RegistrarUsuarioResponse>> call= service.postRegistrarUsuario(req);
-            call.enqueue(new Callback<ArrayList<RegistrarUsuarioResponse>>() {
+            Call<RegistrarUsuarioResponse> call= service.postRegistrarUsuario(req);
+            call.enqueue(new Callback<RegistrarUsuarioResponse>() {
                 @Override
-                public void onResponse(Call<ArrayList<RegistrarUsuarioResponse>> call, Response<ArrayList<RegistrarUsuarioResponse>> response) {
+                public void onResponse(Call<RegistrarUsuarioResponse> call, Response<RegistrarUsuarioResponse> response) {
                     textoRespuesta[0] =response.body().toString();
                     Toast.makeText(contexto, "Se envío correctamente la petición. Falta retorno del servidor."+ response.toString(), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
-                public void onFailure(Call<ArrayList<RegistrarUsuarioResponse>> call, Throwable t) {
+                public void onFailure(Call<RegistrarUsuarioResponse> call, Throwable t) {
                     Toast.makeText(contexto, "Error al registrar usuario. "+ textoRespuesta[0], Toast.LENGTH_SHORT).show();
                 }
 

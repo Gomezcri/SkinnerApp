@@ -3,6 +3,9 @@ package util;
 import android.app.ProgressDialog;
 import android.content.Context;
 
+import com.example.skinnerapp.Model.HistoricoResponse;
+
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -14,12 +17,12 @@ public class Util {
     public static Retrofit getConnection(){
 
     OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .connectTimeout(1, TimeUnit.MINUTES)
-            .readTimeout(60, TimeUnit.SECONDS)
-            .writeTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(5, TimeUnit.MINUTES)
+            .readTimeout(5, TimeUnit.MINUTES)
+            .writeTimeout(5, TimeUnit.MINUTES)
             .build();
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.6:8080/")
+            .baseUrl("http://192.168.1.4:8080/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
@@ -41,5 +44,8 @@ public class Util {
         if (progress != null && progress.isShowing()) {
             progress.dismiss();
         }
+    }
+    public static int obtenerUserIdApp() {
+        return 6; //reemplazar por user id persistido en la app
     }
 }

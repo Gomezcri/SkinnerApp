@@ -1,35 +1,35 @@
 package com.example.skinnerapp.Interface;
 
 import com.example.skinnerapp.Model.ActualizarUsuarioResponse;
-import com.example.skinnerapp.Model.AnalizarImagenRequest;
-import com.example.skinnerapp.Model.AnalizarImagenResponse;
+import com.example.skinnerapp.Model.RegistrarLesionRequest;
+import com.example.skinnerapp.Model.RegistrarLesionResponse;
+import com.example.skinnerapp.Model.HistoricoResponse;
+import com.example.skinnerapp.Model.LesionesResponse;
 import com.example.skinnerapp.Model.ObtenerUsuarioResponse;
+import com.example.skinnerapp.Model.RegistrarHistoricoRequest;
+import com.example.skinnerapp.Model.RegistrarHistoricoResponse;
 import com.example.skinnerapp.Model.RegistrarUsuarioRequest;
 import com.example.skinnerapp.Model.RegistrarUsuarioResponse;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 public interface JsonPlaceHolderApi {
 
-    @POST("/AnalizarImagen/")
+    @POST("/lesiones/")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    Call<AnalizarImagenResponse> getAnalisisImagen(@Body AnalizarImagenRequest body);
+    Call<LesionesResponse> getAnalisisImagen(@Body RegistrarLesionRequest body);
 
     @POST("/usuarios/")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    Call<ArrayList<RegistrarUsuarioResponse>> postRegistrarUsuario(@Body RegistrarUsuarioRequest request);
+    Call<RegistrarUsuarioResponse> postRegistrarUsuario(@Body RegistrarUsuarioRequest request);
 
     @GET()
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
@@ -38,5 +38,17 @@ public interface JsonPlaceHolderApi {
     @PUT()
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<ActualizarUsuarioResponse> putUserById(@Url() String url,@Body RegistrarUsuarioRequest request);
+
+    @GET()
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    Call<ArrayList<LesionesResponse>> getLesionesById(@Url() String url);
+
+    @GET()
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    Call<ArrayList<HistoricoResponse>> getHistoricoByLesionId(@Url() String url);
+
+    @POST("/historial/")
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    Call<RegistrarHistoricoResponse> postRegistrarHistorico(@Body RegistrarHistoricoRequest request);
 
 }

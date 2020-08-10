@@ -19,12 +19,27 @@
     <string name="direccion">Ingrese su dirección</string>
     <string name="registrar">Registrar usuario</string>
 
+    <string name="descripcion">Ingresar descripción</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string name="addlesion">Añadir lesión</string>
+    <string name="add_historico">Añadir histórico</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!--    Permissions
+    <string name="permission_rationale_location">Se requiere acceso al servicio de ubicación para demostrar la función \ 'mi ubicación \', que muestra su ubicación actual en el mapa.</string>
+    <string name="location_permission_denied">SkinnerApp requiere permiso de ubicación para habilitar la capa \'mi ubicación\'. Vuelva a intentarlo y conceda acceso para utilizar la ubicación.\n Si el permiso se ha denegado de forma permanente, puede habilitarlo desde Configuración del sistema &gt; Aplicaciones &gt; \'SkinnerApp\'.</string>
+    <string name="permission_required_toast">Se requiere permiso de ubicación para utilizar esta funcionalidad.</string>-->
+    <string name="title_activity_find_doctor">Map</string>
+
+    <string name="gps_network_not_enabled">GPS esta desactivado.</string>
+    <string name="open_location_settings">El sistema GPS esta desactivado, ¿Desea activarlo?</string>
+    <string name="Cancel">Cancelar</string>
+    <string name="useractualposition">Posición actual</string>
 </resources>

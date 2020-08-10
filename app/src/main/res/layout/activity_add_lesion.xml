@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context=".AddLesionActivity">
+
+    <Button
+        android:id="@+id/btngaleria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Galeria"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageview"
+        android:layout_width="276dp"
+        android:layout_height="165dp"
+        android:layout_above="@+id/button_image"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btngaleria" />
+
+    <ImageView
+        android:id="@+id/button_image"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="36dp"
+        android:paddingBottom="20dp"
+        android:tooltipText="Saque su foto tocando la cámara."
+        app:layout_constraintTop_toBottomOf="@+id/text_descripcion"
+        app:srcCompat="@mipmap/skinner_pictur_x128"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <ImageView
+        android:id="@+id/button_analizar"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:paddingTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_image"
+        app:layout_constraintVertical_bias="0.068"
+        app:srcCompat="@mipmap/skinner_analyze_x128"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/text_call"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_analizar"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/text_descripcion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/descripcion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageview" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
