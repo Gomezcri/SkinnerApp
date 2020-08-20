@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.skinnerapp">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -31,7 +30,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Splash_Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -46,17 +51,13 @@
 
         <activity
             android:name=".FindDoctorActivity"
-            android:label="@string/title_activity_find_doctor"></activity>
+            android:label="@string/title_activity_find_doctor" />
         <activity android:name=".HistoryActivity" />
         <activity android:name=".AddLesionActivity" />
         <activity android:name=".BodyActivity" />
         <activity android:name=".ResponseActivity" />
         <activity android:name=".MainActivity2">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
