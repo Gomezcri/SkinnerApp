@@ -43,12 +43,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.JsonObject;
+import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.data.Feature;
 import com.google.maps.android.data.Point;
 import com.google.maps.android.data.geojson.GeoJsonFeature;
 import com.google.maps.android.data.geojson.GeoJsonLayer;
-import com.google.maps.android.data.geojson.GeoJsonPoint;
 import com.google.maps.android.data.geojson.GeoJsonPointStyle;
 
 
@@ -57,6 +56,7 @@ import org.json.JSONException;
 import java.io.IOException;
 
 import util.MapPoints;
+import util.MyItem;
 
 public class FindDoctorActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -74,6 +74,10 @@ public class FindDoctorActivity extends FragmentActivity implements OnMapReadyCa
         AlertDialog alert = null;
         Spinner combo_opciones;
         private final static String mLogTag = "GeoJsonDemo";
+        private String[] osdefeatures = {"DIRECTOR","CALLE","ALTURA","TELEFONO"};
+        private String[] hospitalesfeatures = {"nombre","domicilio","",""};
+        // Declare a variable for the cluster manager.
+        private ClusterManager<MyItem> mClusterManager;
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +98,21 @@ protected void onCreate(Bundle savedInstanceState) {
         .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 }
+
+        private void setUpClusterer() {
+                // Position the map.
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.503186, -0.126446), 10));
+
+                // Initialize the manager with the context and the map.
+                // (Activity extends context, so we can pass 'this' in the constructor.)
+                mClusterManager = new ClusterManager<MyItem>(this, mMap);
+
+                // Point the map's listeners at the listeners implemented by the cluster
+                // manager.
+                mMap.setOnCameraIdleListener(mClusterManager);
+                mMap.setOnMarkerClickListener(mClusterManager);
+
+        }
 
         private void checkEnableGPS() {
                 LocationManager lm = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
@@ -177,7 +196,7 @@ public void onMapReady(GoogleMap googleMap) {
 
                 buildGoogleApiClient();
                 mMap.setMyLocationEnabled(true);
-
+                setUpClusterer();
             MapPoints puntos = new MapPoints();
                 combo_opciones.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -185,11 +204,18 @@ public void onMapReady(GoogleMap googleMap) {
                                 //Toast.makeText(getApplicationContext(), "ELEGISTE OPCION: "+position,Toast.LENGTH_SHORT).show(); // numero/posicion del elemento elegido
                                 //Toast.makeText(getApplicationContext(), "ELEGISTE OPCION: "+parent.getItemAtPosition(position),Toast.LENGTH_SHORT).show(); // contenido de la posicion elegida
                         switch (position) {
-                                case 1:
-                                        retrieveFileFromResource();
+                                case 0://no seleccionado
+                                        mClusterManager.clearItems();
+                                        mMap.clear();
                                         break;
-                                case 2:
+                                case 1://hospitales
+                                        retrieveFileFromResource(R.raw.hospitales,hospitalesfeatures);
+                                        break;
+                                case 2://galeno
                                         Toast.makeText(getApplicationContext(), "SOY UNA TOSTADA" + parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show(); // contenido de la posicion elegida
+                                        break;
+                                case 3://osde
+                                        retrieveFileFromResource(R.raw.docosde,osdefeatures);
                                         break;
                         }
                         }
@@ -312,19 +338,22 @@ public void onConnectionSuspended(int i) {
 public void onConnectionFailed(@NonNull ConnectionResult connectionResult) { }
 
 
-private void retrieveFileFromResource() {
+private void retrieveFileFromResource(int selection, String[] features) {
                 try {
+                        mMap.clear();
+                        mClusterManager.clearItems();
+                        GeoJsonLayer layer = new GeoJsonLayer(mMap,selection,getApplicationContext() );
 
-                        GeoJsonLayer layer = new GeoJsonLayer(mMap,R.raw.hospitales,getApplicationContext() );
-                        layer.removeLayerFromMap();
 
-                        addGeoJsonLayerToMap(layer);
+                        //layer.removeLayerFromMap();
+
+                      //  addGeoJsonLayerToMap(layer);
                         // Set a listener for geometry clicked events.
-                        layer.setOnFeatureClickListener(new GeoJsonLayer.OnFeatureClickListener() {
-                                @Override
-                                public void onFeatureClick(Feature feature) {
-                                        Point coordenada= (Point) feature.getGeometry();
-                                        Log.i("GeoJsonClick", "Feature clicked: " + feature.getProperty("NOMBRE"));
+                       // layer.setOnFeatureClickListener(new GeoJsonLayer.OnFeatureClickListener() {
+                         //       @Override
+                           //     public void onFeatureClick(Feature feature) {
+                             //           Point coordenada= (Point) feature.getGeometry();
+                               //         Log.i("GeoJsonClick", "Feature clicked: " + feature.getProperty("NOMBRE"));
                                         /*Marker melbourne = mMap.addMarker(
                                                 new MarkerOptions()
                                                         .position(((GeoJsonPoint) feature.getGeometry()).getCoordinates())
@@ -332,21 +361,37 @@ private void retrieveFileFromResource() {
 
                                         melbourne.showInfoWindow();
 */
-                                }
-                        });
+                                //}
+                        //});
                         BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.icon_medico);
 
                         for (GeoJsonFeature feature : layer.getFeatures()) {
 
-                                GeoJsonPointStyle pointStyle = new GeoJsonPointStyle();
+                                // Set the lat/long coordinates for the marker.
+                                LatLng coordenada = (LatLng) feature.getGeometry().getGeometryObject();
+                                double lat = coordenada.latitude;
+                                double lng = coordenada.longitude;
+
+// Set the title and snippet strings.
+                                String title = feature.getProperty(features[0]);
+                                String snippet = "Calle: "+feature.getProperty(features[1])+
+                                        " Altura: "+feature.getProperty(features[2])+System.getProperty("line.separator")+
+                                        "Telefono: "+feature.getProperty(features[3])+"\n";
+
+// Create a cluster item for the marker and set the title and snippet using the constructor.
+                                MyItem infoWindowItem = new MyItem(lat, lng, title, snippet);
+
+// Add the cluster item (marker) to the cluster manager.
+                                mClusterManager.addItem(infoWindowItem);
+                                /*GeoJsonPointStyle pointStyle = new GeoJsonPointStyle();
                                 // Set options for the point style
                                 pointStyle.setIcon(icon);
-                                pointStyle.setTitle(feature.getProperty("NOMBRE"));
-                                pointStyle.setSnippet("Calle: "+feature.getProperty("CALLE")+
-                                        " Altura: "+feature.getProperty("ALTURA")+System.getProperty("line.separator")+
-                                        "Telefono: "+feature.getProperty("TELEFONO")+"\n"
+                                pointStyle.setTitle(feature.getProperty(features[0]));//DIRECTOR
+                                pointStyle.setSnippet("Calle: "+feature.getProperty(features[1])+
+                                        " Altura: "+feature.getProperty(features[2])+System.getProperty("line.separator")+
+                                        "Telefono: "+feature.getProperty(features[3])+"\n"
                                 );
-                                feature.setPointStyle(pointStyle);
+                                feature.setPointStyle(pointStyle);*/
                                 mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
                                         @Override
