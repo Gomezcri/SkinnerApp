@@ -106,7 +106,7 @@ protected void onCreate(Bundle savedInstanceState) {
                 // Initialize the manager with the context and the map.
                 // (Activity extends context, so we can pass 'this' in the constructor.)
                 mClusterManager = new ClusterManager<MyItem>(this, mMap);
-
+                mClusterManager.setRenderer(new MarkerClusterRenderer(this,mMap,mClusterManager));
                 // Point the map's listeners at the listeners implemented by the cluster
                 // manager.
                 mMap.setOnCameraIdleListener(mClusterManager);
@@ -193,7 +193,6 @@ public boolean onMarkerClick(final Marker marker) {
 public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED) {
-
                 buildGoogleApiClient();
                 mMap.setMyLocationEnabled(true);
                 setUpClusterer();
