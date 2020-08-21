@@ -43,6 +43,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.data.Feature;
 import com.google.maps.android.data.Point;
@@ -61,8 +62,7 @@ import util.MyItem;
 public class FindDoctorActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener,
-        GoogleMap.OnMarkerClickListener {
+        LocationListener {
 
         private GoogleMap mMap;
         private GoogleApiClient googleApiClient;
@@ -86,7 +86,6 @@ protected void onCreate(Bundle savedInstanceState) {
         combo_opciones = (Spinner) findViewById(R.id.sp_opcion);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.combo_Opciones,android.R.layout.simple_spinner_item);
         combo_opciones.setAdapter(adapter);
-
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M)
         {
                 checkUserLocationPermission();
@@ -111,6 +110,44 @@ protected void onCreate(Bundle savedInstanceState) {
                 // manager.
                 mMap.setOnCameraIdleListener(mClusterManager);
                 mMap.setOnMarkerClickListener(mClusterManager);
+                mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<MyItem>(){
+                        @Override
+                        public boolean onClusterClick(final Cluster<MyItem> cluster) {
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                                        cluster.getPosition(), (float) Math.floor(mMap
+                                                .getCameraPosition().zoom + 1)), 300,
+                                        null);
+                                return true;
+                        }
+                });
+
+                mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>(){
+                        @Override
+                        public boolean onClusterItemClick(MyItem item) {
+                               // Integer id_doctor = (Integer) marker.getTag();
+
+                                /*AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                                builder.setMessage("¿Desea solicitar su atención con el doctor " + item.getTitle()+"?")
+                                        .setCancelable(false)
+                                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                                public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                                                        //TO-DO mostrar patalla de comunicacion con el medico
+                                                }
+                                        })
+                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                                public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                                                        dialog.cancel();
+                                                }
+                                        });
+                                alert = builder.create();
+                                alert.show();/*
+                                REVISAR ALERT DIALOG AL SELECIONAR UN ICONO
+                                 */
+
+                                return true;
+                        }
+                });
+
 
         }
 
@@ -166,37 +203,12 @@ protected void onCreate(Bundle savedInstanceState) {
  */
 
 @Override
-public boolean onMarkerClick(final Marker marker) {
-
-        Integer id_doctor = (Integer) marker.getTag();
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("¿Desea solicitar su atención con el doctor " + marker.getTitle()+"?")
-                .setCancelable(false)
-                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                        public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                                //TO-DO mostrar patalla de comunicacion con el medico
-                        }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                                dialog.cancel();
-                        }
-                });
-        alert = builder.create();
-        alert.show();
-
-        return false;
-}
-
-@Override
 public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED) {
                 buildGoogleApiClient();
                 mMap.setMyLocationEnabled(true);
                 setUpClusterer();
-            MapPoints puntos = new MapPoints();
                 combo_opciones.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -224,7 +236,7 @@ public void onMapReady(GoogleMap googleMap) {
 
                         }
                 });
-            BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.icon_medico);
+         /*   BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.icon_medico);
             googleMap.setOnMarkerClickListener((GoogleMap.OnMarkerClickListener) this);
             for(Integer i=0; i < puntos.getPuntos().size(); i++)
             {
@@ -234,11 +246,14 @@ public void onMapReady(GoogleMap googleMap) {
                         .icon(icon));
                     myMarker.setTag(puntos.getPuntos().get(i).getTag());
             }
+*/
 
+        }
 
         }
 
-        }
+
+
 
 public boolean checkUserLocationPermission(){
         if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
@@ -291,7 +306,8 @@ public void onLocationChanged(Location location) {
                 currentUserLocationMarker.remove();
                 }
 
-        LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+       // LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+        LatLng latLng = new LatLng(-34.642978,-58.541109);
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Posición actual");
@@ -342,7 +358,6 @@ private void retrieveFileFromResource(int selection, String[] features) {
                         mMap.clear();
                         mClusterManager.clearItems();
                         GeoJsonLayer layer = new GeoJsonLayer(mMap,selection,getApplicationContext() );
-
 
                         //layer.removeLayerFromMap();
 
