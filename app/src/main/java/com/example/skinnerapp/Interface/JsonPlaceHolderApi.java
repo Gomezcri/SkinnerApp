@@ -1,6 +1,8 @@
 package com.example.skinnerapp.Interface;
 
 import com.example.skinnerapp.Model.ActualizarUsuarioResponse;
+import com.example.skinnerapp.Model.LoginUsuarioRequest;
+import com.example.skinnerapp.Model.LoginUsuarioResponse;
 import com.example.skinnerapp.Model.RegistrarLesionRequest;
 import com.example.skinnerapp.Model.RegistrarLesionResponse;
 import com.example.skinnerapp.Model.HistoricoResponse;
