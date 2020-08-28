@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_us"
+        android:layout_width="149dp"
+        android:layout_height="27dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="102dp"
+        tools:layout_editor_absoluteY="57dp" />
+
+    <TextView
+        android:id="@+id/tv_pass"
+        android:layout_width="156dp"
+        android:layout_height="32dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="95dp"
+        tools:layout_editor_absoluteY="123dp" />
+
+    <Button
+        android:id="@+id/bt_ingresar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="INGRESAR"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="211dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -51,4 +51,8 @@ public interface JsonPlaceHolderApi {
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<RegistrarHistoricoResponse> postRegistrarHistorico(@Body RegistrarHistoricoRequest request);
 
+    @POST("/login/")
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    Call<LoginUsuarioResponse> getUsuarioLogin(@Body LoginUsuarioRequest request);
+
 }
