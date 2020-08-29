@@ -48,7 +48,6 @@ import retrofit2.Retrofit;
 
 import static util.Util.dismissLoadingDialog;
 import static util.Util.getConnection;
-import static util.Util.obtenerUserIdApp;
 import static util.Util.showLoadingDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -74,6 +73,8 @@ public class AddLesionActivity extends AppCompatActivity {
     public final static int REQUEST_ACTIVITY_BODY = 100;
     public final static int RESULT_ACTIVITY_BODY = 101;
 
+    private Integer id_user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +90,7 @@ public class AddLesionActivity extends AppCompatActivity {
         id_lesion = getIntent().getIntExtra("id_lesion",0);
         id_doctor = getIntent().getIntExtra("id_doctor",0);
         id_tipo = getIntent().getIntExtra("id_tipo",0);
+        id_user = getIntent().getIntExtra("id_user",0);
 
         btnAnalizar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,7 +182,7 @@ public class AddLesionActivity extends AppCompatActivity {
         showLoadingDialog(this,"Analizando","Skinner está analizando su imagen, aguarde un momento.");
         if(text_descripcion.getText()!= null)
             descripcion = text_descripcion.getText().toString();
-        RegistrarLesionRequest req = new RegistrarLesionRequest(encodedImage,bodyPart,section,obtenerUserIdApp(),descripcion,Calendar.getInstance().getTime().toString());
+        RegistrarLesionRequest req = new RegistrarLesionRequest(encodedImage,bodyPart,section,id_user,descripcion,Calendar.getInstance().getTime().toString());
         Call<LesionesResponse> call= service.getAnalisisImagen(req);
         call.enqueue(new Callback<LesionesResponse>() {
             @Override

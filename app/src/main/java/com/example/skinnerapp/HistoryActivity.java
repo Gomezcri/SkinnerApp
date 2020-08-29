@@ -42,7 +42,7 @@ public class HistoryActivity extends AppCompatActivity {
         btn_add_historico = (Button) findViewById(R.id.button_add_historico);
         id_lesion = getIntent().getIntExtra("id_lesion",0);
         id_doctor = getIntent().getIntExtra("id_doctor",0);
-        id_tipo = getIntent().getIntExtra("id_doctor",0);
+        id_tipo = getIntent().getIntExtra("id_tipo",0);
         datos = obtenerHistorico(id_lesion);
         btn_add_historico.setOnClickListener(new View.OnClickListener() {
             @Override

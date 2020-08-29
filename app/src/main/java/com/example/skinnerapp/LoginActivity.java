@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button ingresar;
     private String textoUsuario;
     private String textoContrasenia;
+    public final static int RESULT_ACTIVITY_MAIN = 111;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +62,11 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(Call<LoginUsuarioResponse> call, Response<LoginUsuarioResponse> response) {
 
                     Intent resultIntent = new Intent(LoginActivity.this, MainActivity2.class);
+
                     if(response.body().getId()!=null){
+                        resultIntent.putExtra("id_usuario", response.body().getId());  // put data that you want returned to activity A
                         startActivity(resultIntent);
+
                     }
                     else{
                         Toast.makeText(LoginActivity.this, "Usuario o contraseña incorrecta, intente de nuevo.", Toast.LENGTH_SHORT).show();

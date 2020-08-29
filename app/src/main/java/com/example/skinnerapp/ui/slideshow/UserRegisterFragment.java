@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
+import com.example.skinnerapp.Interface.ResultReceiver;
 import com.example.skinnerapp.Model.ActualizarUsuarioResponse;
 import com.example.skinnerapp.Model.ObtenerUsuarioResponse;
 import com.example.skinnerapp.Model.RegistrarUsuarioRequest;
@@ -29,7 +30,6 @@ import retrofit2.Retrofit;
 
 import static util.Util.dismissLoadingDialog;
 import static util.Util.getConnection;
-import static util.Util.obtenerUserIdApp;
 import static util.Util.showLoadingDialog;
 
 public class UserRegisterFragment extends Fragment {
@@ -44,6 +44,13 @@ public class UserRegisterFragment extends Fragment {
     private Context contexto;
     private Integer userid = null;
     private ArrayList<ObtenerUsuarioResponse> userData;
+    public ResultReceiver resultreceiver;
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        resultreceiver = (ResultReceiver)context;
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -57,7 +64,7 @@ public class UserRegisterFragment extends Fragment {
         text_direccion = (EditText) root.findViewById(R.id.text_direccion);
         text_telefono = (EditText) root.findViewById(R.id.text_telefono);
 
-        userid = obtenerUserIdApp();
+        userid = resultreceiver.getResultId();
 
         if(userid != null)
         {

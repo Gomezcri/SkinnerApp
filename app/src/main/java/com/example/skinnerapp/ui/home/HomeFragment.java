@@ -19,6 +19,8 @@ import com.example.skinnerapp.AddLesionActivity;
 import com.example.skinnerapp.FindDoctorActivity;
 import com.example.skinnerapp.HistoryActivity;
 import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
+import com.example.skinnerapp.Interface.ResultReceiver;
+import com.example.skinnerapp.MainActivity2;
 import com.example.skinnerapp.Model.LesionesResponse;
 import com.example.skinnerapp.R;
 
@@ -30,7 +32,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 import static util.Util.getConnection;
-import static util.Util.obtenerUserIdApp;
 
 public class HomeFragment extends Fragment {
 
@@ -41,9 +42,15 @@ public class HomeFragment extends Fragment {
     private Context contexto;
     private Button btn_add_lesion;
     private Button btn_gps;
-
+    public ResultReceiver resultreceiver;
     public final static int RESULT_ACTIVITY_LESION = 122;
     public final static int RESULT_ACTIVITY_HISTORICO = 123;
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        resultreceiver = (ResultReceiver)context;
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -53,7 +60,6 @@ public class HomeFragment extends Fragment {
         contexto = this.getContext();
         lista = (ListView) root.findViewById(R.id.lista_lesion);
         btn_add_lesion = (Button) root.findViewById(R.id.button_add_lesion);
-
         btn_add_lesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +77,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        datos = obtenerLesiones(obtenerUserIdApp());
+        datos = obtenerLesiones(resultreceiver.getResultId());
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -114,6 +120,7 @@ public class HomeFragment extends Fragment {
         resultIntent.putExtra("id_lesion", 0);  // put data that you want returned to activity A
         resultIntent.putExtra("id_doctor", 0);  // put data that you want returned to activity A
         resultIntent.putExtra("id_tipo", 0);  // put data that you want returned to activity A
+        resultIntent.putExtra("id_user", resultreceiver.getResultId());  // put data that you want returned to activity A
         startActivityForResult(resultIntent,RESULT_ACTIVITY_LESION);
     }
 

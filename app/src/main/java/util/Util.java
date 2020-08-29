@@ -22,7 +22,7 @@ public class Util {
             .writeTimeout(5, TimeUnit.MINUTES)
             .build();
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.107:8080/")
+            .baseUrl("http://192.168.1.9:8080/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
@@ -44,8 +44,5 @@ public class Util {
         if (progress != null && progress.isShowing()) {
             progress.dismiss();
         }
-    }
-    public static int obtenerUserIdApp() {
-        return 6; //reemplazar por user id persistido en la app
     }
 }
