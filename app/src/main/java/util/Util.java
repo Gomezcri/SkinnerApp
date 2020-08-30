@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Util {
     private static ProgressDialog progress;
+    private static String dirIP= "http://192.168.0.83:8080/";
     public static Retrofit getConnection(){
 
     OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -22,7 +23,7 @@ public class Util {
             .writeTimeout(5, TimeUnit.MINUTES)
             .build();
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.9:8080/")
+            .baseUrl(dirIP)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build();

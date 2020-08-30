@@ -66,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(response.body().getId()!=null){
                         resultIntent.putExtra("id_usuario", response.body().getId());  // put data that you want returned to activity A
                         startActivity(resultIntent);
+                        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
 
                     }
                     else{

@@ -22,15 +22,11 @@
 
     <TextView
         android:id="@+id/textoResultado"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="507dp"
+        android:layout_width="411dp"
+        android:layout_height="112dp"
         android:gravity="center"
         android:text="La prueba loca"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagenResultado" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="332dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

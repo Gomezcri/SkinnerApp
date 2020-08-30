@@ -2,15 +2,10 @@
 
 <resources>
     <string-array name="combo_Opciones">
-        <item>SELECCIONE UNA OPCION</item>
-        <item>HOSPITALES</item>
-        <item>GALENO</item>
-        <item>OSDE</item>
-        <item>opcion</item>
-        <item>opcion</item>
-        <item>opcion</item>
-        <item>opcion</item>
-        <item>opcion</item>
+        <item>Seleccione una opcion</item>
+        <item>Hospitales</item>
+        <item>Galeno</item>
+        <item>Osde</item>
         <item>opcion</item>
     </string-array>
 

@@ -70,14 +70,14 @@
         android:id="@+id/back"
         android:layout_width="146dp"
         android:layout_height="313dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="52dp"
         android:src="@mipmap/skinner_body_back2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.003"></ImageView>
+        app:layout_constraintVertical_bias="0.035"></ImageView>
 
     <ImageView
         android:id="@+id/back_mask"
@@ -90,7 +90,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.172"></ImageView>
+        app:layout_constraintVertical_bias="0.199"></ImageView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

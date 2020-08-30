@@ -22,4 +22,6 @@
         android:name="com.example.skinnerapp.ui.slideshow.UserRegisterFragment"
         android:label="@string/menu_registrar"
         tools:layout="@layout/fragment_user_register" />
+
+
 </navigation>

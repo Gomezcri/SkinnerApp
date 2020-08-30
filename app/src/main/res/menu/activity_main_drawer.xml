@@ -13,9 +13,14 @@
             android:icon="@drawable/ic_baseline_info_24"
             android:title="@string/menu_info" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@android:drawable/ic_menu_add"
-            android:title="@string/menu_registrar" />
+        android:id="@+id/nav_slideshow"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/menu_registrar" />
+
+        <item
+            android:id="@+id/nav_solicitarTurno"
+            android:icon="@drawable/icon_medico"
+            android:title="@string/menu_solicitar_turno" />
 
     </group>
 </menu>

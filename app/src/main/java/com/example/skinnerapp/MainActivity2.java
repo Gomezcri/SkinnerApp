@@ -1,9 +1,15 @@
 package com.example.skinnerapp;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -16,7 +22,7 @@ import com.example.skinnerapp.Interface.ResultReceiver;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-public class MainActivity2 extends AppCompatActivity implements ResultReceiver {
+public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
 
     private AppBarConfiguration mAppBarConfiguration;
     private static Integer id_user;
@@ -40,6 +46,7 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver {
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -49,6 +56,7 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
     }
 
     @Override
@@ -68,5 +76,42 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver {
     @Override
     public Integer getResultId() {
         return id_user;
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Aviso")
+                .setMessage("¿Desea cerrar sesión?")
+                .setNegativeButton("NO", null)
+                .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                        System.exit(0);
+                    }
+                }).create().show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.st_cerrar_sesion:
+                new AlertDialog.Builder(this)
+                        .setTitle("Aviso")
+                        .setMessage("¿Desea cerrar sesión?")
+                        .setNegativeButton("NO", null)
+                        .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finish();
+                                System.exit(0);
+                            }
+                        }).create().show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 }
