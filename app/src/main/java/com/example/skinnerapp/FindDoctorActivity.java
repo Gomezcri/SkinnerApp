@@ -78,6 +78,8 @@ public class FindDoctorActivity extends FragmentActivity implements OnMapReadyCa
         private String[] hospitalesfeatures = {"nombre","domicilio","",""};
         // Declare a variable for the cluster manager.
         private ClusterManager<MyItem> mClusterManager;
+        private Integer id_lesion;
+        private Integer id_paciente;
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
@@ -87,10 +89,9 @@ protected void onCreate(Bundle savedInstanceState) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.combo_Opciones,android.R.layout.simple_spinner_item);
         combo_opciones.setAdapter(adapter);
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M)
-        {
                 checkUserLocationPermission();
-        }
-
+        id_paciente = getIntent().getIntExtra("id_paciente",0);
+        id_lesion = getIntent().getIntExtra("id_lesion",0);
         checkEnableGPS();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -124,31 +125,32 @@ protected void onCreate(Bundle savedInstanceState) {
                 mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>(){
                         @Override
                         public boolean onClusterItemClick(MyItem item) {
-                               // Integer id_doctor = (Integer) marker.getTag();
-
-                                /*AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-                                builder.setMessage("¿Desea solicitar su atención con el doctor " + item.getTitle()+"?")
-                                        .setCancelable(false)
-                                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                                                public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                                                        //TO-DO mostrar patalla de comunicacion con el medico
-                                                }
-                                        })
-                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                                public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                                                        dialog.cancel();
-                                                }
-                                        });
-                                alert = builder.create();
-                                alert.show();/*
-                                REVISAR ALERT DIALOG AL SELECIONAR UN ICONO
-                                 */
-
+                                itemClickShowDialog(item);
                                 return true;
                         }
                 });
 
 
+        }
+
+        private void itemClickShowDialog(MyItem item) {
+               // Integer id_doctor = (Integer) marker.getTag();
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("¿Desea solicitar su atención con el doctor " + item.getTitle()+"?")
+                        .setCancelable(false)
+                        .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                                        //TO-DO mostrar patalla de comunicacion con el medico
+                                }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                                        dialog.cancel();
+                                }
+                        });
+                alert = builder.create();
+                alert.show();
         }
 
         private void checkEnableGPS() {
@@ -236,17 +238,6 @@ public void onMapReady(GoogleMap googleMap) {
 
                         }
                 });
-         /*   BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.icon_medico);
-            googleMap.setOnMarkerClickListener((GoogleMap.OnMarkerClickListener) this);
-            for(Integer i=0; i < puntos.getPuntos().size(); i++)
-            {
-                    myMarker  = mMap.addMarker(new MarkerOptions()
-                        .position(puntos.getPuntos().get(i).getUbicacion())
-                        .title(puntos.getPuntos().get(i).getTitle())
-                        .icon(icon));
-                    myMarker.setTag(puntos.getPuntos().get(i).getTag());
-            }
-*/
 
         }
 

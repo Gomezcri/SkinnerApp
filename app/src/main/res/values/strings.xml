@@ -52,4 +52,21 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+    <string name="input_palmas">Ingrese cantidad de palmas</string>
+
+    <string name="update_lesion">Guardar</string>
+
+    <string name="btn_map">Médicos cercanos</string>
+    <string name="saved_user_id">userid</string>
+
+
+    <!--    MENSAJES A MOSTRAR LUEGO DE ANALISIS DE IMAGENES -->
+    <string name="mensaje_lunar">Te recomendamos hacer el control de tus lunares con el médico</string>
+    <string name="mensaje_melanoma">Por favor, consulte a la brevedad con un médico</string>
+    <string name="mensaje_vitiligo">Por favor, consulte a la brevedad con el médico</string>
+    <string name="mensaje_psoriasis_leve">Por favor, consulte a la brevedad con un médico.</string>
+    <string name="mensaje_psoriasis_grave">Por favor, consulte a un médico dentro de las próximas dos semanas.</string>
+
+
 </resources>

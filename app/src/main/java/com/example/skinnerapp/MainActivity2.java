@@ -1,8 +1,12 @@
 package com.example.skinnerapp;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -82,13 +86,12 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setTitle("Aviso")
-                .setMessage("¿Desea cerrar sesión?")
+                .setMessage("¿Desea cerrar la aplicación?")
                 .setNegativeButton("NO", null)
                 .setPositiveButton("SI", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                        System.exit(0);
+                        removeUserData("0");
                     }
                 }).create().show();
     }
@@ -104,8 +107,7 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
                         .setPositiveButton("SI", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                finish();
-                                System.exit(0);
+                                removeUserData("-1");
                             }
                         }).create().show();
                 return true;
@@ -113,5 +115,13 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    private void removeUserData(String close) {
+
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("userdata", close);
+        setResult(RESULT_OK, resultIntent);
+        finish();
     }
 }

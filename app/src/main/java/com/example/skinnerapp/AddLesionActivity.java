@@ -192,6 +192,8 @@ public class AddLesionActivity extends AppCompatActivity {
                 dismissLoadingDialog();
                 Intent resultIntent = new Intent(AddLesionActivity.this, ResponseActivity.class);
                 resultIntent.putExtra("id_tipo", response.body().getId_tipo());  // put data that you want returned to activity A
+                resultIntent.putExtra("id_paciente", response.body().getId_paciente());  // put data that you want returned to activity A
+                resultIntent.putExtra("id_lesion", response.body().getId());  // put data that you want returned to activity A
                 resultIntent.putExtra("estado", response.code());  // put data that you want returned to activity A
                 startActivityForResult(resultIntent,RESULT_ACTIVITY_BODY);
                 //Toast.makeText(MainActivity.this, "Se envío correctamente la petición. Falta retorno del servidor."+ response.toString(), Toast.LENGTH_SHORT).show();

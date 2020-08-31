@@ -12,6 +12,7 @@ import com.example.skinnerapp.Model.RegistrarHistoricoRequest;
 import com.example.skinnerapp.Model.RegistrarHistoricoResponse;
 import com.example.skinnerapp.Model.RegistrarUsuarioRequest;
 import com.example.skinnerapp.Model.RegistrarUsuarioResponse;
+import com.example.skinnerapp.Model.UpdateLesionRequest;
 
 import java.util.ArrayList;
 
@@ -57,4 +58,7 @@ public interface JsonPlaceHolderApi {
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<LoginUsuarioResponse> getUsuarioLogin(@Body LoginUsuarioRequest request);
 
+    @PUT()
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    Call<RegistrarLesionResponse> putLesion(@Url() String url,@Body UpdateLesionRequest req);
 }

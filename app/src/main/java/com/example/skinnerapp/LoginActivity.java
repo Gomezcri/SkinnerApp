@@ -1,7 +1,10 @@
 package com.example.skinnerapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -27,7 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button ingresar;
     private String textoUsuario;
     private String textoContrasenia;
-    public final static int RESULT_ACTIVITY_MAIN = 111;
+    private Integer userid;
+    public final static int RESULT_ACTIVITY_MAIN = 119;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,16 @@ public class LoginActivity extends AppCompatActivity {
         us = (TextView) findViewById(R.id.tv_us);
         pass = (TextView) findViewById(R.id.tv_pass);
         ingresar = (Button) findViewById(R.id.bt_ingresar);
+        SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
+        //SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        userid = sharedPref.getInt(getString(R.string.saved_user_id), 0);
 
+        if(userid != 0)
+        {
+            Intent resultIntent = new Intent(LoginActivity.this, MainActivity2.class);
+            resultIntent.putExtra("id_usuario", userid);  // put data that you want returned to activity A
+            startActivityForResult(resultIntent, RESULT_ACTIVITY_MAIN);
+        }
         ingresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,8 +77,11 @@ public class LoginActivity extends AppCompatActivity {
                     Intent resultIntent = new Intent(LoginActivity.this, MainActivity2.class);
 
                     if(response.body().getId()!=null){
+
+                        saveUserData(response.body().getId());
+
                         resultIntent.putExtra("id_usuario", response.body().getId());  // put data that you want returned to activity A
-                        startActivity(resultIntent);
+                        startActivityForResult(resultIntent, RESULT_ACTIVITY_MAIN);
                         overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
 
                     }
@@ -85,6 +101,34 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
+
+    }
+
+    private void saveUserData(Integer id) {
+        SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(getString(R.string.saved_user_id), id);
+        editor.commit();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //ACTIVITY RESULT GPS
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_ACTIVITY_MAIN) {
+            if(resultCode == RESULT_OK){
+                String userdata = data.getStringExtra("userdata"); //0: close app, -1 delete user data
+
+                if(userdata.equals("0")){
+                    finish();
+                    System.exit(0);
+                }
+                if(userdata.equals("-1")){
+                    saveUserData(0);
+                }
+            }
+        }
 
     }
 
