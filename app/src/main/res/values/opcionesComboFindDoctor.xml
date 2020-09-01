@@ -4,9 +4,7 @@
     <string-array name="combo_Opciones">
         <item>Seleccione una opcion</item>
         <item>Hospitales</item>
-        <item>Galeno</item>
         <item>Osde</item>
-        <item>opcion</item>
     </string-array>
 
 </resources>

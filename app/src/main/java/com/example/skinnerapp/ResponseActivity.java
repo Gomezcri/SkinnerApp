@@ -90,6 +90,9 @@ public class ResponseActivity extends AppCompatActivity {
                     textoResultado.setText(getString(R.string.mensaje_lunar));
                     btn_map.setVisibility(View.VISIBLE);
                     break;
+                case 5://nada
+                    textoResultado.setText(getString(R.string.mensaje_sin_enfermedad));
+                    break;
             }
 
             btn_map.setOnClickListener(new View.OnClickListener() {

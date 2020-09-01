@@ -61,13 +61,12 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<HistoricoResponse>> call, Response<ArrayList<HistoricoResponse>> response) {
                 datos = response.body();
-                Toast.makeText(contexto, "Se actualizó correctamente los datos de su usuario", Toast.LENGTH_SHORT).show();
                 if(datos != null)
                     lista.setAdapter(new AdaptadorHistorico(contexto,datos));
             }
             @Override
             public void onFailure(Call<ArrayList<HistoricoResponse>> call, Throwable t) {
-                Toast.makeText(contexto, "Error al registrar usuario. "+ t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(contexto, "Error al obtener lesiones, el servicio no se encuentra disponible. "+ t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         return datos;

@@ -103,13 +103,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<LesionesResponse>> call, Response<ArrayList<LesionesResponse>> response) {
                 datos = response.body();
-                Toast.makeText(contexto, "Se actualizó correctamente los datos de su usuario", Toast.LENGTH_SHORT).show();
                 if(datos != null)
                     lista.setAdapter(new AdaptadorLesion(getContext(),datos));
             }
             @Override
             public void onFailure(Call<ArrayList<LesionesResponse>> call, Throwable t) {
-                Toast.makeText(contexto, "Error al registrar usuario. "+ t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(contexto, "Error al obtener lesiones, el servicio no se encuentra disponible. "+ t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         return datos;

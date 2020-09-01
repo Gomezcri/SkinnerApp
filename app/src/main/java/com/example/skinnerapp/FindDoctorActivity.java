@@ -224,10 +224,10 @@ public void onMapReady(GoogleMap googleMap) {
                                 case 1://hospitales
                                         retrieveFileFromResource(R.raw.hospitales,hospitalesfeatures);
                                         break;
-                                case 2://galeno
+                               /* case 2://galeno
                                         Toast.makeText(getApplicationContext(), "SOY UNA TOSTADA" + parent.getItemAtPosition(position), Toast.LENGTH_SHORT).show(); // contenido de la posicion elegida
-                                        break;
-                                case 3://osde
+                                        break;*/
+                                case 2://osde
                                         retrieveFileFromResource(R.raw.docosde,osdefeatures);
                                         break;
                         }

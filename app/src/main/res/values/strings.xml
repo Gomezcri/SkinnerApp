@@ -69,6 +69,8 @@
     <string name="mensaje_vitiligo">Por favor, consulte a la brevedad con el médico</string>
     <string name="mensaje_psoriasis_leve">Por favor, consulte a la brevedad con un médico.</string>
     <string name="mensaje_psoriasis_grave">Por favor, consulte a un médico dentro de las próximas dos semanas.</string>
+    <string name="mensaje_sin_enfermedad">No detectamos ninguna anomalia en su lesion, en caso de creer necesario haga la consulta con un profesional.</string>
+
 
 
 </resources>
