@@ -14,9 +14,12 @@ import android.widget.TextView;
 import com.example.skinnerapp.Model.HistoricoResponse;
 import com.example.skinnerapp.Model.LesionesResponse;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static util.Util.formatDate;
 
 public class AdaptadorHistorico extends BaseAdapter {
 
@@ -40,9 +43,14 @@ public class AdaptadorHistorico extends BaseAdapter {
         TextView txtubicacion = (TextView) vista.findViewById(R.id.text_ubicacion);
 
         ImageView imagen = (ImageView) vista.findViewById(R.id.image_lesion);
-        SimpleDateFormat formato =  new SimpleDateFormat("dd/MM/yyyy");
+        String fechanueva= "";
+        try {
+            fechanueva = formatDate(datos.get(i).getFecha());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         txtdescripcion.setText(datos.get(i).getDescripcion());
-        txtfecha.setText(datos.get(i).getFecha());
+        txtfecha.setText(fechanueva);
         txtubicacion.setText(datos.get(i).getId().toString());
 
         byte[] decodedString = Base64.decode(datos.get(i).getImagen(), Base64.DEFAULT);

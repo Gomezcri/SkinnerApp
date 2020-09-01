@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         pass = (TextView) findViewById(R.id.tv_pass);
         ingresar = (Button) findViewById(R.id.bt_ingresar);
         SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
+
         //SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         userid = sharedPref.getInt(getString(R.string.saved_user_id), 0);
 
@@ -49,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
         {
             Intent resultIntent = new Intent(LoginActivity.this, MainActivity2.class);
             resultIntent.putExtra("id_usuario", userid);  // put data that you want returned to activity A
+            resultIntent.putExtra("username", sharedPref.getString(getString(R.string.saved_user_name),""));
+            resultIntent.putExtra("useremail", sharedPref.getString(getString(R.string.saved_user_email),""));
             startActivityForResult(resultIntent, RESULT_ACTIVITY_MAIN);
         }
         ingresar.setOnClickListener(new View.OnClickListener() {
@@ -78,9 +81,10 @@ public class LoginActivity extends AppCompatActivity {
 
                     if(response.body().getId()!=null){
 
-                        saveUserData(response.body().getId());
-
+                        saveUserData(response.body().getId(),response.body().getEmail(),response.body().getNombre() +" "+response.body().getApellido());
                         resultIntent.putExtra("id_usuario", response.body().getId());  // put data that you want returned to activity A
+                        resultIntent.putExtra("username", response.body().getNombre() +" "+response.body().getApellido());  // put data that you want returned to activity A
+                        resultIntent.putExtra("useremail", response.body().getEmail());  // put data that you want returned to activity A
                         startActivityForResult(resultIntent, RESULT_ACTIVITY_MAIN);
                         overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
 
@@ -104,10 +108,12 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void saveUserData(Integer id) {
+    private void saveUserData(Integer id, String useremail, String username) {
         SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(getString(R.string.saved_user_id), id);
+        editor.putString(getString(R.string.saved_user_email), useremail);
+        editor.putString(getString(R.string.saved_user_name), username);
         editor.commit();
     }
 
@@ -125,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                     System.exit(0);
                 }
                 if(userdata.equals("-1")){
-                    saveUserData(0);
+                    saveUserData(0,"","");
                 }
             }
         }

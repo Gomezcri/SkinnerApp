@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.example.skinnerapp.Model.HistoricoResponse;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -45,5 +47,14 @@ public class Util {
         if (progress != null && progress.isShowing()) {
             progress.dismiss();
         }
+    }
+
+    public static String formatDate(String date) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        Date newDate = format.parse(date);
+
+        format = new SimpleDateFormat("dd/MM/yyyy HH:mm a");
+        return format.format(newDate);
+
     }
 }

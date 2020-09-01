@@ -15,9 +15,12 @@ import android.widget.TextView;
 import com.example.skinnerapp.Model.LesionesResponse;
 import com.example.skinnerapp.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static util.Util.formatDate;
 
 public class AdaptadorLesion extends BaseAdapter {
 
@@ -42,9 +45,15 @@ public class AdaptadorLesion extends BaseAdapter {
         TextView txtubicacion = (TextView) vista.findViewById(R.id.text_ubicacion);
 
         ImageView imagen = (ImageView) vista.findViewById(R.id.image_lesion);
-        SimpleDateFormat formato =  new SimpleDateFormat("dd/MM/yyyy");
+        String fechanueva= "";
+        try {
+            fechanueva = formatDate(datos.get(i).getFecha_creacion());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         txtdescripcion.setText(datos.get(i).getDescripcion());
-        txtfecha.setText(datos.get(i).getFecha_creacion());
+        txtfecha.setText(fechanueva);
         txtubicacion.setText(datos.get(i).getUbicacion());
 
         byte[] decodedString = Base64.decode(datos.get(i).getImage(), Base64.DEFAULT);

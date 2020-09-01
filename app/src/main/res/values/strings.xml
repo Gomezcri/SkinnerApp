@@ -59,6 +59,8 @@
 
     <string name="btn_map">Médicos cercanos</string>
     <string name="saved_user_id">userid</string>
+    <string name="saved_user_name">username</string>
+    <string name="saved_user_email">useremail</string>
 
 
     <!--    MENSAJES A MOSTRAR LUEGO DE ANALISIS DE IMAGENES -->

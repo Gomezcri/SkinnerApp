@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,7 +31,10 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
 
     private AppBarConfiguration mAppBarConfiguration;
     private static Integer id_user;
-
+    private static String struseremail;
+    private static String strusername;
+    private TextView useremail;
+    private TextView username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +43,8 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
         id_user = getIntent().getIntExtra("id_usuario",0);
+        strusername = getIntent().getStringExtra("username");
+        struseremail = getIntent().getStringExtra("useremail");
 
         //algo
         fab.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +56,13 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        useremail = (TextView) headerView.findViewById(R.id.useremail);
+        username = (TextView) headerView.findViewById(R.id.username);
 
+
+        useremail.setText(struseremail);
+        username.setText(strusername);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
