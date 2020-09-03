@@ -51,7 +51,7 @@ public class AdaptadorHistorico extends BaseAdapter {
         }
         txtdescripcion.setText(datos.get(i).getDescripcion());
         txtfecha.setText(fechanueva);
-        txtubicacion.setText(datos.get(i).getId());
+        txtubicacion.setText(datos.get(i).getId().toString());
 
         byte[] decodedString = Base64.decode(datos.get(i).getImagen(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);

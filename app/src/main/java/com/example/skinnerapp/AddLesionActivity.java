@@ -72,6 +72,7 @@ public class AddLesionActivity extends AppCompatActivity {
 
     public final static int REQUEST_ACTIVITY_BODY = 100;
     public final static int RESULT_ACTIVITY_BODY = 101;
+    public final static int RESULT_ACTIVITY_RESPONSE = 102;
 
     private Integer id_user;
 
@@ -135,7 +136,7 @@ public class AddLesionActivity extends AppCompatActivity {
         Retrofit retrofit = getConnection();
         //final String[] textoRespuesta = {""};
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
-        showLoadingDialog(this,"Analizando","Skinner está analizando su imagen, aguarde un momento.");
+        //showLoadingDialog(this,"Analizando","Skinner está analizando su imagen, aguarde un momento.");
         Date currentTime = Calendar.getInstance().getTime();
         String descripcion = null;
 
@@ -146,14 +147,12 @@ public class AddLesionActivity extends AppCompatActivity {
         call.enqueue(new Callback<RegistrarHistoricoResponse>() {
             @Override
             public void onResponse(Call<RegistrarHistoricoResponse> call, Response<RegistrarHistoricoResponse> response) {
-                //textView.setText(response.body().getMessage());
+
                 dismissLoadingDialog();
-                //textoRespuesta[0] =response.body().getMessage();
                 Intent resultIntent = new Intent(AddLesionActivity.this, ResponseActivity.class);
-                resultIntent.putExtra("respuestaServidor", response.body().getId());  // put data that you want returned to activity A
+                resultIntent.putExtra("respuestaServidor", response.body().getId().toString());  // put data that you want returned to activity A
                 resultIntent.putExtra("estado", response.code());  // put data that you want returned to activity A
-                startActivityForResult(resultIntent,RESULT_ACTIVITY_BODY);
-                //Toast.makeText(MainActivity.this, "Se envío correctamente la petición. Falta retorno del servidor."+ response.toString(), Toast.LENGTH_SHORT).show();
+                startActivityForResult(resultIntent,RESULT_ACTIVITY_RESPONSE);
             }
             @Override
             public void onFailure(Call<RegistrarHistoricoResponse> call, Throwable t) {
@@ -162,7 +161,7 @@ public class AddLesionActivity extends AppCompatActivity {
                 Intent resultIntent = new Intent(AddLesionActivity.this,ResponseActivity.class);
                 resultIntent.putExtra("respuestaServidor", t.getMessage());  // put data that you want returned to activity A
                 resultIntent.putExtra("estado", 404);  // put data that you want returned to activity A
-                startActivityForResult(resultIntent,RESULT_ACTIVITY_BODY);
+                startActivityForResult(resultIntent,RESULT_ACTIVITY_RESPONSE);
             }
 
         });
@@ -194,8 +193,9 @@ public class AddLesionActivity extends AppCompatActivity {
                 resultIntent.putExtra("id_tipo", response.body().getId_tipo());  // put data that you want returned to activity A
                 resultIntent.putExtra("id_paciente", response.body().getId_paciente());  // put data that you want returned to activity A
                 resultIntent.putExtra("id_lesion", response.body().getId());  // put data that you want returned to activity A
+                resultIntent.putExtra("id_historial", response.body().getId_historial());  // put data that you want returned to activity A
                 resultIntent.putExtra("estado", response.code());  // put data that you want returned to activity A
-                startActivityForResult(resultIntent,RESULT_ACTIVITY_BODY);
+                startActivityForResult(resultIntent,RESULT_ACTIVITY_RESPONSE);
                 //Toast.makeText(MainActivity.this, "Se envío correctamente la petición. Falta retorno del servidor."+ response.toString(), Toast.LENGTH_SHORT).show();
             }
             @Override
@@ -205,7 +205,7 @@ public class AddLesionActivity extends AppCompatActivity {
                 Intent resultIntent = new Intent(AddLesionActivity.this,ResponseActivity.class);
                 resultIntent.putExtra("respuestaServidor", t.getMessage());  // put data that you want returned to activity A
                 resultIntent.putExtra("estado", 404);  // put data that you want returned to activity A
-                startActivityForResult(resultIntent,RESULT_ACTIVITY_BODY);
+                startActivityForResult(resultIntent,RESULT_ACTIVITY_RESPONSE);
             }
 
         });
@@ -344,7 +344,6 @@ public class AddLesionActivity extends AppCompatActivity {
                 break;
             case OPEN_GALERY:
                 if (resultCode == RESULT_OK) {
-
                     Uri selectedImage = data.getData();
                     imageView.setImageURI(selectedImage);
                     if (selectedImage != null) {
@@ -361,9 +360,12 @@ public class AddLesionActivity extends AppCompatActivity {
                         encodedImage = Base64.encodeToString(byteArrayImage, Base64.NO_WRAP);
                         btnAnalizar.setVisibility(View.VISIBLE);
                     }
-
                 }
-                break;
+          /*  case RESULT_ACTIVITY_RESPONSE:
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
+                break;*/
         }
 
     }

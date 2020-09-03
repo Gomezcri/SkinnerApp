@@ -67,6 +67,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        /* TODO: SACAR
         btn_gps = (Button) root.findViewById(R.id.idgps);
 
         btn_gps.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +77,7 @@ public class HomeFragment extends Fragment {
                 startActivityForResult(resultIntent,RESULT_ACTIVITY_LESION);
             }
         });
-
+*/
         datos = obtenerLesiones(resultreceiver.getResultId());
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -121,6 +122,19 @@ public class HomeFragment extends Fragment {
         resultIntent.putExtra("id_tipo", 0);  // put data that you want returned to activity A
         resultIntent.putExtra("id_user", resultreceiver.getResultId());  // put data that you want returned to activity A
         startActivityForResult(resultIntent,RESULT_ACTIVITY_LESION);
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //ACTIVITY RESULT TAKE PICTURE
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_ACTIVITY_LESION) {
+            datos = obtenerLesiones(resultreceiver.getResultId());
+        }
+        if (requestCode == RESULT_ACTIVITY_HISTORICO) {
+            datos = obtenerLesiones(resultreceiver.getResultId());
+        }
+
     }
 
 }

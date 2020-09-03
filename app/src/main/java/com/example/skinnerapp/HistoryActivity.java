@@ -32,7 +32,7 @@ public class HistoryActivity extends AppCompatActivity {
     private Integer id_tipo;
     private Context contexto;
 
-    public final static int RESULT_ACTIVITY_LESION = 122;
+    public final static int RESULT_ACTIVITY_LESION = 139;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,4 +78,14 @@ public class HistoryActivity extends AppCompatActivity {
         resultIntent.putExtra("id_doctor", id_doctor);  // put data that you want returned to activity A
         startActivityForResult(resultIntent,RESULT_ACTIVITY_LESION);
     }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //ACTIVITY RESULT TAKE PICTURE
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_ACTIVITY_LESION) {
+            finish();
+        }
+
+    }
+
 }

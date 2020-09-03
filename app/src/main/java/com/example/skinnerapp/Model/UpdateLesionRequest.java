@@ -1,9 +1,9 @@
 package com.example.skinnerapp.Model;
 
 public class UpdateLesionRequest {
-    private Integer palmas;
+    private String analisis;
 
-    public UpdateLesionRequest(Integer palmas) {
-        this.palmas = palmas;
+    public UpdateLesionRequest(String analisis) {
+        this.analisis = analisis;
     }
 }

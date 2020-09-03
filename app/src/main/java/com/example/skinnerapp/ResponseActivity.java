@@ -1,5 +1,6 @@
 package com.example.skinnerapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
@@ -45,6 +47,7 @@ public class ResponseActivity extends AppCompatActivity {
     private Integer id_tipo;
     private Integer id_paciente;
     private Integer id_lesion;
+    private Integer id_historico;
     private String mensaje = null;
     private EditText input_palmas;
     private Button btn_update_lesion;
@@ -55,26 +58,26 @@ public class ResponseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acivity_response);
-        int codigo = getIntent().getIntExtra("estado",404);
+        int codigo = getIntent().getIntExtra("estado", 404);
         mensaje = getIntent().getStringExtra("respuestaServidor");
-        id_tipo  = getIntent().getIntExtra("id_tipo",0);
-        id_paciente = getIntent().getIntExtra("id_paciente",0);
-        id_lesion = getIntent().getIntExtra("id_lesion",0);
+        id_tipo = getIntent().getIntExtra("id_tipo", 0);
+        id_paciente = getIntent().getIntExtra("id_paciente", 0);
+        id_lesion = getIntent().getIntExtra("id_lesion", 0);
+        id_historico = getIntent().getIntExtra("id_historial", 0);
 
         imagenDeResultado = (ImageView) findViewById(R.id.imagenResultado);
-        textoResultado= (TextView) findViewById(R.id.textoResultado);
+        textoResultado = (TextView) findViewById(R.id.textoResultado);
         input_palmas = (EditText) findViewById(R.id.input_palmas);
         btn_update_lesion = (Button) findViewById(R.id.btn_update_lesion);
-
         btn_map = (Button) findViewById(R.id.btn_map);
 
         btn_update_lesion.setVisibility(View.GONE);
         input_palmas.setVisibility(View.GONE);
         btn_map.setVisibility(View.GONE);
-        if(codigo==200){
+        if (codigo == 200 && id_lesion !=0) {
             imagenDeResultado.setImageResource(R.drawable.checkverde);
 
-            switch (id_tipo){
+            switch (id_tipo) {
                 case 1://melanoma
                     textoResultado.setText(getString(R.string.mensaje_melanoma));
                     btn_map.setVisibility(View.VISIBLE);
@@ -101,14 +104,20 @@ public class ResponseActivity extends AppCompatActivity {
                     Intent resultIntent = new Intent(ResponseActivity.this, FindDoctorActivity.class);
                     resultIntent.putExtra("id_lesion", id_lesion);  // put data that you want returned to activity A
                     resultIntent.putExtra("id_paciente", id_paciente);  // put data that you want returned to activity A
-                    startActivityForResult(resultIntent,RESULT_ACTIVITY_GPS);
+                    startActivityForResult(resultIntent, RESULT_ACTIVITY_GPS);
                 }
             });
         }
+        else
+            if (codigo == 200 && id_lesion ==0)
+            {
+                imagenDeResultado.setImageResource(R.drawable.checkverde);
+                textoResultado.setText(getString(R.string.mensaje_nuevo_historico));
+            }
 
-        if(codigo==404){
-            imagenDeResultado.setImageResource(R.drawable.signopregunta);
-            textoResultado.setText("No hay conexion con el servidor, porfavor intenta en unos instantes");
+        if (codigo == 404) {
+        imagenDeResultado.setImageResource(R.drawable.signopregunta);
+        textoResultado.setText("No hay conexion con el servidor, porfavor intenta en unos instantes");
         }
     }
 
@@ -120,23 +129,23 @@ public class ResponseActivity extends AppCompatActivity {
         btn_update_lesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(input_palmas.getText() != null)
-                {
-                    if(Integer.parseInt(input_palmas.getText().toString()) >= 10)
+                if (input_palmas.getText() != null) {
+                    if (Integer.parseInt(input_palmas.getText().toString()) >= 10)
                         textoResultado.setText(getString(R.string.mensaje_psoriasis_grave));
                     else
                         textoResultado.setText(getString(R.string.mensaje_psoriasis_leve));
                     Retrofit retrofit = getConnection();
                     JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
 
-                    UpdateLesionRequest req = new UpdateLesionRequest(Integer.parseInt(input_palmas.getText().toString()));
-                    Call<RegistrarLesionResponse> call= service.putLesion("/lesion/"+id_lesion,req);
+                    UpdateLesionRequest req = new UpdateLesionRequest("{palmas:"+Integer.parseInt(input_palmas.getText().toString())+"}");
+                    Call<RegistrarLesionResponse> call = service.putLesion("/historial/" + id_historico, req);
                     call.enqueue(new Callback<RegistrarLesionResponse>() {
                         @Override
                         public void onResponse(Call<RegistrarLesionResponse> call, Response<RegistrarLesionResponse> response) {
                             btn_update_lesion.setVisibility(View.GONE);
                             btn_map.setVisibility(View.VISIBLE);
                         }
+
                         @Override
                         public void onFailure(Call<RegistrarLesionResponse> call, Throwable t) {
 
@@ -152,6 +161,28 @@ public class ResponseActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //ACTIVITY RESULT GPS
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_ACTIVITY_GPS) {
+           goToMainMenu();
+        }
+    }
 
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Aviso")
+                .setMessage("¿Desea volver al menú principal?")
+                .setNegativeButton("NO", null)
+                .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                            goToMainMenu();
+                    }
+                }).create().show();
+    }
+
+    private void goToMainMenu() {
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

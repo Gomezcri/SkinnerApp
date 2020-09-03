@@ -10,6 +10,11 @@ public class LesionesResponse {
     private String fecha_creacion;
     private String imagen;
     private Boolean activo;
+    private Integer id_historial;
+
+    public Integer getId_historial() {
+        return id_historial;
+    }
 
     public Integer getId_paciente() {
         return id_paciente;

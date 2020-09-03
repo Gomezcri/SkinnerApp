@@ -468,4 +468,24 @@ private void addGeoJsonLayerToMap(GeoJsonLayer layer) {
 
                 });
         }
+
+        @Override
+        public void onBackPressed() {
+                new androidx.appcompat.app.AlertDialog.Builder(this)
+                        .setTitle("Aviso")
+                        .setMessage("¿Desea volver al menú principal?")
+                        .setNegativeButton("NO", null)
+                        .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                        goToMainMenu();
+                                }
+                        }).create().show();
+        }
+
+        private void goToMainMenu() {
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
+        }
 }
