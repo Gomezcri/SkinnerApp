@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "298576690530",
+    "firebase_url": "https://skinner-48d78.firebaseio.com",
+    "project_id": "skinner-48d78",
+    "storage_bucket": "skinner-48d78.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298576690530:android:e421426afbb0713bf4403b",
+        "android_client_info": {
+          "package_name": "com.example.skinnerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298576690530-aljch2f9orgite0sl71ibso17btuhih5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBZZ-qK3AAsRuBhT9tI5fpDGNYNnkdXGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298576690530-aljch2f9orgite0sl71ibso17btuhih5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

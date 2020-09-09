@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,9 +25,13 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.skinnerapp.Interface.ResultReceiver;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
 public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -35,6 +40,8 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
     private static String strusername;
     private TextView useremail;
     private TextView username;
+    private String token;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +52,15 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
         id_user = getIntent().getIntExtra("id_usuario",0);
         strusername = getIntent().getStringExtra("username");
         struseremail = getIntent().getStringExtra("useremail");
+
+        //PARA OBTENER EL TOKEN
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( MainActivity2.this,  new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                token = instanceIdResult.getToken();
+                Toast.makeText(getApplicationContext(), "T: "+token,Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //algo
         fab.setOnClickListener(new View.OnClickListener() {
