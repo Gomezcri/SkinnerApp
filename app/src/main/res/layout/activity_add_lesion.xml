@@ -36,7 +36,7 @@
         android:layout_marginTop="36dp"
         android:paddingBottom="20dp"
         android:tooltipText="Saque su foto tocando la cámara."
-        app:layout_constraintTop_toBottomOf="@+id/text_descripcion"
+        app:layout_constraintTop_toBottomOf="@+id/text_titulo"
         app:srcCompat="@mipmap/skinner_pictur_x128"
         tools:layout_editor_absoluteX="0dp" />
 
@@ -62,7 +62,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/text_descripcion"
+        android:id="@+id/text_titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

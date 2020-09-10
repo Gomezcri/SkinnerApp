@@ -1,8 +1,11 @@
 package com.example.skinnerapp.Interface;
 
 import com.example.skinnerapp.Model.ActualizarUsuarioResponse;
+import com.example.skinnerapp.Model.AsignacionRequest;
+import com.example.skinnerapp.Model.AsignacionResponse;
 import com.example.skinnerapp.Model.LoginUsuarioRequest;
 import com.example.skinnerapp.Model.LoginUsuarioResponse;
+import com.example.skinnerapp.Model.TratamientoResponse;
 import com.example.skinnerapp.Model.RegistrarLesionRequest;
 import com.example.skinnerapp.Model.RegistrarLesionResponse;
 import com.example.skinnerapp.Model.HistoricoResponse;
@@ -50,6 +53,10 @@ public interface JsonPlaceHolderApi {
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<ArrayList<HistoricoResponse>> getHistoricoByLesionId(@Url() String url);
 
+    @GET()
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    Call<ArrayList<TratamientoResponse>> getRecomendacionesById(@Url() String url);
+
     @POST("/historial/")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<RegistrarHistoricoResponse> postRegistrarHistorico(@Body RegistrarHistoricoRequest request);
@@ -57,6 +64,10 @@ public interface JsonPlaceHolderApi {
     @POST("/login/")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<LoginUsuarioResponse> getUsuarioLogin(@Body LoginUsuarioRequest request);
+
+    @POST("/asignaciones/")
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    Call<AsignacionResponse> postRegistrarAsignacion(@Body AsignacionRequest request);
 
     @PUT()
     @Headers({ "Content-Type: application/json;charset=UTF-8"})

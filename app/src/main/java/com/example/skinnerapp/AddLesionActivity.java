@@ -24,7 +24,6 @@ import androidx.core.content.FileProvider;
 import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
 import com.example.skinnerapp.Model.LesionesResponse;
 import com.example.skinnerapp.Model.RegistrarLesionRequest;
-import com.example.skinnerapp.Model.RegistrarLesionResponse;
 import com.example.skinnerapp.Model.RegistrarHistoricoRequest;
 import com.example.skinnerapp.Model.RegistrarHistoricoResponse;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -37,7 +36,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -84,7 +82,7 @@ public class AddLesionActivity extends AppCompatActivity {
         takePictureButton = (ImageView) findViewById(R.id.button_image);
         imageView = (ImageView) findViewById(R.id.imageview);
         textView = (TextView) findViewById(R.id.text_call);
-        text_descripcion = (EditText)findViewById(R.id.text_descripcion);
+        text_descripcion = (EditText)findViewById(R.id.text_titulo);
         btngaleria =(Button)findViewById(R.id.btngaleria);
         btnAnalizar = (ImageView) findViewById(R.id.button_analizar);
 
@@ -186,8 +184,6 @@ public class AddLesionActivity extends AppCompatActivity {
         call.enqueue(new Callback<LesionesResponse>() {
             @Override
             public void onResponse(Call<LesionesResponse> call, Response<LesionesResponse> response) {
-
-
                 dismissLoadingDialog();
                 Intent resultIntent = new Intent(AddLesionActivity.this, ResponseActivity.class);
                 resultIntent.putExtra("id_tipo", response.body().getId_tipo());  // put data that you want returned to activity A

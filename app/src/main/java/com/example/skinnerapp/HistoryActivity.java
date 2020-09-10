@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
 import com.example.skinnerapp.Model.HistoricoResponse;
-import com.example.skinnerapp.ui.home.AdaptadorLesion;
 
 import java.util.ArrayList;
 
@@ -31,8 +30,10 @@ public class HistoryActivity extends AppCompatActivity {
     private Integer id_doctor;
     private Integer id_tipo;
     private Context contexto;
+    private Button btn_recomendaciones;
 
-    public final static int RESULT_ACTIVITY_LESION = 139;
+    public final static int RESULT_ACTIVITY_RECOMENDACION = 144;
+    public final static int RESULT_ACTIVITY_LESION = 141;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +41,7 @@ public class HistoryActivity extends AppCompatActivity {
         contexto = this;
         lista = (ListView) findViewById(R.id.lista_historico);
         btn_add_historico = (Button) findViewById(R.id.button_add_historico);
+        btn_recomendaciones= (Button) findViewById(R.id.button_tratamientos);
         id_lesion = getIntent().getIntExtra("id_lesion",0);
         id_doctor = getIntent().getIntExtra("id_doctor",0);
         id_tipo = getIntent().getIntExtra("id_tipo",0);
@@ -50,7 +52,20 @@ public class HistoryActivity extends AppCompatActivity {
                 openAddLesionActivity();
             }
         });
+        btn_recomendaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openRecomendacionActivity();
+            }
+        });
     }
+
+    private void openRecomendacionActivity() {
+        Intent resultIntent = new Intent(this, TratamientoActivity.class);
+        resultIntent.putExtra("id_lesion", id_lesion);  // put data that you want returned to activity A
+        startActivityForResult(resultIntent,RESULT_ACTIVITY_RECOMENDACION);
+    }
+
 
     private ArrayList<HistoricoResponse> obtenerHistorico(Integer id_lesion) {
         Retrofit retrofit = getConnection();

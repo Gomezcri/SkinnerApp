@@ -12,12 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.skinnerapp.Model.HistoricoResponse;
-import com.example.skinnerapp.Model.LesionesResponse;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static util.Util.formatDate;
 
@@ -38,9 +35,9 @@ public class AdaptadorHistorico extends BaseAdapter {
     public View getView(int i, View convertView, ViewGroup parent) {
 
         final View vista = inflater.inflate(R.layout.list_elemets, null);
-        TextView txtdescripcion = (TextView) vista.findViewById(R.id.text_descripcion);
+        TextView txtdescripcion = (TextView) vista.findViewById(R.id.text_titulo);
         TextView txtfecha = (TextView) vista.findViewById(R.id.text_fecha);
-        TextView txtubicacion = (TextView) vista.findViewById(R.id.text_ubicacion);
+        TextView txtubicacion = (TextView) vista.findViewById(R.id.text_descr);
 
         ImageView imagen = (ImageView) vista.findViewById(R.id.image_lesion);
         String fechanueva= "";

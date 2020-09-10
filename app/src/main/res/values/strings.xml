@@ -29,9 +29,13 @@
     <string name="previous">Previous</string>
 
     <string name="addlesion">Añadir lesión</string>
-    <string name="add_historico">Añadir histórico</string>
+    <string name="ver_tratamientos">Ver tratamientos</string>
+    <string name="add_historico">Añadir imagen</string>
+    <string name="list_tratamientos">Tratamientos asignados</string>
     <string name="hello_first_fragment">Hello first fragment</string>
+
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
 
     <!--    Permissions
     <string name="permission_rationale_location">Se requiere acceso al servicio de ubicación para demostrar la función \ 'mi ubicación \', que muestra su ubicación actual en el mapa.</string>
@@ -71,5 +75,6 @@
     <string name="mensaje_psoriasis_grave">Por favor, consulte a un médico dentro de las próximas dos semanas.</string>
     <string name="mensaje_sin_enfermedad">No detectamos ninguna anomalía en su lesión, en caso de creer necesario haga la consulta con un profesional.</string>
     <string name="mensaje_nuevo_historico">Se ha añadido correctamente su nuevo historico, presione botón atrás para volver al menú principal.</string>
+    <string name="title_activity_recomendacion">RecomendacionActivity</string>
 
 </resources>

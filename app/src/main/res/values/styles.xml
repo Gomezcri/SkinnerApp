@@ -18,6 +18,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="CropTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/cropColor</item>
         <item name="colorPrimaryDark">@color/cropColorDark</item>

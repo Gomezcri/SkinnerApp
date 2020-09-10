@@ -67,9 +67,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        /* TODO: SACAR
+        // TODO: SACAR
         btn_gps = (Button) root.findViewById(R.id.idgps);
-
+        btn_gps.setVisibility(View.GONE);
         btn_gps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment {
                 startActivityForResult(resultIntent,RESULT_ACTIVITY_LESION);
             }
         });
-*/
+
         datos = obtenerLesiones(resultreceiver.getResultId());
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {

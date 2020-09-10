@@ -29,6 +29,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
+import com.example.skinnerapp.Model.AsignacionRequest;
+import com.example.skinnerapp.Model.AsignacionResponse;
+import com.example.skinnerapp.Model.RegistrarHistoricoResponse;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -38,7 +42,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -46,18 +49,24 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.data.Feature;
-import com.google.maps.android.data.Point;
 import com.google.maps.android.data.geojson.GeoJsonFeature;
 import com.google.maps.android.data.geojson.GeoJsonLayer;
-import com.google.maps.android.data.geojson.GeoJsonPointStyle;
 
 
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
-import util.MapPoints;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 import util.MyItem;
+
+import static util.Util.dismissLoadingDialog;
+import static util.Util.getConnection;
 
 public class FindDoctorActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -134,7 +143,7 @@ protected void onCreate(Bundle savedInstanceState) {
         }
 
         private void itemClickShowDialog(MyItem item) {
-               // Integer id_doctor = (Integer) marker.getTag();
+                final Integer id_doctor = Integer.parseInt(item.getmId_doctor());
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("¿Desea solicitar su atención con el doctor " + item.getTitle()+"?")
@@ -142,6 +151,8 @@ protected void onCreate(Bundle savedInstanceState) {
                         .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                 public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
                                         //TO-DO mostrar patalla de comunicacion con el medico
+                                        addAsignacion(id_doctor);
+
                                 }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -151,6 +162,25 @@ protected void onCreate(Bundle savedInstanceState) {
                         });
                 alert = builder.create();
                 alert.show();
+        }
+
+        private void addAsignacion(Integer id_doctor) {
+                Retrofit retrofit = getConnection();
+                JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
+
+                AsignacionRequest req = new AsignacionRequest(id_lesion,id_doctor,id_paciente);
+                Call<AsignacionResponse> call= service.postRegistrarAsignacion(req);
+
+                call.enqueue(new Callback<AsignacionResponse>() {
+                        @Override
+                        public void onResponse(Call<AsignacionResponse> call, Response<AsignacionResponse> response) {
+
+                        }
+                        @Override
+                        public void onFailure(Call<AsignacionResponse> call, Throwable t) {
+                        }
+
+                });
         }
 
         private void checkEnableGPS() {
@@ -368,7 +398,7 @@ private void retrieveFileFromResource(int selection, String[] features) {
 */
                                 //}
                         //});
-                        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.icon_medico);
+                     //   BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.icon_medico);
 
                         for (GeoJsonFeature feature : layer.getFeatures()) {
 
@@ -376,6 +406,7 @@ private void retrieveFileFromResource(int selection, String[] features) {
                                 LatLng coordenada = (LatLng) feature.getGeometry().getGeometryObject();
                                 double lat = coordenada.latitude;
                                 double lng = coordenada.longitude;
+                                String id_doctor = feature.getProperty("ID");
 
 // Set the title and snippet strings.
                                 String title = feature.getProperty(features[0]);
@@ -384,7 +415,7 @@ private void retrieveFileFromResource(int selection, String[] features) {
                                         "Telefono: "+feature.getProperty(features[3])+"\n";
 
 // Create a cluster item for the marker and set the title and snippet using the constructor.
-                                MyItem infoWindowItem = new MyItem(lat, lng, title, snippet);
+                                MyItem infoWindowItem = new MyItem(lat, lng, title, snippet,id_doctor);
 
 // Add the cluster item (marker) to the cluster manager.
                                 mClusterManager.addItem(infoWindowItem);

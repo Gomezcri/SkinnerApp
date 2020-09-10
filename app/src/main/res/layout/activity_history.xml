@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HistoryActivity"
-    android:background="@drawable/gradient_background">
+    android:background="@drawable/gradient_background"
+    tools:context=".HistoryActivity">
 
     <ListView
         android:id="@+id/lista_historico"
@@ -22,11 +22,21 @@
         android:id="@+id/button_add_historico"
         android:layout_width="160dp"
         android:layout_height="48dp"
+        android:layout_marginTop="100dp"
         android:text="@string/add_historico"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lista_historico"
-        app:layout_constraintVertical_bias="0.242" />
+        app:layout_constraintTop_toBottomOf="@+id/lista_historico" />
+
+    <Button
+        android:id="@+id/button_tratamientos"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/ver_tratamientos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_add_historico" />
 </androidx.constraintlayout.widget.ConstraintLayout>

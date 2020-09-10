@@ -7,15 +7,21 @@ public class MyItem implements ClusterItem {
     private LatLng mPosition;
     private String mTitle;
     private String mSnippet;
+    private String mId_doctor;
+
+    public String getmId_doctor() {
+        return mId_doctor;
+    }
 
     public MyItem(double lat, double lng) {
         mPosition = new LatLng(lat, lng);
     }
 
-    public MyItem(double lat, double lng, String title, String snippet) {
+    public MyItem(double lat, double lng, String title, String snippet,String id_doctor) {
         mPosition = new LatLng(lat, lng);
         mTitle = title;
         mSnippet = snippet;
+        mId_doctor = id_doctor;
     }
 
     @Override
