@@ -58,6 +58,9 @@
         <activity android:name=".BodyActivity" />
         <activity android:name=".ResponseActivity" />
         <activity android:name=".MainActivity2" />
+        <activity android:name=".Registrar_usuario">
+
+        </activity>
         <activity android:name=".LoginActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

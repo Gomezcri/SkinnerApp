@@ -40,6 +40,7 @@ public class UserRegisterFragment extends Fragment {
     private EditText text_apellido;
     private EditText text_direccion;
     private EditText text_telefono;
+    private EditText text_usuario;
     private View root;
     private Context contexto;
     private Integer userid = null;
@@ -63,6 +64,7 @@ public class UserRegisterFragment extends Fragment {
         text_apellido = (EditText) root.findViewById(R.id.text_apellido);
         text_direccion = (EditText) root.findViewById(R.id.text_direccion);
         text_telefono = (EditText) root.findViewById(R.id.text_telefono);
+        text_usuario= (EditText) root.findViewById(R.id.tx_usuario);
 
         userid = resultreceiver.getResultId();
 

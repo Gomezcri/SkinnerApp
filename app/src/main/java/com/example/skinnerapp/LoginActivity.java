@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView us;
     private TextView pass;
     private Button ingresar;
+    private Button crearUsuario;
     private String textoUsuario;
     private String textoContrasenia;
     private Integer userid;
@@ -41,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         us = (TextView) findViewById(R.id.tv_us);
         pass = (TextView) findViewById(R.id.tv_pass);
         ingresar = (Button) findViewById(R.id.bt_ingresar);
+        crearUsuario = (Button) findViewById(R.id.bt_crearUsuario);
         SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
 
         //SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -58,6 +60,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 LoguearUsuario();
+            }
+        });
+
+        crearUsuario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, Registrar_usuario.class);
+                startActivity(intent);
             }
         });
 
@@ -107,6 +117,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
+
 
     private void saveUserData(Integer id, String useremail, String username) {
         SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
