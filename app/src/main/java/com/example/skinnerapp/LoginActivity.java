@@ -15,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
 import com.example.skinnerapp.Model.LoginUsuarioRequest;
 import com.example.skinnerapp.Model.LoginUsuarioResponse;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private String textoContrasenia;
     private Integer userid;
     public final static int RESULT_ACTIVITY_MAIN = 119;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,14 @@ public class LoginActivity extends AppCompatActivity {
         ingresar = (Button) findViewById(R.id.bt_ingresar);
         crearUsuario = (Button) findViewById(R.id.bt_crearUsuario);
         SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
+        //PARA OBTENER EL TOKEN
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( LoginActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                token = instanceIdResult.getToken();
+                //Toast.makeText(getApplicationContext(), "T: "+token,Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         userid = sharedPref.getInt(getString(R.string.saved_user_id), 0);
@@ -81,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
         {
             textoUsuario = us.getText().toString();
             textoContrasenia = pass.getText().toString();
-            LoginUsuarioRequest req = new LoginUsuarioRequest(textoUsuario,textoContrasenia);
+            LoginUsuarioRequest req = new LoginUsuarioRequest(textoUsuario,textoContrasenia,token);
             Call<LoginUsuarioResponse> call= service.getUsuarioLogin(req);
             call.enqueue(new Callback<LoginUsuarioResponse>() {
                 @Override
@@ -97,7 +109,6 @@ public class LoginActivity extends AppCompatActivity {
                         resultIntent.putExtra("useremail", response.body().getEmail());  // put data that you want returned to activity A
                         startActivityForResult(resultIntent, RESULT_ACTIVITY_MAIN);
                         overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
-
                     }
                     else{
                         Toast.makeText(LoginActivity.this, "Usuario o contraseña incorrecta, intente de nuevo.", Toast.LENGTH_SHORT).show();

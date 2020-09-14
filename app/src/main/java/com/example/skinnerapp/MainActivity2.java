@@ -40,7 +40,6 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
     private static String strusername;
     private TextView useremail;
     private TextView username;
-    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +51,6 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
         id_user = getIntent().getIntExtra("id_usuario",0);
         strusername = getIntent().getStringExtra("username");
         struseremail = getIntent().getStringExtra("useremail");
-
-        //PARA OBTENER EL TOKEN
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( MainActivity2.this,  new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-                token = instanceIdResult.getToken();
-                Toast.makeText(getApplicationContext(), "T: "+token,Toast.LENGTH_SHORT).show();
-            }
-        });
 
         //algo
         fab.setOnClickListener(new View.OnClickListener() {

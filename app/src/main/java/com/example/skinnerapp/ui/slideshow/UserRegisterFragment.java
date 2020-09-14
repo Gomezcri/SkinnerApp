@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
 import com.example.skinnerapp.Interface.ResultReceiver;
+import com.example.skinnerapp.Model.ActualizarUsuarioRequest;
 import com.example.skinnerapp.Model.ActualizarUsuarioResponse;
 import com.example.skinnerapp.Model.ObtenerUsuarioResponse;
 import com.example.skinnerapp.Model.RegistrarUsuarioRequest;
@@ -64,7 +65,7 @@ public class UserRegisterFragment extends Fragment {
         text_apellido = (EditText) root.findViewById(R.id.text_apellido);
         text_direccion = (EditText) root.findViewById(R.id.text_direccion);
         text_telefono = (EditText) root.findViewById(R.id.text_telefono);
-        text_usuario= (EditText) root.findViewById(R.id.tx_usuario);
+        text_usuario= (EditText) root.findViewById(R.id.tx_email);
 
         userid = resultreceiver.getResultId();
 
@@ -79,8 +80,6 @@ public class UserRegisterFragment extends Fragment {
             public void onClick(View v) {
                 if(userid != null)
                     actualizarUsuario();
-               else
-                    registrarUsuario();
             }
         });
 
@@ -94,7 +93,7 @@ public class UserRegisterFragment extends Fragment {
                 Retrofit retrofit = getConnection();
                 JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
 
-                RegistrarUsuarioRequest req = new RegistrarUsuarioRequest(text_nombre.getText().toString(),text_apellido.getText().toString(),text_direccion.getText().toString(),text_telefono.getText().toString());
+                ActualizarUsuarioRequest req = new ActualizarUsuarioRequest(text_nombre.getText().toString(),text_apellido.getText().toString(),text_direccion.getText().toString(),text_telefono.getText().toString());
                 Call<ActualizarUsuarioResponse> call= service.putUserById("/usuarios/"+userid,req);
                 call.enqueue(new Callback<ActualizarUsuarioResponse>() {
                     @Override
@@ -158,37 +157,6 @@ public class UserRegisterFragment extends Fragment {
         text_direccion.setText(userData.get(0).getDireccion());
         text_telefono.setText(userData.get(0).getTelefono());
         dismissLoadingDialog();
-    }
-
-    private void registrarUsuario(){
-        if(datosValidos()){
-
-            final String[] textoRespuesta = {""};
-            Retrofit retrofit = getConnection();
-            JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
-
-            RegistrarUsuarioRequest req = new RegistrarUsuarioRequest(text_nombre.getText().toString(),text_apellido.getText().toString(),text_direccion.getText().toString(),text_telefono.getText().toString());
-            Call<RegistrarUsuarioResponse> call= service.postRegistrarUsuario(req);
-            call.enqueue(new Callback<RegistrarUsuarioResponse>() {
-                @Override
-                public void onResponse(Call<RegistrarUsuarioResponse> call, Response<RegistrarUsuarioResponse> response) {
-                    textoRespuesta[0] =response.body().toString();
-                    Toast.makeText(contexto, "Se envío correctamente la petición. Falta retorno del servidor."+ response.toString(), Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onFailure(Call<RegistrarUsuarioResponse> call, Throwable t) {
-                    Toast.makeText(contexto, "Error al registrar usuario. "+ textoRespuesta[0], Toast.LENGTH_SHORT).show();
-                }
-
-            });
-
-        }
-        else {
-            Toast.makeText(contexto, "Debe completar los datos solicitados antes presionar en registrar.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
     }
 
     private Boolean datosValidos(){

@@ -46,13 +46,13 @@
         app:layout_constraintTop_toBottomOf="@+id/text_telefono" />
 
     <EditText
-        android:id="@+id/tx_usuario"
+        android:id="@+id/tx_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:autofillHints=""
         android:ems="10"
-        android:hint="Usuario"
+        android:hint="Email"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +68,7 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tx_usuario" />
+        app:layout_constraintTop_toBottomOf="@+id/tx_email" />
 
     <EditText
         android:id="@+id/text_apellido"

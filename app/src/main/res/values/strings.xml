@@ -77,4 +77,10 @@
     <string name="mensaje_nuevo_historico">Se ha añadido correctamente su nuevo historico, presione botón atrás para volver al menú principal.</string>
     <string name="title_activity_recomendacion">RecomendacionActivity</string>
 
+    <!--    REGISTRAR USUARIO -->
+    <string name="registroUsuario_ok">Su usuario ha sido registrado, proceda a iniciar sesión.</string>
+    <string name="registroUsuario_error">No se pudo registrar su usuario, intente nuevamente.</string>
+    <string name="registroUsuario_campoincompleto">No se pudo registrar su usuario, completar todos los campos.</string>
+
+
 </resources>

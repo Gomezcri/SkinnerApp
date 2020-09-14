@@ -1,5 +1,6 @@
 package com.example.skinnerapp.Interface;
 
+import com.example.skinnerapp.Model.ActualizarUsuarioRequest;
 import com.example.skinnerapp.Model.ActualizarUsuarioResponse;
 import com.example.skinnerapp.Model.AsignacionRequest;
 import com.example.skinnerapp.Model.AsignacionResponse;
@@ -33,17 +34,13 @@ public interface JsonPlaceHolderApi {
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<LesionesResponse> getAnalisisImagen(@Body RegistrarLesionRequest body);
 
-    @POST("/usuarios/")
-    @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    Call<RegistrarUsuarioResponse> postRegistrarUsuario(@Body RegistrarUsuarioRequest request);
-
     @GET()
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<ArrayList<ObtenerUsuarioResponse>> getUserById(@Url() String url);
 
     @PUT()
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    Call<ActualizarUsuarioResponse> putUserById(@Url() String url,@Body RegistrarUsuarioRequest request);
+    Call<ActualizarUsuarioResponse> putUserById(@Url() String url,@Body ActualizarUsuarioRequest request);
 
     @GET()
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
@@ -72,4 +69,9 @@ public interface JsonPlaceHolderApi {
     @PUT()
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<RegistrarLesionResponse> putLesion(@Url() String url,@Body UpdateLesionRequest req);
+
+    @POST("/usuarios/")
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    Call<RegistrarUsuarioResponse> postRegistrarUsuario(@Body RegistrarUsuarioRequest request);
+
 }
