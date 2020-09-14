@@ -70,7 +70,7 @@ public class AddLesionActivity extends AppCompatActivity {
 
     public final static int REQUEST_ACTIVITY_BODY = 100;
     public final static int RESULT_ACTIVITY_BODY = 101;
-    public final static int RESULT_ACTIVITY_RESPONSE = 102;
+    public final static int RESULT_ACTIVITY_RESPONSE = 104;
 
     private Integer id_user;
 
@@ -276,34 +276,13 @@ public class AddLesionActivity extends AppCompatActivity {
         if (requestCode == REQUEST_TAKE_PHOTO) {
             if (resultCode == RESULT_OK) {
                 f = new File(currentPhotoPath);
-                // imageView.setImageURI(Uri.fromFile(f));
-                //Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                 Uri contentUri = Uri.fromFile(f);
-                //  mediaScanIntent.setData(contentUri);
-                // getActivity().sendBroadcast(mediaScanIntent);
                 Toast.makeText(this, "Recortar la imagen en donde se encuentra su lesión.", Toast.LENGTH_SHORT).show();
                 CropImage.activity(contentUri)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setCropShape(CropImageView.CropShape.RECTANGLE)
                         .start(this);
 
-                //btnAnalizar.setVisibility(View.VISIBLE);
-
-                //encodedImage = convertImgString();
-
-/*
-               Bitmap compressedImgBitmap = null;
-               try {
-                   compressedImgBitmap = new Compressor(this).compressToBitmap(f);
-               } catch (IOException e) {
-                   e.printStackTrace();
-               }
-
-               ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-               compressedImgBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-               imageView.setImageBitmap(compressedImgBitmap);
-               byte[] byteArrayImage = byteArrayOutputStream.toByteArray();
-               encodedImage = Base64.encodeToString(byteArrayImage, Base64.DEFAULT);*/
             }
         }
         //ACTIVITY RESULT OPEN OTHERS ACTIVITIES
@@ -329,13 +308,11 @@ public class AddLesionActivity extends AppCompatActivity {
             case REQUEST_ACTIVITY_BODY:
                 if (resultCode == RESULT_OK) {
                     Bundle bundle = data.getExtras();
-
                     if (bundle.getString("bodyPart") != null) {
                         bodyPart = bundle.getString("bodyPart");
                         section = bundle.getString("section");
                         askCameraPermissions();
                     }
-
                 }
                 break;
             case OPEN_GALERY:
@@ -357,11 +334,11 @@ public class AddLesionActivity extends AppCompatActivity {
                         btnAnalizar.setVisibility(View.VISIBLE);
                     }
                 }
-          /*  case RESULT_ACTIVITY_RESPONSE:
+            case RESULT_ACTIVITY_RESPONSE:
                 Intent intent = new Intent();
                 setResult(RESULT_OK, intent);
                 finish();
-                break;*/
+                break;
         }
 
     }

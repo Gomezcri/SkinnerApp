@@ -52,7 +52,7 @@ public class ResponseActivity extends AppCompatActivity {
     private EditText input_palmas;
     private Button btn_update_lesion;
     private Button btn_map;
-    public final static int RESULT_ACTIVITY_GPS = 133;
+    public final static int RESULT_ACTIVITY_GPS = 199;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -60,8 +60,16 @@ public class LoginActivity extends AppCompatActivity {
         //SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         userid = sharedPref.getInt(getString(R.string.saved_user_id), 0);
 
-        if(userid != 0)
-        {
+        //PARA OBTENER EL TOKEN
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( LoginActivity.this,  new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                token = instanceIdResult.getToken();
+                //Toast.makeText(getApplicationContext(), "T: "+token,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        if(userid != 0){
             Intent resultIntent = new Intent(LoginActivity.this, MainActivity2.class);
             resultIntent.putExtra("id_usuario", userid);  // put data that you want returned to activity A
             resultIntent.putExtra("username", sharedPref.getString(getString(R.string.saved_user_name),""));
@@ -87,7 +95,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void LoguearUsuario() {
         Retrofit retrofit = getConnection();
-        final String[] textoRespuesta = {""};
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
         if(us.getText()!= null && pass.getText() != null)
         {
@@ -113,8 +120,6 @@ public class LoginActivity extends AppCompatActivity {
                     else{
                         Toast.makeText(LoginActivity.this, "Usuario o contraseña incorrecta, intente de nuevo.", Toast.LENGTH_SHORT).show();
                     }
-
-                    //Toast.makeText(MainActivity.this, "Se envío correctamente la petición. Falta retorno del servidor."+ response.toString(), Toast.LENGTH_SHORT).show();
                 }
                 @Override
                 public void onFailure(Call<LoginUsuarioResponse> call, Throwable t) {

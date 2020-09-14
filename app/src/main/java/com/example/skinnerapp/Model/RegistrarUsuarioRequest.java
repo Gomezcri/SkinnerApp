@@ -20,5 +20,4 @@ public class RegistrarUsuarioRequest {
         this.id_ciudad=id_city;
         this.id_rol = 1;
     }
-
 }

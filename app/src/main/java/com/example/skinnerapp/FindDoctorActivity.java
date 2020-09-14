@@ -236,7 +236,10 @@ protected void onCreate(Bundle savedInstanceState) {
                 call.enqueue(new Callback<AsignacionResponse>() {
                         @Override
                         public void onResponse(Call<AsignacionResponse> call, Response<AsignacionResponse> response) {
-
+                                Toast.makeText(FindDoctorActivity.this, "Su solicitud ha sido enviada, volviendo al menu principal.", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent();
+                                setResult(RESULT_OK, intent);
+                                finish();
                         }
                         @Override
                         public void onFailure(Call<AsignacionResponse> call, Throwable t) {

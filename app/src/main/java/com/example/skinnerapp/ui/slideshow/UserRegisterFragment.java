@@ -170,16 +170,4 @@ public class UserRegisterFragment extends Fragment {
             return true;
 
     }
-/*
-    private class MyFocusChangeListener implements View.OnFocusChangeListener {
-        public void onFocusChange(View v, boolean hasFocus){
-
-            if(v.getId() == R.id.textbox && !hasFocus) {
-
-                InputMethodManager imm =  (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
-            }
-        }
-    }*/
 }
