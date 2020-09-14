@@ -34,7 +34,6 @@
         <activity android:name=".Splash_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -52,7 +51,10 @@
 
         <activity
             android:name=".FindDoctorActivity"
-            android:label="@string/title_activity_find_doctor" />
+            android:label="@string/title_activity_find_doctor">
+
+        </activity>
+
         <activity android:name=".HistoryActivity" />
         <activity android:name=".AddLesionActivity" />
         <activity android:name=".BodyActivity" />

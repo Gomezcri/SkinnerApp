@@ -53,9 +53,13 @@ import com.google.maps.android.data.geojson.GeoJsonFeature;
 import com.google.maps.android.data.geojson.GeoJsonLayer;
 
 
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -95,8 +99,12 @@ protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_doctor);
         combo_opciones = (Spinner) findViewById(R.id.sp_opcion);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.combo_Opciones,android.R.layout.simple_spinner_item);
+        final ArrayList<String> items = getOpciones("opciones_findDoctor.json");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.spinner_layout,R.id.txt,items);
         combo_opciones.setAdapter(adapter);
+
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.combo_Opciones,android.R.layout.simple_spinner_item);
+        //combo_opciones.setAdapter(adapter);
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M)
                 checkUserLocationPermission();
         id_paciente = getIntent().getIntExtra("id_paciente",0);
@@ -107,6 +115,60 @@ protected void onCreate(Bundle savedInstanceState) {
         .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 }
+
+        private ArrayList<String> getOpciones(String archivo) {
+                JSONArray jsonArray=null;
+                String opcion=null;
+                ArrayList<String> opcionesList = new ArrayList<String>();
+
+                InputStream is= null;
+                try {
+                        is = getResources().getAssets().open(archivo);
+                } catch (IOException e) {
+                        e.printStackTrace();
+                }
+                int size = 0;
+                try {
+                        size = is.available();
+                } catch (IOException e) {
+                        e.printStackTrace();
+                }
+                byte[] data = new byte[size];
+                try {
+                        is.read(data);
+                } catch (IOException e) {
+                        e.printStackTrace();
+                }
+                try {
+                        is.close();
+                } catch (IOException e) {
+                        e.printStackTrace();
+                }
+                String json= null;
+                try {
+                        json = new String(data,"UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                }
+                try {
+                        jsonArray = new JSONArray(json);
+                } catch (JSONException e) {
+                        e.printStackTrace();
+                }
+                if(jsonArray!=null){
+                        for(int i =0; i<jsonArray.length();i++)
+                        {
+                                try {opcion=jsonArray.getJSONObject(i).getString("name");
+                                        opcionesList.add(opcion);
+                                } catch (JSONException e) {
+                                        e.printStackTrace();
+                                }
+                        }
+                }
+
+                return opcionesList;
+        }
+
 
         private void setUpClusterer() {
                 // Position the map.
