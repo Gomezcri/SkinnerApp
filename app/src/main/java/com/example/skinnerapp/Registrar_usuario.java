@@ -58,7 +58,7 @@ public class Registrar_usuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registrar_usuario);
         email = (EditText) findViewById(R.id.tv_email);
-        pass = (EditText) findViewById(R.id.tv_pass);
+        pass = (EditText) findViewById(R.id.tv_contraseña);
         nombre = (EditText) findViewById(R.id.tv_nombre);
         apellido = (EditText) findViewById(R.id.tv_apellido);
         direccion = (EditText) findViewById(R.id.tv_direccion);
@@ -82,6 +82,7 @@ public class Registrar_usuario extends AppCompatActivity {
         sp_localidades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
                 cadena = items.get(position);
                 aux=cadena.split("-");
                 id_ciudad= Integer.valueOf(aux[1]);

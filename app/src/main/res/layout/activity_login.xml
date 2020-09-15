@@ -71,6 +71,8 @@
         android:layout_marginBottom="64dp"
         android:enabled="true"
         android:text="INGRESAR"
+        android:textColor="#E8E8E8"
+        android:background="@drawable/button_skinner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +89,9 @@
         android:text="CREAR USUARIO"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="@+id/textView"
+        android:textColor="#E8E8E8"
+        android:background="@drawable/button_skinner"/>
 
     <ProgressBar
         android:id="@+id/loading"

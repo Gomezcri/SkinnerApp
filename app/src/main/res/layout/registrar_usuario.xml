@@ -19,7 +19,9 @@
         android:text="REGISTRARME"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_localidades" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_localidades"
+        android:textColor="#E8E8E8"
+        android:background="@drawable/button_skinner"/>
 
     <EditText
         android:id="@+id/tv_contraseña"

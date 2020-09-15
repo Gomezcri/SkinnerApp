@@ -8,8 +8,9 @@ public class ObtenerUsuarioResponse {
     private Integer id;
     private Boolean activo;
     private Integer id_rol;
+    private String email;
 
-    public ObtenerUsuarioResponse(String nombre, String apellido,String direccion,String telefono, Integer id, Boolean activo,Integer id_rol) {
+    public ObtenerUsuarioResponse(String nombre, String apellido, String direccion, String telefono, Integer id, Boolean activo, Integer id_rol, String email) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
@@ -17,8 +18,11 @@ public class ObtenerUsuarioResponse {
         this.id = id;
         this.activo = activo;
         this.id_rol = id_rol;
+        this.email = email;
     }
-
+    public String getEmail() {
+        return email;
+    }
     public String getNombre() {
         return nombre;
     }

@@ -443,7 +443,7 @@ private void retrieveFileFromResource(int selection, String[] features) {
                 try {
                         mMap.clear();
                         mClusterManager.clearItems();
-                        GeoJsonLayer layer = new GeoJsonLayer(mMap,selection,getApplicationContext() );
+                        GeoJsonLayer layer = new GeoJsonLayer(mMap,selection,getApplicationContext());//Aca cargamos el geosheison
 
                         //layer.removeLayerFromMap();
 

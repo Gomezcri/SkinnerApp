@@ -50,6 +50,9 @@
         android:layout_marginTop="36dp"
         android:text="@string/update_lesion"
         app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="#E8E8E8"
+        android:background="@drawable/button_skinner"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_palmas" />
 
@@ -77,6 +80,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_update_lesion"
+        android:textColor="#E8E8E8"
+        android:background="@drawable/button_skinner"
         app:layout_constraintVertical_bias="0.173" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

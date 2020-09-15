@@ -156,6 +156,7 @@ public class UserRegisterFragment extends Fragment {
         text_apellido.setText(userData.get(0).getApellido());
         text_direccion.setText(userData.get(0).getDireccion());
         text_telefono.setText(userData.get(0).getTelefono());
+        text_usuario.setText(userData.get(0).getEmail());
         dismissLoadingDialog();
     }
 
@@ -164,7 +165,8 @@ public class UserRegisterFragment extends Fragment {
         if(text_nombre.getText().toString().matches("") ||
                 text_apellido.getText().toString().matches("") ||
                 text_direccion.getText().toString().matches("") ||
-                text_telefono.getText().toString().matches("") ){
+                text_telefono.getText().toString().matches("") ||
+                text_usuario.getText().toString().matches("")){
             return false;
         }else
             return true;
