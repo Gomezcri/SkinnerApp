@@ -38,7 +38,6 @@ public class TratamientoActivity extends AppCompatActivity {
             datos = obtenerRecomendaciones();
     }
 
-
     private ArrayList<TratamientoResponse> obtenerRecomendaciones() {
         Retrofit retrofit = getConnection();
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);

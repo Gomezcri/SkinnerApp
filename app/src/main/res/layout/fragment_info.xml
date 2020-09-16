@@ -19,6 +19,8 @@
         android:fontFamily="sans-serif-smallcaps"
         android:text="Información de interés"
         android:textSize="24sp"
+        android:gravity="center"
+        android:textColor="#000000"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,8 +38,10 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
-        android:text="A continuación, les brindaremos información de contacto en relación a asociaciones/organizaciones donde encontrará publicaciones sobre enfermedades de la piel, tratamientos, avances médicos, entre otros."
+        android:text="A continuación, les brindaremos información de contacto en relación a organizaciones y asociaciones donde encontrará publicaciones sobre enfermedades de la piel, tratamientos y avances médicos, entre otros."
         android:textSize="14sp"
+        android:gravity="center"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,6 +55,7 @@
         android:layout_marginLeft="28dp"
         android:layout_marginTop="52dp"
         android:text="ASPAVIT: "
+        android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -77,6 +82,7 @@
         android:layout_marginLeft="28dp"
         android:layout_marginTop="16dp"
         android:text="AEPSO: "
+        android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -103,6 +109,7 @@
         android:layout_marginLeft="28dp"
         android:layout_marginTop="20dp"
         android:text="SOARPSO: "
+        android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 

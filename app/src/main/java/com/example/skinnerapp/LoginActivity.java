@@ -5,11 +5,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
@@ -30,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView us;
     private TextView pass;
+    private TextView olvidoContrasenia;
     private Button ingresar;
     private Button crearUsuario;
     private String textoUsuario;
@@ -37,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private Integer userid;
     public final static int RESULT_ACTIVITY_MAIN = 119;
     private String token;
+    private String text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,27 +55,22 @@ public class LoginActivity extends AppCompatActivity {
         pass = (TextView) findViewById(R.id.tv_pass);
         ingresar = (Button) findViewById(R.id.bt_ingresar);
         crearUsuario = (Button) findViewById(R.id.bt_crearUsuario);
+        olvidoContrasenia = (TextView) findViewById(R.id.textView_olvidoContrasenia);
+
+        //Sppanable para hacer click y abrir otra activity
+        setClickableString("Click AQUÍ", "¿Olvidaste tu contraseña? Click AQUÍ", olvidoContrasenia);
+
         SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
         //PARA OBTENER EL TOKEN
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( LoginActivity.this,  new OnSuccessListener<InstanceIdResult>() {
             @Override
             public void onSuccess(InstanceIdResult instanceIdResult) {
                 token = instanceIdResult.getToken();
-                //Toast.makeText(getApplicationContext(), "T: "+token,Toast.LENGTH_SHORT).show();
             }
         });
 
         //SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         userid = sharedPref.getInt(getString(R.string.saved_user_id), 0);
-
-        //PARA OBTENER EL TOKEN
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener( LoginActivity.this,  new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-                token = instanceIdResult.getToken();
-                //Toast.makeText(getApplicationContext(), "T: "+token,Toast.LENGTH_SHORT).show();
-            }
-        });
 
         if(userid != 0){
             Intent resultIntent = new Intent(LoginActivity.this, MainActivity2.class);
@@ -130,11 +133,7 @@ public class LoginActivity extends AppCompatActivity {
 
         }
 
-
-
     }
-
-
 
     private void saveUserData(Integer id, String useremail, String username) {
         SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
@@ -164,6 +163,29 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    public void setClickableString(String clickableValue, String wholeValue, TextView yourTextView){
+        String value = wholeValue;
+        SpannableString spannableString = new SpannableString(value);
+        int startIndex = value.indexOf(clickableValue);
+        int endIndex = startIndex + clickableValue.length();
+        spannableString.setSpan(new ClickableSpan() {
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(true); // <-- (false) this will remove automatic underline in set span
+            }
+
+            @Override
+            public void onClick(View widget) {
+                // do what you want with clickable value
+                Intent intent = new Intent(LoginActivity.this, Recuperar_contraseña.class);
+                startActivity(intent);
+            }
+        }, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        yourTextView.setText(spannableString);
+        yourTextView.setMovementMethod(LinkMovementMethod.getInstance()); // <-- important, onClick in ClickableSpan won't work without this
     }
 
 }

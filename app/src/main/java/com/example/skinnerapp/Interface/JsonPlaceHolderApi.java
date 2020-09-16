@@ -6,6 +6,8 @@ import com.example.skinnerapp.Model.AsignacionRequest;
 import com.example.skinnerapp.Model.AsignacionResponse;
 import com.example.skinnerapp.Model.LoginUsuarioRequest;
 import com.example.skinnerapp.Model.LoginUsuarioResponse;
+import com.example.skinnerapp.Model.RecuperarContraseñaRequest;
+import com.example.skinnerapp.Model.RecuperarcontraseñaResponse;
 import com.example.skinnerapp.Model.TratamientoResponse;
 import com.example.skinnerapp.Model.RegistrarLesionRequest;
 import com.example.skinnerapp.Model.RegistrarLesionResponse;
@@ -73,5 +75,9 @@ public interface JsonPlaceHolderApi {
     @POST("/usuarios/")
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<RegistrarUsuarioResponse> postRegistrarUsuario(@Body RegistrarUsuarioRequest request);
+
+    @POST("/recuperar_password/")
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    Call<RecuperarcontraseñaResponse> postRecuperarContraseña(@Body RecuperarContraseñaRequest request);
 
 }

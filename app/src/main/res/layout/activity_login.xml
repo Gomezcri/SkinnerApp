@@ -18,38 +18,63 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="55dp"
-        android:layout_marginRight="55dp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_us"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.434"
+        app:layout_constraintHorizontal_bias="0.557"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.456"
-        app:srcCompat="@drawable/logo3" />
+        app:srcCompat="@drawable/logo3"
+        tools:layout_editor_absoluteY="-32dp" />
 
-    <EditText
-        android:id="@+id/tv_us"
-        android:layout_width="0dp"
+    <Button
+        android:id="@+id/bt_crearUsuario"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="24dp"
-        android:hint="@string/prompt_email"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
+        android:layout_gravity="start"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/button_skinner"
+        android:enabled="true"
+        android:text="CREAR USUARIO"
+        android:textColor="#E8E8E8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loading" />
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="#000000"
+        android:text="¿Es tu primer ingreso? ¡Creá tu usuario!"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_ingresar" />
+
+    <TextView
+        android:id="@+id/textView_olvidoContrasenia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
+        android:clickable="true"
+        android:text="¿Olvidaste tu contraseña? Click AQUÍ"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_crearUsuario" />
 
     <EditText
         android:id="@+id/tv_pass"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="24dp"
         android:hint="@string/prompt_password"
         android:imeActionLabel="@string/action_sign_in_short"
@@ -57,6 +82,7 @@
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_us" />
 
@@ -66,32 +92,31 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="64dp"
+        android:background="@drawable/button_skinner"
         android:enabled="true"
         android:text="INGRESAR"
         android:textColor="#E8E8E8"
-        android:background="@drawable/button_skinner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_pass"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="0.155" />
 
-    <Button
-        android:id="@+id/bt_crearUsuario"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/tv_us"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginTop="40dp"
-        android:enabled="true"
-        android:text="CREAR USUARIO"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:hint="@string/prompt_email"
+        android:inputType="textEmailAddress"
+        android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView"
-        android:textColor="#E8E8E8"
-        android:background="@drawable/button_skinner"/>
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <ProgressBar
         android:id="@+id/loading"
@@ -108,15 +133,5 @@
         app:layout_constraintStart_toStartOf="@+id/tv_pass"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="¿Es tu primer ingreso? ¡Creá tu usuario!"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_ingresar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

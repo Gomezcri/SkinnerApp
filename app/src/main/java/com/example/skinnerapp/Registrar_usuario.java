@@ -77,7 +77,6 @@ public class Registrar_usuario extends AppCompatActivity {
             }
         });
 
-
         //Listener spinner localidades
         sp_localidades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -136,7 +135,6 @@ public class Registrar_usuario extends AppCompatActivity {
         return true;
         else
         return false;
-
     }
 
     public ArrayList<String> getLocalidades(String archivo){
