@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -20,9 +21,12 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
 import com.example.skinnerapp.Interface.ResultReceiver;
+import com.example.skinnerapp.Model.HistoricoResponse;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -139,18 +143,17 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
     private void Cerrar_Sesion() {
         Retrofit retrofit = getConnection();
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
-        Call<void> call= service.postCerrarSesion("/cerrar_sesion/"+id_user);
-        call.enqueue(new Callback<void>() {
+        Call<Void> call= service.postCerrarSesion("/cerrar_sesion/"+id_user);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<void> call, Response<void> response) {
+            public void onResponse(Call<Void> call, Response<Void> response) {
                 removeUserData("-1");
             }
-
             @Override
-            public void onFailure(Call<CerrarSesionIdResponse> call, Throwable t) {
-
+            public void onFailure(Call<Void> call, Throwable t) {
             }
         });
+
     }
 
     private void removeUserData(String close) {

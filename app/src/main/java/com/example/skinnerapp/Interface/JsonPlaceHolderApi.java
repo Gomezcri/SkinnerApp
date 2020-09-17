@@ -88,6 +88,6 @@ public interface JsonPlaceHolderApi {
 
     @PUT()
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    Call<void> postCerrarSesion(@Url() String url);
+    Call<Void> postCerrarSesion(@Url() String url);
 
 }
