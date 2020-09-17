@@ -56,9 +56,13 @@ public class Recuperar_contraseña extends AppCompatActivity {
 
                 @Override
                 public void onResponse(Call<RecuperarcontraseñaResponse> call, Response<RecuperarcontraseñaResponse> response) {
-                    Intent resultIntent = new Intent(Recuperar_contraseña.this, LoginActivity.class);
+                   // Intent resultIntent = new Intent(Recuperar_contraseña.this, LoginActivity.class);
                     Toast.makeText(Recuperar_contraseña.this, "Revise la casilla de mail ingresada y realice un nuevo ingreso", Toast.LENGTH_LONG).show();
-                    startActivity(resultIntent);
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("change", true);
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
+                   // startActivity(resultIntent);
                 }
 
                 @Override

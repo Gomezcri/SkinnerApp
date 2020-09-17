@@ -43,8 +43,9 @@ public class LoginActivity extends AppCompatActivity {
     private String textoContrasenia;
     private Integer userid;
     public final static int RESULT_ACTIVITY_MAIN = 119;
+    public final static int RESULT_ACTIVITY_RESTART = 120;
+    public final static int RESULT_ACTIVITY_ACTUALIZAR_PSW = 121;
     private String token;
-    private String text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,16 +110,29 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<LoginUsuarioResponse> call, Response<LoginUsuarioResponse> response) {
 
-                    Intent resultIntent = new Intent(LoginActivity.this, MainActivity2.class);
-
                     if(response.body().getId()!=null){
+                        SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
+                        boolean changepassword = sharedPref.getBoolean(getString(R.string.saved_password), false);
+                        if(changepassword)
+                        {
+                            Intent resultIntent = new Intent(LoginActivity.this, Cambiar_password.class);
+                            resultIntent.putExtra("id_usuario", response.body().getId());
+                            resultIntent.putExtra("username", response.body().getNombre() +" "+response.body().getApellido());  // put data that you want returned to activity A
+                            resultIntent.putExtra("useremail", response.body().getEmail());  // put data that you want returned to activity A
+                            startActivityForResult(resultIntent, RESULT_ACTIVITY_ACTUALIZAR_PSW);
+                            overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                        }
+                        else
+                        {
+                            Intent resultIntent = new Intent(LoginActivity.this, MainActivity2.class);
+                            saveUserData(response.body().getId(),response.body().getEmail(),response.body().getNombre() +" "+response.body().getApellido(),false);
+                            resultIntent.putExtra("id_usuario", response.body().getId());  // put data that you want returned to activity A
+                            resultIntent.putExtra("username", response.body().getNombre() +" "+response.body().getApellido());  // put data that you want returned to activity A
+                            resultIntent.putExtra("useremail", response.body().getEmail());  // put data that you want returned to activity A
+                            startActivityForResult(resultIntent, RESULT_ACTIVITY_MAIN);
+                            overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                        }
 
-                        saveUserData(response.body().getId(),response.body().getEmail(),response.body().getNombre() +" "+response.body().getApellido());
-                        resultIntent.putExtra("id_usuario", response.body().getId());  // put data that you want returned to activity A
-                        resultIntent.putExtra("username", response.body().getNombre() +" "+response.body().getApellido());  // put data that you want returned to activity A
-                        resultIntent.putExtra("useremail", response.body().getEmail());  // put data that you want returned to activity A
-                        startActivityForResult(resultIntent, RESULT_ACTIVITY_MAIN);
-                        overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                     }
                     else{
                         Toast.makeText(LoginActivity.this, "Usuario o contraseña incorrecta, intente de nuevo.", Toast.LENGTH_SHORT).show();
@@ -135,12 +149,13 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void saveUserData(Integer id, String useremail, String username) {
+    private void saveUserData(Integer id, String useremail, String username,Boolean changepassword) {
         SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(getString(R.string.saved_user_id), id);
         editor.putString(getString(R.string.saved_user_email), useremail);
         editor.putString(getString(R.string.saved_user_name), username);
+        editor.putBoolean(getString(R.string.saved_password),changepassword);
         editor.commit();
     }
 
@@ -158,7 +173,37 @@ public class LoginActivity extends AppCompatActivity {
                     System.exit(0);
                 }
                 if(userdata.equals("-1")){
-                    saveUserData(0,"","");
+                    saveUserData(0,"","",false);
+                }
+            }
+        }
+
+        if (requestCode == RESULT_ACTIVITY_RESTART) {
+            if(resultCode == RESULT_OK){
+                boolean changepassword = data.getBooleanExtra("change",false); //0: close app, -1 delete user data
+
+                if(changepassword){
+                    saveUserData(0,"","",true);
+                }
+            }
+        }
+
+        if (requestCode == RESULT_ACTIVITY_ACTUALIZAR_PSW) {
+            if(resultCode == RESULT_OK){
+                boolean changepassword = data.getBooleanExtra("actualizado",false); //0: close app, -1 delete user data
+
+                if(changepassword){
+                    String strusername = data.getStringExtra("username");
+                    String struseremail = data.getStringExtra("useremail");
+                    Integer id_user = data.getIntExtra("id_usuario",0);
+
+                    Intent resultIntent = new Intent(LoginActivity.this, MainActivity2.class);
+                    saveUserData(id_user,struseremail,strusername,false);
+                    resultIntent.putExtra("id_usuario", id_user);  // put data that you want returned to activity A
+                    resultIntent.putExtra("username", strusername);  // put data that you want returned to activity A
+                    resultIntent.putExtra("useremail", struseremail);  // put data that you want returned to activity A
+                    startActivityForResult(resultIntent, RESULT_ACTIVITY_ACTUALIZAR_PSW);
+                    overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                 }
             }
         }
@@ -181,7 +226,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View widget) {
                 // do what you want with clickable value
                 Intent intent = new Intent(LoginActivity.this, Recuperar_contraseña.class);
-                startActivity(intent);
+                startActivityForResult(intent,RESULT_ACTIVITY_RESTART);
             }
         }, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         yourTextView.setText(spannableString);

@@ -1,5 +1,7 @@
 package com.example.skinnerapp.Interface;
 
+import com.example.skinnerapp.Model.ActualizarContraseñaRequest;
+import com.example.skinnerapp.Model.ActualizarContraseñaResponse;
 import com.example.skinnerapp.Model.ActualizarUsuarioRequest;
 import com.example.skinnerapp.Model.ActualizarUsuarioResponse;
 import com.example.skinnerapp.Model.AsignacionRequest;
@@ -43,6 +45,10 @@ public interface JsonPlaceHolderApi {
     @PUT()
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<ActualizarUsuarioResponse> putUserById(@Url() String url,@Body ActualizarUsuarioRequest request);
+
+    @PUT()
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    Call<ActualizarContraseñaResponse> putUpdatePassword(@Url() String url, @Body ActualizarContraseñaRequest request);
 
     @GET()
     @Headers({ "Content-Type: application/json;charset=UTF-8"})

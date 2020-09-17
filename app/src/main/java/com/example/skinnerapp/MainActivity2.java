@@ -126,6 +126,8 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 removeUserData("-1");
+
+                                //BLANQUEAR TOKEN LLAMANDO A LOS SERVICIOS DE PAQUIN.
                             }
                         }).create().show();
                 return true;

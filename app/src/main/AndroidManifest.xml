@@ -31,10 +31,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".TratamientoActivity"></activity>
+        <activity android:name=".Cambiar_password"></activity>
+        <activity android:name=".TratamientoActivity" />
         <activity android:name=".Splash_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -52,19 +54,14 @@
 
         <activity
             android:name=".FindDoctorActivity"
-            android:label="@string/title_activity_find_doctor">
-
-        </activity>
-
+            android:label="@string/title_activity_find_doctor"></activity>
         <activity android:name=".HistoryActivity" />
         <activity android:name=".AddLesionActivity" />
         <activity android:name=".BodyActivity" />
         <activity android:name=".ResponseActivity" />
         <activity android:name=".MainActivity2" />
-        <activity android:name=".Registrar_usuario">
-
-        </activity>
-        <activity android:name=".Recuperar_contraseña"/>
+        <activity android:name=".Registrar_usuario"></activity>
+        <activity android:name=".Recuperar_contraseña" />
         <activity android:name=".LoginActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
@@ -84,10 +81,9 @@
                 android:value="@string/google_maps_key" />
         </provider>
 
-        <service
-            android:name=".MiFirebaseMessaggingService">
+        <service android:name=".MiFirebaseMessaggingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
     </application>
