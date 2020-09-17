@@ -1,18 +1,12 @@
 package com.example.skinnerapp;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -24,13 +18,19 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
 import com.example.skinnerapp.Interface.ResultReceiver;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.http.Body;
+
+import static util.Util.getConnection;
 
 public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
 
@@ -125,9 +125,8 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
                         .setPositiveButton("SI", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                removeUserData("-1");
 
-                                //BLANQUEAR TOKEN LLAMANDO A LOS SERVICIOS DE PAQUIN.
+                                Cerrar_Sesion();
                             }
                         }).create().show();
                 return true;
@@ -137,8 +136,24 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
         }
     }
 
-    private void removeUserData(String close) {
+    private void Cerrar_Sesion() {
+        Retrofit retrofit = getConnection();
+        JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
+        Call<void> call= service.postCerrarSesion("/cerrar_sesion/"+id_user);
+        call.enqueue(new Callback<void>() {
+            @Override
+            public void onResponse(Call<void> call, Response<void> response) {
+                removeUserData("-1");
+            }
 
+            @Override
+            public void onFailure(Call<CerrarSesionIdResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void removeUserData(String close) {
         Intent resultIntent = new Intent();
         resultIntent.putExtra("userdata", close);
         setResult(RESULT_OK, resultIntent);

@@ -94,7 +94,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     private void LoguearUsuario() {
@@ -132,7 +131,6 @@ public class LoginActivity extends AppCompatActivity {
                             startActivityForResult(resultIntent, RESULT_ACTIVITY_MAIN);
                             overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                         }
-
                     }
                     else{
                         Toast.makeText(LoginActivity.this, "Usuario o contraseña incorrecta, intente de nuevo.", Toast.LENGTH_SHORT).show();
@@ -142,11 +140,8 @@ public class LoginActivity extends AppCompatActivity {
                 public void onFailure(Call<LoginUsuarioResponse> call, Throwable t) {
                     Toast.makeText(LoginActivity.this, "No se pudo conectar con el servidor, intenta mas tarde cuerno", Toast.LENGTH_SHORT).show();
                 }
-
             });
-
         }
-
     }
 
     private void saveUserData(Integer id, String useremail, String username,Boolean changepassword) {

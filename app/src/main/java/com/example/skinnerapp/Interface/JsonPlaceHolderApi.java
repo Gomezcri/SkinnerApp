@@ -86,4 +86,8 @@ public interface JsonPlaceHolderApi {
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<RecuperarcontraseñaResponse> postRecuperarContraseña(@Body RecuperarContraseñaRequest request);
 
+    @PUT()
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    Call<void> postCerrarSesion(@Url() String url);
+
 }

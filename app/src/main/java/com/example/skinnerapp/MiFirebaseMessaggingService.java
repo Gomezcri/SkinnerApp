@@ -70,7 +70,7 @@ public class MiFirebaseMessaggingService extends FirebaseMessagingService {
         //preparate notification
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context,CHANNEL_ID)
-                .setSmallIcon(R.drawable.icon_medico)
+                .setSmallIcon(R.drawable.doctor)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
