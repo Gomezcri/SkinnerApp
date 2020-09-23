@@ -138,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 @Override
                 public void onFailure(Call<LoginUsuarioResponse> call, Throwable t) {
-                    Toast.makeText(LoginActivity.this, "No se pudo conectar con el servidor, intenta mas tarde cuerno", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "No se pudo conectar con el servidor, intenta mas tarde.", Toast.LENGTH_SHORT).show();
                 }
             });
         }
