@@ -40,7 +40,7 @@ public interface JsonPlaceHolderApi {
 
     @GET()
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
-    Call<ArrayList<ObtenerUsuarioResponse>> getUserById(@Url() String url);
+    Call<ObtenerUsuarioResponse> getUserById(@Url() String url);
 
     @PUT()
     @Headers({ "Content-Type: application/json;charset=UTF-8"})

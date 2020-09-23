@@ -45,7 +45,7 @@ public class UserRegisterFragment extends Fragment {
     private View root;
     private Context contexto;
     private Integer userid = null;
-    private ArrayList<ObtenerUsuarioResponse> userData;
+    private ObtenerUsuarioResponse userData;
     public ResultReceiver resultreceiver;
 
     @Override
@@ -119,10 +119,10 @@ public class UserRegisterFragment extends Fragment {
     }
     //valida si se modifico o no algun dato del usuario
     private boolean modificacionValidada() {
-        if(userData.get(0).getNombre().equals(text_nombre.getText().toString())  &&
-            userData.get(0).getApellido().equals(text_apellido.getText().toString()) &&
-            userData.get(0).getDireccion().equals(text_direccion.getText().toString()) &&
-            userData.get(0).getTelefono().equals(text_telefono.getText().toString())
+        if(userData.getNombre().equals(text_nombre.getText().toString())  &&
+            userData.getApellido().equals(text_apellido.getText().toString()) &&
+            userData.getDireccion().equals(text_direccion.getText().toString()) &&
+            userData.getTelefono().equals(text_telefono.getText().toString())
         )
             return false;
         else
@@ -134,29 +134,29 @@ public class UserRegisterFragment extends Fragment {
         Retrofit retrofit = getConnection();
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<ArrayList<ObtenerUsuarioResponse>> call= service.getUserById("/usuarios/"+userid);
+        Call<ObtenerUsuarioResponse> call= service.getUserById("/usuarios/"+userid);
         showLoadingDialog(getContext(),"Datos usuario","Skinner está recuperando sus datos de usuario, aguarde un momento.");
-        call.enqueue(new Callback<ArrayList<ObtenerUsuarioResponse>>() {
+        call.enqueue(new Callback<ObtenerUsuarioResponse>() {
             @Override
-            public void onResponse(Call<ArrayList<ObtenerUsuarioResponse>> call, Response<ArrayList<ObtenerUsuarioResponse>> response) {
+            public void onResponse(Call<ObtenerUsuarioResponse> call, Response<ObtenerUsuarioResponse> response) {
                 userData = response.body();
                 autoCompletarDatosUsuario();
             }
 
             @Override
-            public void onFailure(Call<ArrayList<ObtenerUsuarioResponse>> call, Throwable t) {
-                Toast.makeText(contexto, "Error al registrar usuario. "+ t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<ObtenerUsuarioResponse> call, Throwable t) {
+                Toast.makeText(contexto, "Error al obtener datos del usuario. "+ t.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
         });
     }
 
     private void autoCompletarDatosUsuario() {
-        text_nombre.setText(userData.get(0).getNombre());
-        text_apellido.setText(userData.get(0).getApellido());
-        text_direccion.setText(userData.get(0).getDireccion());
-        text_telefono.setText(userData.get(0).getTelefono());
-        text_usuario.setText(userData.get(0).getEmail());
+        text_nombre.setText(userData.getNombre());
+        text_apellido.setText(userData.getApellido());
+        text_direccion.setText(userData.getDireccion());
+        text_telefono.setText(userData.getTelefono());
+        text_usuario.setText(userData.getEmail());
         dismissLoadingDialog();
     }
 

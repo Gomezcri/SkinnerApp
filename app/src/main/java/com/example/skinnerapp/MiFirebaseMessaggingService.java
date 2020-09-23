@@ -76,6 +76,7 @@ public class MiFirebaseMessaggingService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setSound(uri)
                 .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
+                .setStyle(new NotificationCompat.BigTextStyle())
                 .setContentIntent(contentIntent);
 
         if(notificationManager!=null){
