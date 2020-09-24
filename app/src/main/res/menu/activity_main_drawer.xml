@@ -18,10 +18,9 @@
         android:title="@string/menu_registrar" />
 
         <item
-            android:id="@+id/nav_solicitarTurno"
-            android:icon="@drawable/icon_medico"
-            android:title="@string/menu_solicitar_turno"
-            android:visible="false" />
+            android:id="@+id/messageFragment"
+            android:icon="@drawable/icon_mensajeria"
+            android:title="@string/menu_mensajeria" />
 
     </group>
 </menu>

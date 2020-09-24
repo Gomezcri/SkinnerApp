@@ -1,6 +1,8 @@
 package com.example.skinnerapp;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -173,7 +175,6 @@ public class AddLesionActivity extends AppCompatActivity {
 
     private void addNewLesion() {
         Retrofit retrofit = getConnection();
-        final String[] textoRespuesta = {""};
         String descripcion = null;
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
         showLoadingDialog(this,"Analizando","Skinner está analizando su imagen, aguarde un momento.");
@@ -311,7 +312,21 @@ public class AddLesionActivity extends AppCompatActivity {
                     if (bundle.getString("bodyPart") != null) {
                         bodyPart = bundle.getString("bodyPart");
                         section = bundle.getString("section");
-                        askCameraPermissions();
+                        String[] animals = {"1- Limpiá la lente","2- Usá luz natural siempre que sea posible","3- Evitá contraluces","4- Evitá usar el flash"};
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                        builder/*.setMessage(R.string.recomendacion_foto_mensaje)*/
+                                .setItems(animals,null)
+                                .setTitle(R.string.recomendacion_foto_titulo)
+                                .setCancelable(false)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        askCameraPermissions();
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+
                     }
                 }
                 break;

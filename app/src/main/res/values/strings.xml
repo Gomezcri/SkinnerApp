@@ -11,7 +11,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_info">Info</string>
     <string name="menu_registrar">Mis datos</string>
-    <string name="menu_solicitar_turno">Solicitar turno</string>
+    <string name="menu_mensajeria">Mensajería</string>
     <string name="title_activity_test">TestActivity</string>
     <!-- Strings de alta y modificacion de usuarios-->
     <string name="nombre">Ingrese su nombre</string>
@@ -88,5 +88,7 @@
     <string name="registroUsuario_error">No se pudo registrar su usuario, intente nuevamente.</string>
     <string name="registroUsuario_campoincompleto">No se pudo registrar su usuario, completar todos los campos.</string>
 
-
+    <string name="recomendacion_foto_titulo">Para tomar una foto óptima, recordá:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

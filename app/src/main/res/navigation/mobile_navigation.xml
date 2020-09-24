@@ -22,6 +22,11 @@
         android:name="com.example.skinnerapp.ui.slideshow.UserRegisterFragment"
         android:label="@string/menu_registrar"
         tools:layout="@layout/fragment_user_register" />
+    <fragment
+        android:id="@+id/messageFragment"
+        android:name="com.example.skinnerapp.ui.message.MessageFragment"
+        android:label="@string/menu_mensajeria"
+        tools:layout="@layout/fragment_message" />
 
 
 </navigation>
