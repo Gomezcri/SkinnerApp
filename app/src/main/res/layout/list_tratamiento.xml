@@ -48,7 +48,7 @@
         app:layout_constraintGuide_begin="132dp" />
 
     <TextView
-        android:id="@+id/text_titulo"
+        android:id="@+id/text_from"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -63,7 +63,7 @@
 
 
     <TextView
-        android:id="@+id/text_descr"
+        android:id="@+id/text_mensaje"
         android:layout_width="285dp"
         android:layout_height="69dp"
         android:fontFamily="sans-serif-medium"

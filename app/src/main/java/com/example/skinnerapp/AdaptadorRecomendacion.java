@@ -27,8 +27,8 @@ public class AdaptadorRecomendacion extends BaseAdapter {
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
         final View vista = inflater.inflate(R.layout.list_tratamiento, null);
-        TextView txttitulo = (TextView) vista.findViewById(R.id.text_titulo);
-        TextView txtdescripcion = (TextView) vista.findViewById(R.id.text_descr);
+        TextView txttitulo = (TextView) vista.findViewById(R.id.text_from);
+        TextView txtdescripcion = (TextView) vista.findViewById(R.id.text_mensaje);
         if(datos != null)
         {
             txtdescripcion.setText(datos.get(i).getDescripcion());

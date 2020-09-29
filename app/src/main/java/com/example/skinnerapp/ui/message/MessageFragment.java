@@ -1,5 +1,7 @@
 package com.example.skinnerapp.ui.message;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,18 +14,30 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.skinnerapp.HistoryActivity;
+import com.example.skinnerapp.MessageActivity;
 import com.example.skinnerapp.R;
 import com.example.skinnerapp.ui.slideshow.UserRegisterViewModel;
 
 
 public class MessageFragment extends Fragment {
     private View root;
+    private Button btn_msj;
+    private Context contexto;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_message, container, false);
-
+        btn_msj = (Button) root.findViewById(R.id.id_test);
+        contexto = this.getContext();
+        btn_msj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent resultIntent = new Intent(contexto, MessageActivity.class);
+                startActivity(resultIntent);
+            }
+        });
         return root;
     }
 

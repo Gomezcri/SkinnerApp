@@ -37,14 +37,14 @@ public class AdaptadorLesion extends BaseAdapter {
     public View getView(int i, View convertView, ViewGroup parent) {
 
         final View vista = inflater.inflate(R.layout.list_elemets, null);
-        TextView txtdescripcion = (TextView) vista.findViewById(R.id.text_titulo);
+        TextView txtdescripcion = (TextView) vista.findViewById(R.id.text_from);
         TextView txtfecha = (TextView) vista.findViewById(R.id.text_fecha);
-        TextView txtubicacion = (TextView) vista.findViewById(R.id.text_descr);
+        TextView txtubicacion = (TextView) vista.findViewById(R.id.text_mensaje);
 
         ImageView imagen = (ImageView) vista.findViewById(R.id.image_lesion);
         String fechanueva= "";
         try {
-            fechanueva = formatDate(datos.get(i).getFecha_creacion());
+            fechanueva = formatDate(datos.get(i).getFecha_creacion(),"dd/MM/yyyy HH:mm a");
         } catch (ParseException e) {
             e.printStackTrace();
         }

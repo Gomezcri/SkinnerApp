@@ -49,11 +49,11 @@ public class Util {
         }
     }
 
-    public static String formatDate(String date) throws ParseException {
+    public static String formatDate(String date, String formato) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         Date newDate = format.parse(date);
 
-        format = new SimpleDateFormat("dd/MM/yyyy HH:mm a");
+        format = new SimpleDateFormat(formato);
         return format.format(newDate);
 
     }

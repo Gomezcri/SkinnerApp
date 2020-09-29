@@ -84,7 +84,7 @@ public class AddLesionActivity extends AppCompatActivity {
         takePictureButton = (ImageView) findViewById(R.id.button_image);
         imageView = (ImageView) findViewById(R.id.imageview);
         textView = (TextView) findViewById(R.id.text_call);
-        text_descripcion = (EditText)findViewById(R.id.text_titulo);
+        text_descripcion = (EditText)findViewById(R.id.text_from);
         btngaleria =(Button)findViewById(R.id.btngaleria);
         btnAnalizar = (ImageView) findViewById(R.id.button_analizar);
 

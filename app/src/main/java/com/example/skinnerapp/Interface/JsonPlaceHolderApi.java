@@ -8,8 +8,11 @@ import com.example.skinnerapp.Model.AsignacionRequest;
 import com.example.skinnerapp.Model.AsignacionResponse;
 import com.example.skinnerapp.Model.LoginUsuarioRequest;
 import com.example.skinnerapp.Model.LoginUsuarioResponse;
+import com.example.skinnerapp.Model.MensajeResponse;
 import com.example.skinnerapp.Model.RecuperarContraseñaRequest;
 import com.example.skinnerapp.Model.RecuperarcontraseñaResponse;
+import com.example.skinnerapp.Model.SendMessageRequest;
+import com.example.skinnerapp.Model.SendMessageResponse;
 import com.example.skinnerapp.Model.TratamientoResponse;
 import com.example.skinnerapp.Model.RegistrarLesionRequest;
 import com.example.skinnerapp.Model.RegistrarLesionResponse;
@@ -89,5 +92,14 @@ public interface JsonPlaceHolderApi {
     @PUT()
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<Void> postCerrarSesion(@Url() String url);
+
+    @GET()
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    Call<ArrayList<MensajeResponse>> getMensajesByLesionId(@Url() String url);
+
+    @POST("/mensajes/")
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    Call<SendMessageResponse> postSendMessage(@Body SendMessageRequest request);
+
 
 }
