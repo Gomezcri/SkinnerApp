@@ -58,8 +58,7 @@ public class MessageFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_message, container, false);
         lista = (ListView) root.findViewById(R.id.lista_mensajes);
         contexto = this.getContext();
-        //id_paciente = resultreceiver.getResultId();
-        id_paciente = 19;
+        id_paciente = resultreceiver.getResultId();;
         datos = obtenerMensajesPorPaciente(id_paciente);
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {

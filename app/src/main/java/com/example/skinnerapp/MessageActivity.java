@@ -108,7 +108,7 @@ public class MessageActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<MensajeResponse>> call, Response<ArrayList<MensajeResponse>> response) {
                 datos = response.body();
-                adapter.addMensaje(datos);
+                adapter.addMensaje(datos,id_paciente);
             }
             @Override
             public void onFailure(Call<ArrayList<MensajeResponse>> call, Throwable t) {

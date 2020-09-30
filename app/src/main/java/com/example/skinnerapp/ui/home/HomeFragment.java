@@ -43,6 +43,7 @@ public class HomeFragment extends Fragment {
     private Button btn_add_lesion;
     private Button btn_gps;
     public ResultReceiver resultreceiver;
+    private Integer id_paciente;
     public final static int RESULT_ACTIVITY_LESION = 122;
     public final static int RESULT_ACTIVITY_HISTORICO = 123;
 
@@ -77,8 +78,8 @@ public class HomeFragment extends Fragment {
                 startActivityForResult(resultIntent,RESULT_ACTIVITY_LESION);
             }
         });
-
-        datos = obtenerLesiones(resultreceiver.getResultId());
+        id_paciente = resultreceiver.getResultId();
+        datos = obtenerLesiones(id_paciente);
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -87,6 +88,7 @@ public class HomeFragment extends Fragment {
                 resultIntent.putExtra("id_lesion", datos.get(i).getId());  // put data that you want returned to activity A
                 resultIntent.putExtra("id_doctor", datos.get(i).getId_doctor());  // put data that you want returned to activity A
                 resultIntent.putExtra("id_tipo", datos.get(i).getId_tipo());  // put data that you want returned to activity A
+                resultIntent.putExtra("id_paciente", id_paciente);
                 startActivityForResult(resultIntent,RESULT_ACTIVITY_HISTORICO);
             }
         });

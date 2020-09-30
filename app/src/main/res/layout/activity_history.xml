@@ -44,4 +44,17 @@
         android:textColor="#E8E8E8"
         android:background="@drawable/button_skinner"
         />
+
+    <ImageView
+        android:id="@+id/img_msj"
+        android:layout_width="71dp"
+        android:layout_height="66dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.873"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_tratamientos"
+        app:layout_constraintVertical_bias="0.902"
+        app:srcCompat="@drawable/icon_mensajeria" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
