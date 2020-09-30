@@ -11,83 +11,100 @@ import androidx.lifecycle.ViewModelProviders;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.skinnerapp.HistoryActivity;
+import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
+import com.example.skinnerapp.Interface.ResultReceiver;
 import com.example.skinnerapp.MessageActivity;
+import com.example.skinnerapp.Model.LesionesResponse;
+import com.example.skinnerapp.Model.MensajesPorPacienteResponse;
 import com.example.skinnerapp.R;
+import com.example.skinnerapp.ui.home.AdaptadorLesion;
 import com.example.skinnerapp.ui.slideshow.UserRegisterViewModel;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
+import static util.Util.getConnection;
 
 
 public class MessageFragment extends Fragment {
     private View root;
     private Button btn_msj;
     private Context contexto;
+    private Integer RESULT_ACTIVITY_MESSAGE = 150;
+    public ResultReceiver resultreceiver;
+    private Integer id_paciente;
+    private ArrayList<MensajesPorPacienteResponse> datos;
+    private ListView lista;
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        resultreceiver = (ResultReceiver)context;
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.fragment_message, container, false);
-        btn_msj = (Button) root.findViewById(R.id.id_test);
+        lista = (ListView) root.findViewById(R.id.lista_mensajes);
         contexto = this.getContext();
-        btn_msj.setOnClickListener(new View.OnClickListener() {
+        //id_paciente = resultreceiver.getResultId();
+        id_paciente = 19;
+        datos = obtenerMensajesPorPaciente(id_paciente);
+
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
                 Intent resultIntent = new Intent(contexto, MessageActivity.class);
-                startActivity(resultIntent);
+                resultIntent.putExtra("id_lesion", datos.get(i).getId_lesion());  // put data that you want returned to activity A
+                resultIntent.putExtra("id_doctor", datos.get(i).getId_destino_usuario());  // put data that you want returned to activity A
+                resultIntent.putExtra("id_paciente", id_paciente);  // put data that you want returned to activity A
+                resultIntent.putExtra("nombre_doctor", datos.get(i).getNombre_destino() + " " +datos.get(i).getApellido_destino());  // put data that you want returned to activity A
+                startActivityForResult(resultIntent,RESULT_ACTIVITY_MESSAGE);
             }
         });
+
         return root;
     }
 
-    /*
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private ArrayList<MensajesPorPacienteResponse> obtenerMensajesPorPaciente(int userid) {
+        Retrofit retrofit = getConnection();
+        JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+        Call<ArrayList<MensajesPorPacienteResponse>> call= service.getMensajesByPacienteId("/mensajes/paciente/"+userid);
+        call.enqueue(new Callback<ArrayList<MensajesPorPacienteResponse>>() {
+            @Override
+            public void onResponse(Call<ArrayList<MensajesPorPacienteResponse>> call, Response<ArrayList<MensajesPorPacienteResponse>> response) {
+                datos = response.body();
+                if(datos != null)
+                    lista.setAdapter(new AdaptadorListaMensajes(getContext(),datos));
+            }
+            @Override
+            public void onFailure(Call<ArrayList<MensajesPorPacienteResponse>> call, Throwable t) {
+                Toast.makeText(contexto, "Error al obtener lesiones, el servicio no se encuentra disponible. "+ t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        return datos;
 
-    public MessageFragment() {
-        // Required empty public constructor
-    }
-*/
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MessageFragment.
-     */
-    /*
-    // TODO: Rename and change types and number of parameters
-    public static MessageFragment newInstance(String param1, String param2) {
-        MessageFragment fragment = new MessageFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //ACTIVITY RESULT TAKE PICTURE
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_ACTIVITY_MESSAGE) {
+            datos = obtenerMensajesPorPaciente(id_paciente);
         }
+
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_message, container, false);
-    }*/
 }

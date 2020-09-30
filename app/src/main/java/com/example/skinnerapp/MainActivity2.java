@@ -69,8 +69,6 @@ public class MainActivity2 extends AppCompatActivity implements ResultReceiver{
         View headerView = navigationView.getHeaderView(0);
         useremail = (TextView) headerView.findViewById(R.id.useremail);
         username = (TextView) headerView.findViewById(R.id.username);
-
-
         useremail.setText(struseremail);
         username.setText(strusername);
         // Passing each menu ID as a set of Ids because each

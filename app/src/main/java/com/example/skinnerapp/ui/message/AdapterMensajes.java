@@ -1,18 +1,17 @@
-package com.example.skinnerapp;
+package com.example.skinnerapp.ui.message;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.skinnerapp.Model.MensajeResponse;
+import com.example.skinnerapp.R;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static util.Util.formatDate;
@@ -47,7 +46,7 @@ public class AdapterMensajes extends RecyclerView.Adapter<HolderMensaje> {
             holder.getMensaje().setVisibility(View.VISIBLE);
            // Glide.with(c).load(listMensaje.get(position).getUrlFoto()).into(holder.getFotoMensaje());
         }else{
-            
+
             holder.getFotoMensaje().setVisibility(View.GONE);
             holder.getMensaje().setVisibility(View.VISIBLE);
         }

@@ -6,24 +6,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
-import com.example.skinnerapp.Model.HistoricoResponse;
 import com.example.skinnerapp.Model.MensajeResponse;
-import com.example.skinnerapp.Model.RegistrarLesionRequest;
 import com.example.skinnerapp.Model.SendMessageRequest;
 import com.example.skinnerapp.Model.SendMessageResponse;
+import com.example.skinnerapp.ui.message.AdapterMensajes;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -46,6 +42,7 @@ public class MessageActivity extends AppCompatActivity {
     private Integer id_paciente;
     private Context contexto;
     private Integer id_doctor;
+    private String nombre_doctor;
 
     private static final int PHOTO_SEND = 1;
     private static final int PHOTO_PERFIL = 2;
@@ -57,15 +54,16 @@ public class MessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message);
         contexto = this;
         //fotoPerfil = (CircleImageView) findViewById(R.id.fotoPerfil);
-    //    nombre = (TextView) findViewById(R.id.nombre);
+        nombre = (TextView) findViewById(R.id.nombre_medico);
 
         rvMensajes = (RecyclerView) findViewById(R.id.rvMensajes);
         txtMensaje = (EditText) findViewById(R.id.txtMensaje);
         btnEnviar = (Button) findViewById(R.id.btnEnviar);
         //todo agregar los ids dinamicos desde grilla de lesiones y el id del paciente logueado.
-        id_lesion = 37;
-        id_paciente = 19;
-        id_doctor = 6;
+        id_lesion = getIntent().getIntExtra("id_lesion",0);
+        id_paciente = getIntent().getIntExtra("id_paciente",0);
+        id_doctor = getIntent().getIntExtra("id_doctor",0);
+        nombre.setText(getIntent().getStringExtra("nombre_doctor"));
         adapter = new AdapterMensajes(this);
 
         LinearLayoutManager l = new LinearLayoutManager(this);
@@ -87,7 +85,7 @@ public class MessageActivity extends AppCompatActivity {
     private void sendMessage(String mensaje) {
         Retrofit retrofit = getConnection();
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
-        SendMessageRequest req = new SendMessageRequest(id_paciente,id_doctor,mensaje,37);
+        SendMessageRequest req = new SendMessageRequest(id_paciente,id_doctor,mensaje,id_lesion);
         Call<SendMessageResponse> call= service.postSendMessage(req);
         call.enqueue(new Callback<SendMessageResponse>() {
             @Override
