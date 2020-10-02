@@ -130,6 +130,8 @@ public class AddLesionActivity extends AppCompatActivity {
                 openGalery();
             }
         });
+
+        btngaleria.setVisibility(View.GONE);
     }
 
     private void addHistory() {

@@ -32,6 +32,8 @@ public class TratamientoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tratamiento);
         lista = (ListView) findViewById(R.id.lista_recomendaciones);
+
+
         contexto = this;
         id_lesion = getIntent().getIntExtra("id_lesion", 0);
         if(id_lesion != 0)

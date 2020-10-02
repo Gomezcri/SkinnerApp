@@ -30,7 +30,8 @@ public class AdapterMensajes extends RecyclerView.Adapter<HolderMensaje> {
        // listMensaje.add(mensajes);
         id_paciente = id;
         listMensaje = mensajes;
-        notifyItemInserted(listMensaje.size());
+        if(listMensaje != null)
+            notifyItemInserted(listMensaje.size());
     }
 
     @Override

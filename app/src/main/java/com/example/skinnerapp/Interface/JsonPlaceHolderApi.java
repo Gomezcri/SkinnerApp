@@ -10,6 +10,7 @@ import com.example.skinnerapp.Model.LoginUsuarioRequest;
 import com.example.skinnerapp.Model.LoginUsuarioResponse;
 import com.example.skinnerapp.Model.MensajeResponse;
 import com.example.skinnerapp.Model.MensajesPorPacienteResponse;
+import com.example.skinnerapp.Model.NotificacionHabilitadaResponse;
 import com.example.skinnerapp.Model.RecuperarContraseñaRequest;
 import com.example.skinnerapp.Model.RecuperarcontraseñaResponse;
 import com.example.skinnerapp.Model.SendMessageRequest;
@@ -106,5 +107,8 @@ public interface JsonPlaceHolderApi {
     @Headers({ "Content-Type: application/json;charset=UTF-8"})
     Call<ArrayList<MensajesPorPacienteResponse>> getMensajesByPacienteId(@Url() String url);
 
+    @GET()
+    @Headers({ "Content-Type: application/json;charset=UTF-8"})
+    Call<NotificacionHabilitadaResponse> getNotificacionHabilitada(@Url() String url);
 
 }

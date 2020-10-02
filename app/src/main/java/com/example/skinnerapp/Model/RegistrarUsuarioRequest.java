@@ -18,6 +18,6 @@ public class RegistrarUsuarioRequest {
         this.direccion = direccion;
         this.telefono = telefono;
         this.id_ciudad=id_city;
-        this.id_rol = 1;
+        this.id_rol = 2;
     }
 }

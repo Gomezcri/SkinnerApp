@@ -15,15 +15,20 @@ import android.widget.Toast;
 
 import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
 import com.example.skinnerapp.Model.HistoricoResponse;
+import com.example.skinnerapp.Model.NotificacionHabilitadaResponse;
 import com.example.skinnerapp.Model.ObtenerUsuarioResponse;
+import com.example.skinnerapp.Model.TratamientoResponse;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static com.example.skinnerapp.ResponseActivity.RESULT_ACTIVITY_GPS;
 import static util.Util.getConnection;
 
 public class HistoryActivity extends AppCompatActivity {
@@ -38,6 +43,8 @@ public class HistoryActivity extends AppCompatActivity {
     private ImageView btn_msj;
     private Integer id_paciente;
     private String nombre_doctor;
+    private Button btn_map;
+
     public final static int RESULT_ACTIVITY_RECOMENDACION = 144;
     public final static int RESULT_ACTIVITY_LESION = 141;
     public final static int RESULT_ACTIVITY_MESSAGE = 150;
@@ -45,19 +52,27 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+
         contexto = this;
         lista = (ListView) findViewById(R.id.lista_historico);
         btn_add_historico = (Button) findViewById(R.id.button_add_historico);
         btn_recomendaciones= (Button) findViewById(R.id.button_tratamientos);
+        btn_map = (Button) findViewById(R.id.button_gps);
+        btn_recomendaciones.setVisibility(View.GONE);
         btn_msj = (ImageView)findViewById(R.id.img_msj);
         id_lesion = getIntent().getIntExtra("id_lesion",0);
+        obtenerRecomendaciones();
         id_doctor = getIntent().getIntExtra("id_doctor",0);
         id_paciente = getIntent().getIntExtra("id_paciente",0);
-        getNombreApellidoDoctor(id_doctor);
+        if(id_doctor != 0)
+        {
+            habilitarMensajeria(id_doctor);
+            getNombreApellidoDoctor(id_doctor);
+        }
+
         id_tipo = getIntent().getIntExtra("id_tipo",0);
         datos = obtenerHistorico(id_lesion);
-        if(id_doctor == 0)
-            btn_msj.setVisibility(View.GONE);
+        btn_msj.setVisibility(View.GONE);
         btn_msj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +99,16 @@ public class HistoryActivity extends AppCompatActivity {
                 openRecomendacionActivity();
             }
         });
+
+        btn_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent resultIntent = new Intent(HistoryActivity.this, FindDoctorActivity.class);
+                resultIntent.putExtra("id_lesion", id_lesion);  // put data that you want returned to activity A
+                resultIntent.putExtra("id_paciente", id_paciente);  // put data that you want returned to activity A
+                startActivityForResult(resultIntent, RESULT_ACTIVITY_GPS);
+            }
+        });
     }
 
     private void getNombreApellidoDoctor(Integer id_doctor) {
@@ -101,6 +126,24 @@ public class HistoryActivity extends AppCompatActivity {
             public void onFailure(Call<ObtenerUsuarioResponse> call, Throwable t) {
                 Toast.makeText(contexto, "Error al obtener datos del doctor, el servicio no se encuentra disponible. "+ t.getMessage(), Toast.LENGTH_SHORT).show();
             }
+        });
+    }
+
+    private void obtenerRecomendaciones() {
+        Retrofit retrofit = getConnection();
+        JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
+
+        Call<ArrayList<TratamientoResponse>> call = service.getRecomendacionesById("/lesion_tratamientos/" + id_lesion);
+        call.enqueue(new Callback<ArrayList<TratamientoResponse>>() {
+            @Override
+            public void onResponse(Call<ArrayList<TratamientoResponse>> call, Response<ArrayList<TratamientoResponse>> response) {
+                if (response.body().size() > 0)
+                    btn_recomendaciones.setVisibility(View.VISIBLE);
+            }
+            @Override
+            public void onFailure(Call<ArrayList<TratamientoResponse>> call, Throwable t) {
+            }
+
         });
     }
 
@@ -129,6 +172,27 @@ public class HistoryActivity extends AppCompatActivity {
             }
         });
         return datos;
+    }
+
+    private void habilitarMensajeria(Integer id_doctor) {
+        Retrofit retrofit = getConnection();
+        JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
+
+        Call<NotificacionHabilitadaResponse> call= service.getNotificacionHabilitada("/notificacion_habilitada/"+id_doctor);
+        call.enqueue(new Callback<NotificacionHabilitadaResponse>() {
+            @Override
+            public void onResponse(Call<NotificacionHabilitadaResponse> call, Response<NotificacionHabilitadaResponse> response) {
+                NotificacionHabilitadaResponse notif = response.body();
+                if(notif != null) {
+                    if (response.body().getRecibir_notificaciones())
+                        btn_msj.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onFailure(Call<NotificacionHabilitadaResponse> call, Throwable t) {
+                Toast.makeText(contexto, "Error al obtener lesiones, el servicio no se encuentra disponible. "+ t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void openAddLesionActivity(){

@@ -10,7 +10,8 @@
     <ListView
         android:id="@+id/lista_historico"
         android:layout_width="match_parent"
-        android:layout_height="407dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -22,10 +23,10 @@
         android:id="@+id/button_add_historico"
         android:layout_width="160dp"
         android:layout_height="48dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="76dp"
+        android:background="@drawable/button_skinner"
         android:text="@string/add_historico"
         android:textColor="#E8E8E8"
-        android:background="@drawable/button_skinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,15 +36,28 @@
         android:id="@+id/button_tratamientos"
         android:layout_width="160dp"
         android:layout_height="48dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button_skinner"
         android:text="@string/ver_tratamientos"
+        android:textColor="#E8E8E8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_add_historico"
-        android:textColor="#E8E8E8"
+        app:layout_constraintTop_toBottomOf="@+id/button_add_historico" />
+
+    <Button
+        android:id="@+id/button_gps"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/button_skinner"
-        />
+        android:text="@string/btn_map"
+        android:textColor="#E8E8E8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_tratamientos" />
 
     <ImageView
         android:id="@+id/img_msj"
@@ -51,10 +65,10 @@
         android:layout_height="66dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.873"
+        app:layout_constraintHorizontal_bias="0.926"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_tratamientos"
-        app:layout_constraintVertical_bias="0.902"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/icon_mensajeria" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
