@@ -7,6 +7,28 @@
     android:background="@drawable/gradient_background"
     tools:context=".AddLesionActivity">
 
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Presione el paciente para analizar su fotografía"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_image" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Presione la cámara para tomar una nueva fotografía"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_from" />
+
     <Button
         android:id="@+id/btngaleria"
         android:layout_width="match_parent"
@@ -33,10 +55,10 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_gravity="center"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="10dp"
         android:paddingBottom="20dp"
         android:tooltipText="Saque su foto tocando la cámara."
-        app:layout_constraintTop_toBottomOf="@+id/text_from"
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
         app:srcCompat="@mipmap/skinner_pictur_x128"
         tools:layout_editor_absoluteX="0dp" />
 
@@ -45,32 +67,23 @@
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_gravity="center"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:paddingTop="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_image"
-        app:layout_constraintVertical_bias="0.068"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
         app:srcCompat="@mipmap/skinner_analyze_x128"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <TextView
-        android:id="@+id/text_call"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_analizar"
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
         android:id="@+id/text_from"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/descripcion"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageview" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

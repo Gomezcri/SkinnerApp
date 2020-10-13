@@ -11,8 +11,9 @@
     <string name="menu_home">Home</string>
     <string name="menu_info">Info</string>
     <string name="menu_registrar">Mis datos</string>
-    <string name="menu_mensajeria">Mensajería</string>
+    <string name="menu_mensajeria">Mensajes</string>
     <string name="title_activity_test">TestActivity</string>
+
     <!-- Strings de alta y modificacion de usuarios-->
     <string name="nombre">Ingrese su nombre</string>
     <string name="apellido">Ingrese su apellido</string>
@@ -20,7 +21,7 @@
     <string name="direccion">Ingrese su dirección</string>
     <string name="registrar">Registrar usuario</string>
 
-    <string name="descripcion">Ingresar descripción</string>
+    <string name="descripcion">Ingrese una descripción</string>
 
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -43,8 +44,8 @@
     <string name="permission_required_toast">Se requiere permiso de ubicación para utilizar esta funcionalidad.</string>-->
     <string name="title_activity_find_doctor">Map</string>
 
-    <string name="gps_network_not_enabled">GPS esta desactivado.</string>
-    <string name="open_location_settings">El sistema GPS esta desactivado, ¿Desea activarlo?</string>
+    <string name="gps_network_not_enabled">GPS se encuentra desactivado.</string>
+    <string name="open_location_settings">El sistema GPS se encuentra desactivado, ¿Desea activarlo?</string>
     <string name="Cancel">Cancelar</string>
     <string name="useractualposition">Posición actual</string>
     <string name="title_activity_loginactivity">loginactivity</string>
@@ -74,9 +75,9 @@
 
 
     <!--    MENSAJES A MOSTRAR LUEGO DE ANALISIS DE IMAGENES -->
-    <string name="mensaje_lunar">Te recomendamos hacer el control de tus lunares con el médico</string>
+    <string name="mensaje_lunar">Le recomendamos hacer el control de sus lunares con el médico</string>
     <string name="mensaje_melanoma">Por favor, consulte a la brevedad con un médico</string>
-    <string name="mensaje_vitiligo">Por favor, consulte a la brevedad con el médico</string>
+    <string name="mensaje_vitiligo">Por favor, consulte a la brevedad con un médico</string>
     <string name="mensaje_psoriasis_leve">Por favor, consulte a la brevedad con un médico.</string>
     <string name="mensaje_psoriasis_grave">Por favor, consulte a un médico dentro de las próximas dos semanas.</string>
     <string name="mensaje_sin_enfermedad">No detectamos ninguna anomalía en su lesión, en caso de creer necesario haga la consulta con un profesional.</string>
@@ -88,7 +89,7 @@
     <string name="registroUsuario_error">No se pudo registrar su usuario, intente nuevamente.</string>
     <string name="registroUsuario_campoincompleto">No se pudo registrar su usuario, completar todos los campos.</string>
 
-    <string name="recomendacion_foto_titulo">Para tomar una foto óptima, recordá:</string>
+    <string name="recomendacion_foto_titulo">Para tomar una foto óptima le recomendamos:</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

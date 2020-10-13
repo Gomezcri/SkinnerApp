@@ -244,7 +244,7 @@ public class AddLesionActivity extends AppCompatActivity {
                     && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 dispatchTakePictureIntent();
             }else {
-                Toast.makeText(this,"Se requiere permisos para utilizar la cámara",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"Se requieren permisos para utilizar la cámara",Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -314,7 +314,7 @@ public class AddLesionActivity extends AppCompatActivity {
                     if (bundle.getString("bodyPart") != null) {
                         bodyPart = bundle.getString("bodyPart");
                         section = bundle.getString("section");
-                        String[] animals = {"1- Limpiá la lente","2- Usá luz natural siempre que sea posible","3- Evitá contraluces","4- Evitá usar el flash"};
+                        String[] animals = {"1- Limpie la lente","2- Use luz natural siempre que sea posible","3- Evite contraluces","4- Evite usar el flash"};
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
                         builder/*.setMessage(R.string.recomendacion_foto_mensaje)*/
