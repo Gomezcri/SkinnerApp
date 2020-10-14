@@ -21,7 +21,8 @@ public class AdaptadorRecomendacion extends BaseAdapter {
     public AdaptadorRecomendacion(Context contexto, ArrayList<TratamientoResponse> datos) {
         this.contexto = contexto;
         this.datos = datos;
-        inflater = (LayoutInflater)contexto.getSystemService(contexto.LAYOUT_INFLATER_SERVICE);
+        if(contexto !=null)
+            inflater = (LayoutInflater)contexto.getSystemService(contexto.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override

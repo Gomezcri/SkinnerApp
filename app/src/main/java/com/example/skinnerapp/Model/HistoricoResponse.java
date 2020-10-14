@@ -8,6 +8,11 @@ public class HistoricoResponse {
     private String imagen;
     private String fecha;
     private Boolean activo;
+    private String comentario;
+
+    public String getComentario() {
+        return comentario;
+    }
 
     public Integer getId_lesion() {
         return id_lesion;

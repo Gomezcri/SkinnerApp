@@ -53,6 +53,7 @@ public class ResponseActivity extends AppCompatActivity {
     private Button btn_update_lesion;
     private Button btn_map;
     public final static int RESULT_ACTIVITY_GPS = 199;
+    private Button btn_ppal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class ResponseActivity extends AppCompatActivity {
         id_paciente = getIntent().getIntExtra("id_paciente", 0);
         id_lesion = getIntent().getIntExtra("id_lesion", 0);
         id_historico = getIntent().getIntExtra("id_historial", 0);
+        btn_ppal = (Button) findViewById(R.id.btn_ppal);
 
         imagenDeResultado = (ImageView) findViewById(R.id.imagenResultado);
         textoResultado = (TextView) findViewById(R.id.textoResultado);
@@ -74,27 +76,30 @@ public class ResponseActivity extends AppCompatActivity {
         btn_update_lesion.setVisibility(View.GONE);
         input_palmas.setVisibility(View.GONE);
         btn_map.setVisibility(View.GONE);
+        btn_ppal.setVisibility(View.GONE);
         if (codigo == 200 && id_lesion !=0) {
             imagenDeResultado.setImageResource(R.drawable.checkverde);
 
             switch (id_tipo) {
                 case 1://melanoma
-                    textoResultado.setText(getString(R.string.mensaje_melanoma));
+                    LunarMelanomaController(getString(R.string.mensaje_melanoma));
                     btn_map.setVisibility(View.VISIBLE);
                     break;
                 case 2://vitiligo
                     textoResultado.setText(getString(R.string.mensaje_vitiligo));
+                    btn_ppal.setVisibility(View.VISIBLE);
                     btn_map.setVisibility(View.VISIBLE);
                     break;
                 case 3://psoriasis
                     PsoriasisControler();
                     break;
                 case 4://lunar
-                    textoResultado.setText(getString(R.string.mensaje_lunar));
+                    LunarMelanomaController(getString(R.string.mensaje_lunar));
                     btn_map.setVisibility(View.VISIBLE);
                     break;
                 case 5://nada
                     textoResultado.setText(getString(R.string.mensaje_sin_enfermedad));
+                    btn_ppal.setVisibility(View.VISIBLE);
                     break;
             }
 
@@ -111,6 +116,7 @@ public class ResponseActivity extends AppCompatActivity {
         else
             if (codigo == 200 && id_lesion ==0)
             {
+                btn_ppal.setVisibility(View.VISIBLE);
                 imagenDeResultado.setImageResource(R.drawable.checkverde);
                 textoResultado.setText(getString(R.string.mensaje_nuevo_historico));
             }
@@ -119,11 +125,19 @@ public class ResponseActivity extends AppCompatActivity {
         imagenDeResultado.setImageResource(R.drawable.signopregunta);
         textoResultado.setText("No hay conexion con el servidor, porfavor intenta en unos instantes");
         }
+
+        btn_ppal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToMainMenu();
+            }
+        });
     }
 
     private void PsoriasisControler() {
         btn_update_lesion.setVisibility(View.VISIBLE);
         input_palmas.setVisibility(View.VISIBLE);
+
         textoResultado.setText("Para determinar gravedad, ingrese la cantidad de palmas de la distrubución de su lesión.");
 
         btn_update_lesion.setOnClickListener(new View.OnClickListener() {
@@ -136,8 +150,42 @@ public class ResponseActivity extends AppCompatActivity {
                         textoResultado.setText(getString(R.string.mensaje_psoriasis_leve));
                     Retrofit retrofit = getConnection();
                     JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
-
+                    btn_ppal.setVisibility(View.VISIBLE);
                     UpdateLesionRequest req = new UpdateLesionRequest("{palmas:"+Integer.parseInt(input_palmas.getText().toString())+"}");
+                    Call<RegistrarLesionResponse> call = service.putLesion("/historial/" + id_historico, req);
+                    call.enqueue(new Callback<RegistrarLesionResponse>() {
+                        @Override
+                        public void onResponse(Call<RegistrarLesionResponse> call, Response<RegistrarLesionResponse> response) {
+                            btn_update_lesion.setVisibility(View.GONE);
+                            btn_map.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onFailure(Call<RegistrarLesionResponse> call, Throwable t) {
+
+                        }
+
+                    });
+                }
+            }
+        });
+    }
+
+    private void LunarMelanomaController(final String mensaje) {
+        btn_update_lesion.setVisibility(View.VISIBLE);
+        input_palmas.setVisibility(View.VISIBLE);
+        input_palmas.setHint("Ingrese tamaño estimado");
+        textoResultado.setText("Por favor, ingresar el tamaño estimado de su lesión en centímetros.");
+
+        btn_update_lesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (input_palmas.getText() != null) {
+                    textoResultado.setText(mensaje);
+                    Retrofit retrofit = getConnection();
+                    JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
+                    btn_ppal.setVisibility(View.VISIBLE);
+                    UpdateLesionRequest req = new UpdateLesionRequest("{diametro:"+Integer.parseInt(input_palmas.getText().toString())+"}");
                     Call<RegistrarLesionResponse> call = service.putLesion("/historial/" + id_historico, req);
                     call.enqueue(new Callback<RegistrarLesionResponse>() {
                         @Override

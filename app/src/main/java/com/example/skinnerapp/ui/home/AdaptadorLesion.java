@@ -29,8 +29,8 @@ public class AdaptadorLesion extends BaseAdapter {
     {
         this.contexto = contexto;
         this.datos = datos;
-
-        inflater = (LayoutInflater)contexto.getSystemService(contexto.LAYOUT_INFLATER_SERVICE);
+        if(contexto !=null)
+            inflater = (LayoutInflater)contexto.getSystemService(contexto.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -50,8 +50,8 @@ public class AdaptadorLesion extends BaseAdapter {
         }
 
         txtdescripcion.setText(datos.get(i).getDescripcion());
-        txtfecha.setText(fechanueva);
-        txtubicacion.setText(datos.get(i).getUbicacion());
+        txtubicacion.setText(fechanueva);
+        txtfecha.setText(datos.get(i).getUbicacion());
 
         byte[] decodedString = Base64.decode(datos.get(i).getImage(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);

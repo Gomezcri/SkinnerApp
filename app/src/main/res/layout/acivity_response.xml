@@ -48,10 +48,10 @@
         android:layout_width="119dp"
         android:layout_height="50dp"
         android:layout_marginTop="36dp"
-        android:text="@string/update_lesion"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="#E8E8E8"
         android:background="@drawable/button_skinner"
+        android:text="@string/update_lesion"
+        android:textColor="#E8E8E8"
+        app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_palmas" />
@@ -75,13 +75,28 @@
         android:layout_width="169dp"
         android:layout_height="46dp"
         android:layout_marginTop="10dp"
+        android:background="@drawable/button_skinner"
         android:text="@string/btn_map"
+        android:textColor="#E8E8E8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_update_lesion"
-        android:textColor="#E8E8E8"
-        android:background="@drawable/button_skinner"
         app:layout_constraintVertical_bias="0.173" />
+
+    <Button
+        android:id="@+id/btn_ppal"
+        android:layout_width="169dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/button_skinner"
+        android:text="@string/btn_ppal"
+        android:textColor="#E8E8E8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_map"
+        app:layout_constraintVertical_bias="0.0" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

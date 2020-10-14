@@ -59,6 +59,7 @@ public class AddLesionActivity extends AppCompatActivity {
     static final int OPEN_GALERY = 10;
     private String currentPhotoPath;
     private ImageView btnAnalizar;
+    private TextView txtMsj2;
     private TextView textView;
     private File f;
     private String bodyPart;
@@ -83,10 +84,11 @@ public class AddLesionActivity extends AppCompatActivity {
 
         takePictureButton = (ImageView) findViewById(R.id.button_image);
         imageView = (ImageView) findViewById(R.id.imageview);
-        textView = (TextView) findViewById(R.id.text_call);
+        //textView = (TextView) findViewById(R.id.text_call);
         text_descripcion = (EditText)findViewById(R.id.text_from);
         btngaleria =(Button)findViewById(R.id.btngaleria);
         btnAnalizar = (ImageView) findViewById(R.id.button_analizar);
+        txtMsj2 = (TextView) findViewById(R.id.textView9);
 
         id_lesion = getIntent().getIntExtra("id_lesion",0);
         id_doctor = getIntent().getIntExtra("id_doctor",0);
@@ -105,6 +107,8 @@ public class AddLesionActivity extends AppCompatActivity {
             }
         });
         btnAnalizar.setVisibility(View.GONE);
+        txtMsj2.setVisibility(View.GONE);
+
 
         final Intent activityBody = new Intent(this, BodyActivity.class);
         takePictureButton.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +130,7 @@ public class AddLesionActivity extends AppCompatActivity {
         btngaleria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText("");
+              //  textView.setText("");
                 openGalery();
             }
         });
@@ -136,12 +140,10 @@ public class AddLesionActivity extends AppCompatActivity {
 
     private void addHistory() {
         Retrofit retrofit = getConnection();
-        //final String[] textoRespuesta = {""};
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
-        //showLoadingDialog(this,"Analizando","Skinner está analizando su imagen, aguarde un momento.");
         Date currentTime = Calendar.getInstance().getTime();
         String descripcion = null;
-
+        showLoadingDialog(this,"Analizando","Skinner está agregando su nueva imagen.");
         if(text_descripcion.getText()!= null)
             descripcion = text_descripcion.getText().toString();
         RegistrarHistoricoRequest req = new RegistrarHistoricoRequest(id_lesion,id_doctor, text_descripcion.getText().toString(),encodedImage,currentTime.toString(),id_tipo);
@@ -158,7 +160,7 @@ public class AddLesionActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<RegistrarHistoricoResponse> call, Throwable t) {
-                textView.setText(t.getMessage());
+              //  textView.setText(t.getMessage());
                 dismissLoadingDialog();
                 Intent resultIntent = new Intent(AddLesionActivity.this,ResponseActivity.class);
                 resultIntent.putExtra("respuestaServidor", t.getMessage());  // put data that you want returned to activity A
@@ -199,7 +201,7 @@ public class AddLesionActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<LesionesResponse> call, Throwable t) {
-                textView.setText(t.getMessage());
+                //textView.setText(t.getMessage());
                 dismissLoadingDialog();
                 Intent resultIntent = new Intent(AddLesionActivity.this,ResponseActivity.class);
                 resultIntent.putExtra("respuestaServidor", t.getMessage());  // put data that you want returned to activity A
@@ -301,6 +303,7 @@ public class AddLesionActivity extends AppCompatActivity {
             this.sendBroadcast(mediaScanIntent);
 
             btnAnalizar.setVisibility(View.VISIBLE);
+            txtMsj2.setVisibility(View.VISIBLE);
             encodedImage = convertImgString();
 
            /* } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {

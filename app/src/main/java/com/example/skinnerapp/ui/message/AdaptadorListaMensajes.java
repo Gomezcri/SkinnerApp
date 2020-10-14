@@ -30,7 +30,8 @@ public class AdaptadorListaMensajes extends BaseAdapter {
     {
         this.contexto = contexto;
         this.datos = datos;
-        inflater = (LayoutInflater)contexto.getSystemService(contexto.LAYOUT_INFLATER_SERVICE);
+        if(contexto !=null)
+            inflater = (LayoutInflater)contexto.getSystemService(contexto.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.skinnerapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -47,15 +48,18 @@ public class AdaptadorHistorico extends BaseAdapter {
             e.printStackTrace();
         }
         txtdescripcion.setText(datos.get(i).getDescripcion());
-        txtfecha.setText(fechanueva);
-        txtubicacion.setText(datos.get(i).getId().toString());
+        txtubicacion.setText(fechanueva);
+        String comentario = datos.get(i).getComentario();
+
+        if(comentario == null)
+            comentario = "Sin comentario";
+
+        txtfecha.setText(comentario);
 
         byte[] decodedString = Base64.decode(datos.get(i).getImagen(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         imagen.setImageBitmap(decodedByte);
-
-        /*imagen.setImageResource(getImage(datos));
-
+        /*
         imagen.setTag(i);
 
         imagen.setOnClickListener(new View.OnClickListener() {
