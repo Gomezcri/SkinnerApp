@@ -8,20 +8,26 @@ public class MyItem implements ClusterItem {
     private String mTitle;
     private String mSnippet;
     private String mId_doctor;
+    private String mId_lugar;
 
     public String getmId_doctor() {
         return mId_doctor;
+    }
+
+    public String getmId_lugar() {
+        return mId_lugar;
     }
 
     public MyItem(double lat, double lng) {
         mPosition = new LatLng(lat, lng);
     }
 
-    public MyItem(double lat, double lng, String title, String snippet,String id_doctor) {
+    public MyItem(double lat, double lng, String title, String snippet,String id_doctor, String id_lugar) {
         mPosition = new LatLng(lat, lng);
         mTitle = title;
         mSnippet = snippet;
         mId_doctor = id_doctor;
+        mId_lugar = id_lugar;
     }
 
     @Override

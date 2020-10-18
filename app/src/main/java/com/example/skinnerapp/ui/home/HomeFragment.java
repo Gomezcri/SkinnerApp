@@ -89,6 +89,7 @@ public class HomeFragment extends Fragment {
                 resultIntent.putExtra("id_doctor", datos.get(i).getId_doctor());  // put data that you want returned to activity A
                 resultIntent.putExtra("id_tipo", datos.get(i).getId_tipo());  // put data that you want returned to activity A
                 resultIntent.putExtra("id_paciente", id_paciente);
+                resultIntent.putExtra("id_lugar", datos.get(i).getId_lugar());
                 startActivityForResult(resultIntent,RESULT_ACTIVITY_HISTORICO);
             }
         });

@@ -9,8 +9,8 @@
 
     <ListView
         android:id="@+id/lista_historico"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="410dp"
+        android:layout_height="303dp"
         android:layout_marginBottom="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,25 +23,23 @@
         android:id="@+id/button_add_historico"
         android:layout_width="160dp"
         android:layout_height="48dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/button_skinner"
         android:text="@string/add_historico"
         android:textColor="#E8E8E8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lista_historico" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_datosmedico" />
 
     <Button
         android:id="@+id/button_tratamientos"
         android:layout_width="160dp"
         android:layout_height="48dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/button_skinner"
         android:text="@string/ver_tratamientos"
         android:textColor="#E8E8E8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_add_historico" />
 
@@ -49,13 +47,11 @@
         android:id="@+id/button_gps"
         android:layout_width="160dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/button_skinner"
         android:text="@string/btn_map"
         android:textColor="#E8E8E8"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_tratamientos" />
 
@@ -70,5 +66,17 @@
         app:layout_constraintTop_toBottomOf="@+id/button_tratamientos"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/icon_mensajeria" />
+
+    <TextView
+        android:id="@+id/tv_datosmedico"
+        android:layout_width="368dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lista_historico" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

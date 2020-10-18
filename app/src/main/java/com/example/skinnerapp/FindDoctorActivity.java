@@ -87,7 +87,7 @@ public class FindDoctorActivity extends FragmentActivity implements OnMapReadyCa
         AlertDialog alert = null;
         Spinner combo_opciones;
         private final static String mLogTag = "GeoJsonDemo";
-        private String[] osdefeatures = {"DIRECTOR","CALLE","ALTURA","TELEFONO"};
+        private String[] osdefeatures = {"DIRECTOR","CALLE","ALTURA","TELEFONO","IDLUGAR"};
         private String[] hospitalesfeatures = {"nombre","domicilio","",""};
         // Declare a variable for the cluster manager.
         private ClusterManager<MyItem> mClusterManager;
@@ -206,6 +206,7 @@ protected void onCreate(Bundle savedInstanceState) {
 
         private void itemClickShowDialog(MyItem item) {
                 final Integer id_doctor = Integer.parseInt(item.getmId_doctor());
+                final Integer id_lugar = Integer.parseInt(item.getmId_lugar());
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("¿Desea solicitar su atención con el doctor " + item.getTitle()+"?")
@@ -213,7 +214,7 @@ protected void onCreate(Bundle savedInstanceState) {
                         .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                 public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
                                         //TO-DO mostrar patalla de comunicacion con el medico
-                                        addAsignacion(id_doctor);
+                                        addAsignacion(id_doctor,id_lugar);
 
                                 }
                         })
@@ -226,11 +227,11 @@ protected void onCreate(Bundle savedInstanceState) {
                 alert.show();
         }
 
-        private void addAsignacion(Integer id_doctor) {
+        private void addAsignacion(Integer id_doctor, Integer id_lugar) {
                 Retrofit retrofit = getConnection();
                 JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
 
-                AsignacionRequest req = new AsignacionRequest(id_lesion,id_doctor,id_paciente);
+                AsignacionRequest req = new AsignacionRequest(id_lesion,id_doctor,id_paciente,id_lugar);
                 Call<AsignacionResponse> call= service.postRegistrarAsignacion(req);
 
                 call.enqueue(new Callback<AsignacionResponse>() {
@@ -478,9 +479,9 @@ private void retrieveFileFromResource(int selection, String[] features) {
                                 String snippet = "Calle: "+feature.getProperty(features[1])+
                                         " Altura: "+feature.getProperty(features[2])+System.getProperty("line.separator")+
                                         "Telefono: "+feature.getProperty(features[3])+"\n";
-
+                                String id_lugar = feature.getProperty(features[4]);
 // Create a cluster item for the marker and set the title and snippet using the constructor.
-                                MyItem infoWindowItem = new MyItem(lat, lng, title, snippet,id_doctor);
+                                MyItem infoWindowItem = new MyItem(lat, lng, title, snippet,id_doctor,id_lugar);
 
 // Add the cluster item (marker) to the cluster manager.
                                 mClusterManager.addItem(infoWindowItem);
@@ -524,22 +525,6 @@ private void retrieveFileFromResource(int selection, String[] features) {
                                                 return info;
                                         }
                                 });
-                              /*  if (feature.hasProperty("NOMBRE")) {
-                                        String
-                                }
-
-                                if (feature.hasProperty("CALLE")) {
-                                        String calle = feature.getProperty("CALLE");
-                                }
-                                if (feature.hasProperty("ALTURA")) {
-                                        String altura = feature.getProperty("ALTURA");
-                                }
-
-                                if (feature.hasProperty("TELEFONO")) {
-                                        String telefono = feature.getProperty("TELEFONO");
-                                }
-
-                               */
                         }
                 } catch (IOException e) {
                         Log.e(mLogTag, "GeoJSON file could not be read");

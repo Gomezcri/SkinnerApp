@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
@@ -18,7 +19,14 @@ import com.example.skinnerapp.Model.HistoricoResponse;
 import com.example.skinnerapp.Model.NotificacionHabilitadaResponse;
 import com.example.skinnerapp.Model.ObtenerUsuarioResponse;
 import com.example.skinnerapp.Model.TratamientoResponse;
+import com.google.maps.android.data.geojson.GeoJsonLayer;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,11 +47,13 @@ public class HistoryActivity extends AppCompatActivity {
     private Integer id_doctor;
     private Integer id_tipo;
     private Context contexto;
+    private TextView tv_datosMedico;
     private Button btn_recomendaciones;
     private ImageView btn_msj;
     private Integer id_paciente;
     private String nombre_doctor;
     private Button btn_map;
+    private Integer id_lugar;
 
     public final static int RESULT_ACTIVITY_RECOMENDACION = 144;
     public final static int RESULT_ACTIVITY_LESION = 141;
@@ -57,6 +67,8 @@ public class HistoryActivity extends AppCompatActivity {
         lista = (ListView) findViewById(R.id.lista_historico);
         btn_add_historico = (Button) findViewById(R.id.button_add_historico);
         btn_recomendaciones= (Button) findViewById(R.id.button_tratamientos);
+        tv_datosMedico = (TextView) findViewById(R.id.tv_datosmedico);
+
         btn_map = (Button) findViewById(R.id.button_gps);
         btn_recomendaciones.setVisibility(View.GONE);
         btn_msj = (ImageView)findViewById(R.id.img_msj);
@@ -64,12 +76,15 @@ public class HistoryActivity extends AppCompatActivity {
         obtenerRecomendaciones();
         id_doctor = getIntent().getIntExtra("id_doctor",0);
         id_paciente = getIntent().getIntExtra("id_paciente",0);
+        id_lugar = getIntent().getIntExtra("id_lugar",0);
+
         if(id_doctor != 0)
         {
             habilitarMensajeria(id_doctor);
             getNombreApellidoDoctor(id_doctor);
         }
-
+        if(id_doctor != 0 && id_lugar != 0)
+            setDoctorInfo();
         id_tipo = getIntent().getIntExtra("id_tipo",0);
         datos = obtenerHistorico(id_lesion);
         btn_msj.setVisibility(View.GONE);
@@ -78,7 +93,6 @@ public class HistoryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Animation animation = AnimationUtils.loadAnimation(HistoryActivity.this.getApplicationContext(), R.anim.alpha);
                 btn_msj.startAnimation(animation);
-
                 Intent resultIntent = new Intent(contexto, MessageActivity.class);
                 resultIntent.putExtra("id_lesion", id_lesion);  // put data that you want returned to activity A
                 resultIntent.putExtra("id_doctor", id_doctor);  // put data that you want returned to activity A
@@ -120,7 +134,6 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ObtenerUsuarioResponse> call, Response<ObtenerUsuarioResponse> response) {
                 nombre_doctor = response.body().getNombre() +" "+ response.body().getApellido();
-
             }
             @Override
             public void onFailure(Call<ObtenerUsuarioResponse> call, Throwable t) {
@@ -143,8 +156,68 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<TratamientoResponse>> call, Throwable t) {
             }
-
         });
+    }
+
+    private void setDoctorInfo(){
+
+        JSONArray jsonArray=null;
+        InputStream is= null;
+        try {
+            is = getResources().getAssets().open("docosde2.json");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int size = 0;
+        try {
+            size = is.available();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        byte[] data = new byte[size];
+        try {
+            is.read(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String json= null;
+        try {
+            json = new String(data,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        try {
+            jsonArray = new JSONArray(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if(jsonArray!=null){
+            for(int i =0; i<jsonArray.length();i++)
+            {
+                try {
+                    Integer jsonId = Integer.parseInt(jsonArray.getJSONObject(i).getString("ID"));
+                    Integer jsonIdlugar = Integer.parseInt(jsonArray.getJSONObject(i).getString("IDLUGAR"));
+                    if(jsonId == id_doctor && jsonIdlugar == id_lugar) // lo encontre
+                    {
+                        tv_datosMedico.append("Médico: "+jsonArray.getJSONObject(i).getString("DIRECTOR"));
+                        tv_datosMedico.append("\n");
+                        tv_datosMedico.append("Calle: "+jsonArray.getJSONObject(i).getString("CALLE")+" "+jsonArray.getJSONObject(i).getString("ALTURA"));
+                        tv_datosMedico.append("\n");
+                        tv_datosMedico.append("Teléfono: "+jsonArray.getJSONObject(i).getString("TELEFONO"));
+                        tv_datosMedico.append("\n");
+                        tv_datosMedico.append("Consulte disponibilidad de turnos.");
+                        tv_datosMedico.append("\n");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     private void openRecomendacionActivity() {

@@ -4,6 +4,7 @@ public class LesionesResponse {
     private Integer id;
     private Integer id_paciente;
     private Integer id_doctor;
+    private Integer id_lugar;
     private String descripcion;
     private Integer id_tipo;
     private String ubicacion;
@@ -11,6 +12,10 @@ public class LesionesResponse {
     private String imagen;
     private Boolean activo;
     private Integer id_historial;
+
+    public Integer getId_lugar() {
+        return id_lugar;
+    }
 
     public Integer getId_historial() {
         return id_historial;
