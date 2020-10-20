@@ -3,6 +3,7 @@ package com.example.skinnerapp.ui.message;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,10 +42,11 @@ public class AdaptadorListaMensajes extends BaseAdapter {
         TextView text_from = (TextView) vista.findViewById(R.id.text_from);
         TextView text_fecha = (TextView) vista.findViewById(R.id.text_fecha);
         TextView text_mensaje = (TextView) vista.findViewById(R.id.text_mensaje);
-
+        TextView text_descripcion=(TextView) vista.findViewById(R.id.text_descripcion);
+        ImageView img_lesion=(ImageView) vista.findViewById(R.id.imagen_lesion);
         String fechanueva= "";
         try {
-            fechanueva = formatDate(datos.get(i).getFecha(),"hh:mm:ss a");
+            fechanueva = formatDate(datos.get(i).getFecha(),"dd/MM/yyyy HH:mm a");
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -52,7 +54,10 @@ public class AdaptadorListaMensajes extends BaseAdapter {
         text_from.setText(datos.get(i).getNombre_destino() +" "+datos.get(i).getApellido_destino());
         text_fecha.setText(fechanueva);
         text_mensaje.setText(datos.get(i).getMensaje());
-
+        text_descripcion.setText(datos.get(i).getDescripcion());
+        byte[] decodedString = Base64.decode(datos.get(i).getImagen(), Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        img_lesion.setImageBitmap(decodedByte);
         return vista;
     }
 

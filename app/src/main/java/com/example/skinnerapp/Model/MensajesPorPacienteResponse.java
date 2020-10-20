@@ -8,8 +8,10 @@ public class MensajesPorPacienteResponse {
     private String nombre_destino;
     private String apellido_destino;
     private String mensaje;
+    private String descripcion;
+    private String imagen;
 
-   public MensajesPorPacienteResponse(Integer id_origen_usuario, Integer id_lesion, Integer id_destino_usuario,String fecha, String nombre_destino, String apellido_destino, String mensaje){
+   public MensajesPorPacienteResponse(Integer id_origen_usuario, Integer id_lesion, Integer id_destino_usuario,String fecha, String nombre_destino, String apellido_destino, String mensaje,String lesion, String imagen){
        this.id_origen_usuario = id_origen_usuario;
        this.id_destino_usuario = id_destino_usuario;
        this.id_lesion = id_lesion;
@@ -17,6 +19,8 @@ public class MensajesPorPacienteResponse {
        this.nombre_destino = nombre_destino;
        this.apellido_destino = apellido_destino;
        this.mensaje = mensaje;
+       this.descripcion=descripcion;
+       this.imagen=imagen;
    }
 
     public Integer getId_destino_usuario() {
@@ -42,7 +46,11 @@ public class MensajesPorPacienteResponse {
     public String getApellido_destino() {
         return apellido_destino;
     }
+    public String getImagen() {
+    return imagen;
+    }
 
+    public String getDescripcion(){return descripcion;}
     public String getMensaje() {
         return mensaje;
     }
