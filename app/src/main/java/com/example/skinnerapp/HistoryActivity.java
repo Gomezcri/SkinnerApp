@@ -54,6 +54,7 @@ public class HistoryActivity extends AppCompatActivity {
     private String nombre_doctor;
     private Button btn_map;
     private Integer id_lugar;
+    private TextView enviemsj;
 
     public final static int RESULT_ACTIVITY_RECOMENDACION = 144;
     public final static int RESULT_ACTIVITY_LESION = 141;
@@ -68,6 +69,7 @@ public class HistoryActivity extends AppCompatActivity {
         btn_add_historico = (Button) findViewById(R.id.button_add_historico);
         btn_recomendaciones= (Button) findViewById(R.id.button_tratamientos);
         tv_datosMedico = (TextView) findViewById(R.id.tv_datosmedico);
+        enviemsj = (TextView)findViewById(R.id.tv_envieMensaje);
 
         btn_map = (Button) findViewById(R.id.button_gps);
         btn_recomendaciones.setVisibility(View.GONE);
@@ -84,10 +86,14 @@ public class HistoryActivity extends AppCompatActivity {
             getNombreApellidoDoctor(id_doctor);
         }
         if(id_doctor != 0 && id_lugar != 0)
-            setDoctorInfo();
+        {
+            setDoctorInfo("docosde2.json");
+            setDoctorInfo("hospitales.json");
+        }
         id_tipo = getIntent().getIntExtra("id_tipo",0);
         datos = obtenerHistorico(id_lesion);
         btn_msj.setVisibility(View.GONE);
+        enviemsj.setVisibility(View.GONE);
         btn_msj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,12 +165,12 @@ public class HistoryActivity extends AppCompatActivity {
         });
     }
 
-    private void setDoctorInfo(){
+    private void setDoctorInfo(String archivo){
 
         JSONArray jsonArray=null;
         InputStream is= null;
         try {
-            is = getResources().getAssets().open("docosde2.json");
+            is = getResources().getAssets().open(archivo);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -213,6 +219,7 @@ public class HistoryActivity extends AppCompatActivity {
                         tv_datosMedico.append("Consulte disponibilidad de turnos.");
                         tv_datosMedico.append("\n");
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -258,7 +265,9 @@ public class HistoryActivity extends AppCompatActivity {
                 NotificacionHabilitadaResponse notif = response.body();
                 if(notif != null) {
                     if (response.body().getRecibir_notificaciones())
-                        btn_msj.setVisibility(View.VISIBLE);
+                    {   btn_msj.setVisibility(View.VISIBLE);
+                        enviemsj.setVisibility(View.VISIBLE);
+                    }
                 }
             }
             @Override

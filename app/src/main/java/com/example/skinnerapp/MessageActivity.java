@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
 import com.example.skinnerapp.Model.MensajeResponse;
+import com.example.skinnerapp.Model.NotificacionHabilitadaResponse;
 import com.example.skinnerapp.Model.SendMessageRequest;
 import com.example.skinnerapp.Model.SendMessageResponse;
 import com.example.skinnerapp.ui.message.AdapterMensajes;
@@ -69,6 +70,8 @@ public class MessageActivity extends AppCompatActivity {
         LinearLayoutManager l = new LinearLayoutManager(this);
         rvMensajes.setLayoutManager(l);
         rvMensajes.setAdapter(adapter);
+
+        habilitarMensajeria(id_doctor);
 
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,5 +129,33 @@ public class MessageActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+    }
+
+    private void habilitarMensajeria(Integer id_doctor) {
+        Retrofit retrofit = getConnection();
+        JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
+
+        Call<NotificacionHabilitadaResponse> call= service.getNotificacionHabilitada("/notificacion_habilitada/"+id_doctor);
+        call.enqueue(new Callback<NotificacionHabilitadaResponse>() {
+            @Override
+            public void onResponse(Call<NotificacionHabilitadaResponse> call, Response<NotificacionHabilitadaResponse> response) {
+                NotificacionHabilitadaResponse notif = response.body();
+                if(notif != null) {
+                    if (response.body().getRecibir_notificaciones())
+                    {
+                        txtMensaje.setVisibility(View.VISIBLE);
+                        btnEnviar.setVisibility(View.VISIBLE);
+                    }else
+                    {
+                        txtMensaje.setVisibility(View.GONE);
+                        btnEnviar.setVisibility(View.GONE);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<NotificacionHabilitadaResponse> call, Throwable t) {
+                Toast.makeText(contexto, "Error al obtener lesiones, el servicio no se encuentra disponible. "+ t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

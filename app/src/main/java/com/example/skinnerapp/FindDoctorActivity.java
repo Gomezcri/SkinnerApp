@@ -88,7 +88,7 @@ public class FindDoctorActivity extends FragmentActivity implements OnMapReadyCa
         Spinner combo_opciones;
         private final static String mLogTag = "GeoJsonDemo";
         private String[] osdefeatures = {"DIRECTOR","CALLE","ALTURA","TELEFONO","IDLUGAR"};
-        private String[] hospitalesfeatures = {"nombre","domicilio","",""};
+        private String[] hospitalesfeatures = {"DIRECTOR","CALLE","ALTURA","TELEFONO","IDLUGAR"};
         // Declare a variable for the cluster manager.
         private ClusterManager<MyItem> mClusterManager;
         private Integer id_lesion;
