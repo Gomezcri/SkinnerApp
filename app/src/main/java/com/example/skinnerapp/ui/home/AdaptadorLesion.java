@@ -44,7 +44,7 @@ public class AdaptadorLesion extends BaseAdapter {
         ImageView imagen = (ImageView) vista.findViewById(R.id.image_lesion);
         String fechanueva= "";
         try {
-            fechanueva = formatDate(datos.get(i).getFecha_creacion(),"dd/MM/yyyy HH:mm a");
+            fechanueva = formatDate(datos.get(i).getFecha_creacion(),"dd/MM/yyyy HH:mm");
         } catch (ParseException e) {
             e.printStackTrace();
         }

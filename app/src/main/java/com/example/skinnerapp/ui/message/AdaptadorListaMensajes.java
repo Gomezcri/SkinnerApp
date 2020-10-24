@@ -46,7 +46,7 @@ public class AdaptadorListaMensajes extends BaseAdapter {
         ImageView img_lesion=(ImageView) vista.findViewById(R.id.imagen_lesion);
         String fechanueva= "";
         try {
-            fechanueva = formatDate(datos.get(i).getFecha(),"dd/MM/yyyy HH:mm a");
+            fechanueva = formatDate(datos.get(i).getFecha(),"dd/MM/yyyy HH:mm");
         } catch (ParseException e) {
             e.printStackTrace();
         }

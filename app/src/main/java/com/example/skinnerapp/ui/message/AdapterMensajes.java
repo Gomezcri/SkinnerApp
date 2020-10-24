@@ -70,7 +70,7 @@ public class AdapterMensajes extends RecyclerView.Adapter<HolderMensaje> {
 */
         String fechanueva = "";
         try {
-            fechanueva = formatDate(listMensaje.get(position).getHora(),"hh:mm:ss a");
+            fechanueva = formatDate(listMensaje.get(position).getHora(),"dd/MM/yyyy HH:mm");
         } catch (ParseException e) {
             e.printStackTrace();
         }
