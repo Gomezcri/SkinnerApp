@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         olvidoContrasenia = (TextView) findViewById(R.id.textView_olvidoContrasenia);
 
         //Sppanable para hacer click y abrir otra activity
-        setClickableString("Click AQUÍ", "¿Olvidaste tu contraseña? Click AQUÍ", olvidoContrasenia);
+        setClickableString("Click AQUÍ", "¿Olvidó su contraseña? Click AQUÍ", olvidoContrasenia);
 
         SharedPreferences sharedPref = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
         //PARA OBTENER EL TOKEN
@@ -138,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 @Override
                 public void onFailure(Call<LoginUsuarioResponse> call, Throwable t) {
-                    Toast.makeText(LoginActivity.this, "No se pudo conectar con el servidor, intenta mas tarde.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "No se pudo conectar con el servidor, intente más tarde.", Toast.LENGTH_SHORT).show();
                 }
             });
         }

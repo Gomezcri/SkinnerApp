@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Util {
     private static ProgressDialog progress;
-    private static String dirIP= "http://192.168.1.22:8080/";
+    private static String dirIP= "http://192.168.0.18:8080/";
     public static Retrofit getConnection(){
 
     OkHttpClient okHttpClient = new OkHttpClient.Builder()
