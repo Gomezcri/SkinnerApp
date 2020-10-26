@@ -49,19 +49,35 @@
 
     <TextView
         android:id="@+id/text_from"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:fontFamily="sans-serif-black"
+        android:layout_width="172dp"
+        android:layout_height="23dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:fontFamily="serif"
         android:text="TextView"
-        android:textSize="18sp"
+        android:textSize="16sp"
+        android:textStyle="italic"
+
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="0.25" />
+
+    <TextView
+        android:id="@+id/tvMedico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        android:text="Médico:"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toStartOf="@+id/text_from"
+        app:layout_constraintHorizontal_bias="0.421"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
-        app:layout_constraintVertical_bias="0.533" />
+        app:layout_constraintVertical_bias="0.222" />
 
     <TextView
         android:id="@+id/text_descripcion"
@@ -70,8 +86,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="4dp"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="sans-serif-condensed"
         android:text="TextView"
+        android:textStyle="bold"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
         app:layout_constraintHorizontal_bias="0.0"
@@ -90,8 +107,8 @@
 
     <TextView
         android:id="@+id/text_mensaje"
-        android:layout_width="186dp"
-        android:layout_height="35dp"
+        android:layout_width="234dp"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="4dp"
@@ -125,4 +142,5 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="132dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

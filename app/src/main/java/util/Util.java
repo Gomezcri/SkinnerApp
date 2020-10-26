@@ -16,14 +16,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Util {
     private static ProgressDialog progress;
-    private static String dirIP= "http://192.168.0.18:8080/";
+    private static String dirIP= "http://192.168.0.83:8080/";
     public static Retrofit getConnection(){
 
-    OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .connectTimeout(5, TimeUnit.MINUTES)
-            .readTimeout(5, TimeUnit.MINUTES)
-            .writeTimeout(5, TimeUnit.MINUTES)
-            .build();
+    //OkHttpClient okHttpClient = new OkHttpClient.Builder()
+      //      .connectTimeout(5, TimeUnit.MINUTES)
+        //    .readTimeout(5, TimeUnit.MINUTES)
+          //  .writeTimeout(5, TimeUnit.MINUTES)
+            //.build();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .build();
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(dirIP)
             .client(okHttpClient)

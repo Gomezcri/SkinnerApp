@@ -3,8 +3,10 @@ package com.example.skinnerapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
 import com.example.skinnerapp.Model.TratamientoResponse;
@@ -26,14 +28,15 @@ public class TratamientoActivity extends AppCompatActivity {
     private ArrayList<TratamientoResponse> datos;
     private ListView lista;
     private Context contexto;
+    private TextView tv_titulo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tratamiento);
         lista = (ListView) findViewById(R.id.lista_recomendaciones);
-
-
+        tv_titulo = (TextView) findViewById(R.id.textView);
+        tv_titulo.setPaintFlags(tv_titulo.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         contexto = this;
         id_lesion = getIntent().getIntExtra("id_lesion", 0);
         if(id_lesion != 0)

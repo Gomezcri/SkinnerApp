@@ -1,6 +1,7 @@
 package com.example.skinnerapp;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +34,8 @@ public class AdaptadorRecomendacion extends BaseAdapter {
         if(datos != null)
         {
             txtdescripcion.setText(datos.get(i).getDescripcion());
-
             txttitulo.setText(datos.get(i).getTitulo());
+            txttitulo.setPaintFlags(txttitulo.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         }
 
 
