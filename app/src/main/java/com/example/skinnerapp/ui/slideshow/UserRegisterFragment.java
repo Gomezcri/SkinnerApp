@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,7 +25,15 @@ import com.example.skinnerapp.Model.RegistrarUsuarioRequest;
 import com.example.skinnerapp.Model.RegistrarUsuarioResponse;
 import com.example.skinnerapp.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +58,10 @@ public class UserRegisterFragment extends Fragment {
     private Integer userid = null;
     private ObtenerUsuarioResponse userData;
     public ResultReceiver resultreceiver;
-
+    private JSONObject issueObj = null;
+    private Integer id_ciudad = 0;
+    private JSONArray jsonArray = null;
+    private Spinner sp_localidades;
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
@@ -68,6 +82,31 @@ public class UserRegisterFragment extends Fragment {
         text_usuario= (EditText) root.findViewById(R.id.tx_email);
 
         userid = resultreceiver.getResultId();
+
+        sp_localidades = (Spinner) root.findViewById(R.id.spinner_localidades2);
+        final ArrayList<String> items = getLocalidades("localidades.json");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(contexto,R.layout.spinner_layout,R.id.txt,items);
+        sp_localidades.setAdapter(adapter);
+
+        sp_localidades.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+
+                try {
+                    id_ciudad = Integer.valueOf(jsonArray.getJSONObject(position).getString("id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
+        });
 
         if(userid != null)
         {
@@ -93,7 +132,7 @@ public class UserRegisterFragment extends Fragment {
                 Retrofit retrofit = getConnection();
                 JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
 
-                ActualizarUsuarioRequest req = new ActualizarUsuarioRequest(text_nombre.getText().toString(),text_apellido.getText().toString(),text_direccion.getText().toString(),text_telefono.getText().toString());
+                ActualizarUsuarioRequest req = new ActualizarUsuarioRequest(text_nombre.getText().toString(),text_apellido.getText().toString(),text_direccion.getText().toString(),text_telefono.getText().toString(),id_ciudad);
                 Call<ActualizarUsuarioResponse> call= service.putUserById("/usuarios/"+userid,req);
                 call.enqueue(new Callback<ActualizarUsuarioResponse>() {
                     @Override
@@ -119,7 +158,9 @@ public class UserRegisterFragment extends Fragment {
     }
     //valida si se modifico o no algun dato del usuario
     private boolean modificacionValidada() {
-        if(userData.getNombre().equals(text_nombre.getText().toString())  &&
+        if(
+                userData.getId_ciudad().equals(id_ciudad)  &&
+                userData.getNombre().equals(text_nombre.getText().toString())  &&
             userData.getApellido().equals(text_apellido.getText().toString()) &&
             userData.getDireccion().equals(text_direccion.getText().toString()) &&
             userData.getTelefono().equals(text_telefono.getText().toString())
@@ -141,6 +182,32 @@ public class UserRegisterFragment extends Fragment {
             public void onResponse(Call<ObtenerUsuarioResponse> call, Response<ObtenerUsuarioResponse> response) {
                 userData = response.body();
                 autoCompletarDatosUsuario();
+                Integer useridciudad = userData.getId_ciudad();
+
+                for (int i = 0, size = jsonArray.length(); i < size; i++)
+                {
+                    JSONObject objectInArray = null;
+                    try {
+                        objectInArray = jsonArray.getJSONObject(i);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    Integer value = null;
+                    try {
+                        value = Integer.valueOf(jsonArray.getJSONObject(i).getString("id"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if(value != null)
+                    {
+                        if(value.equals(useridciudad))
+                            break;//id_ciudad = i;
+                    }
+                    id_ciudad ++;
+                }
+
+                sp_localidades.setSelection(id_ciudad);
             }
 
             @Override
@@ -157,6 +224,8 @@ public class UserRegisterFragment extends Fragment {
         text_direccion.setText(userData.getDireccion());
         text_telefono.setText(userData.getTelefono());
         text_usuario.setText(userData.getEmail());
+
+
         dismissLoadingDialog();
     }
 
@@ -171,5 +240,61 @@ public class UserRegisterFragment extends Fragment {
         }else
             return true;
 
+    }
+
+    public ArrayList<String> getLocalidades(String archivo){
+
+        String cadena=null;
+        String localidad=null;
+        String id_ciudad=null;
+        ArrayList<String> localidadesList = new ArrayList<String>();
+
+        InputStream is= null;
+        try {
+            is = getResources().getAssets().open(archivo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int size = 0;
+        try {
+            size = is.available();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        byte[] data = new byte[size];
+        try {
+            is.read(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String json= null;
+        try {
+            json = new String(data,"UTF-8");
+            issueObj = new JSONObject(new String(data,"UTF-16"));
+        } catch (UnsupportedEncodingException | JSONException e) {
+            e.printStackTrace();
+        }
+        try {
+            jsonArray = new JSONArray(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if(jsonArray!=null){
+            for(int i =0; i<jsonArray.length();i++)
+            {
+                try {
+                    localidadesList.add(localidad=jsonArray.getJSONObject(i).getString("name"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return localidadesList;
     }
 }

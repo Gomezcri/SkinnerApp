@@ -43,8 +43,6 @@ public class Registrar_usuario extends AppCompatActivity {
     private EditText direccion;
     private EditText telefono;
     private Integer id_ciudad=0;
-    private String cadena;
-    private String[] aux;
     private Button registro;
     private String emailtexto;
     private String passtexto;
@@ -52,6 +50,7 @@ public class Registrar_usuario extends AppCompatActivity {
     private String apellidotexto;
     private String direcciontexto;
     private String telefonotexto;
+    private JSONArray jsonArray=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +81,17 @@ public class Registrar_usuario extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 
-                cadena = items.get(position);
+                /*cadena = items.get(position);
                 aux=cadena.split("-");
                 id_ciudad= Integer.valueOf(aux[1]);
+                */
+                try {
+                    id_ciudad = Integer.valueOf(jsonArray.getJSONObject(position).getString("id"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
             }
 
             @Override
@@ -138,7 +145,7 @@ public class Registrar_usuario extends AppCompatActivity {
     }
 
     public ArrayList<String> getLocalidades(String archivo){
-        JSONArray jsonArray=null;
+
         String cadena=null;
         String localidad=null;
         String id_ciudad=null;
@@ -181,10 +188,8 @@ public class Registrar_usuario extends AppCompatActivity {
         if(jsonArray!=null){
             for(int i =0; i<jsonArray.length();i++)
             {
-                try {localidad=jsonArray.getJSONObject(i).getString("name");
-                    id_ciudad=jsonArray.getJSONObject(i).getString("id");
-                    cadena = localidad+"-"+id_ciudad;
-                    localidadesList.add(cadena);
+                try {
+                    localidadesList.add(localidad=jsonArray.getJSONObject(i).getString("name"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

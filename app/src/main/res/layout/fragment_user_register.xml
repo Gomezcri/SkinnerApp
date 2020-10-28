@@ -7,6 +7,7 @@
     android:background="@drawable/gradient_background"
     tools:context=".ui.slideshow.UserRegisterFragment">
 
+
     <EditText
         android:id="@+id/text_nombre"
         android:layout_width="wrap_content"
@@ -25,13 +26,14 @@
         android:id="@+id/boton_registrar"
         android:layout_width="188dp"
         android:layout_height="44dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/button_skinner"
         android:text="@string/registrar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_direccion"
         android:textColor="#E8E8E8"
-        android:background="@drawable/button_skinner"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_localidades2" />
 
     <EditText
         android:id="@+id/text_direccion"
@@ -85,5 +87,16 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_nombre" />
+
+    <Spinner
+        android:id="@+id/spinner_localidades2"
+        android:layout_width="235dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#110C0B"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_direccion" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
