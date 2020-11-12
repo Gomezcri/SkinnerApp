@@ -281,6 +281,7 @@ public class HistoryActivity extends AppCompatActivity {
         Intent resultIntent = new Intent(this, AddLesionActivity.class);
         resultIntent.putExtra("id_lesion", id_lesion);  // put data that you want returned to activity A
         resultIntent.putExtra("id_doctor", id_doctor);  // put data that you want returned to activity A
+        resultIntent.putExtra("id_paciente", id_paciente);
         startActivityForResult(resultIntent,RESULT_ACTIVITY_LESION);
     }
 

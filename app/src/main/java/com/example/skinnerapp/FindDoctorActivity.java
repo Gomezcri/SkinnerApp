@@ -231,7 +231,7 @@ protected void onCreate(Bundle savedInstanceState) {
                 Retrofit retrofit = getConnection();
                 JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
 
-                AsignacionRequest req = new AsignacionRequest(id_lesion,id_doctor,id_paciente,id_lugar);
+                AsignacionRequest req = new AsignacionRequest(id_lesion,id_doctor,id_paciente,id_lugar,"asignacion");
                 Call<AsignacionResponse> call= service.postRegistrarAsignacion(req);
 
                 call.enqueue(new Callback<AsignacionResponse>() {

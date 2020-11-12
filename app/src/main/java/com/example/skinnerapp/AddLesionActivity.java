@@ -24,6 +24,8 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import com.example.skinnerapp.Interface.JsonPlaceHolderApi;
+import com.example.skinnerapp.Model.AsignacionRequest;
+import com.example.skinnerapp.Model.AsignacionResponse;
 import com.example.skinnerapp.Model.LesionesResponse;
 import com.example.skinnerapp.Model.RegistrarLesionRequest;
 import com.example.skinnerapp.Model.RegistrarHistoricoRequest;
@@ -70,6 +72,7 @@ public class AddLesionActivity extends AppCompatActivity {
     private Integer id_doctor;
     private EditText text_descripcion;
     private Integer id_tipo;
+    private Integer id_paciente;
 
     public final static int REQUEST_ACTIVITY_BODY = 100;
     public final static int RESULT_ACTIVITY_BODY = 101;
@@ -94,7 +97,7 @@ public class AddLesionActivity extends AppCompatActivity {
         id_doctor = getIntent().getIntExtra("id_doctor",0);
         id_tipo = getIntent().getIntExtra("id_tipo",0);
         id_user = getIntent().getIntExtra("id_user",0);
-
+        id_paciente = getIntent().getIntExtra("id_paciente",0);
         btnAnalizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,6 +160,8 @@ public class AddLesionActivity extends AppCompatActivity {
                 resultIntent.putExtra("respuestaServidor", response.body().getId().toString());  // put data that you want returned to activity A
                 resultIntent.putExtra("estado", response.code());  // put data that you want returned to activity A
                 startActivityForResult(resultIntent,RESULT_ACTIVITY_RESPONSE);
+                if(id_doctor != 0)
+                    addAsignacion();
             }
             @Override
             public void onFailure(Call<RegistrarHistoricoResponse> call, Throwable t) {
@@ -170,6 +175,30 @@ public class AddLesionActivity extends AppCompatActivity {
 
         });
     }
+
+
+        private void addAsignacion() {
+            Retrofit retrofit = getConnection();
+            JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
+
+            AsignacionRequest req = new AsignacionRequest(id_lesion,id_doctor,id_paciente,null,"notificacion");
+            Call<AsignacionResponse> call= service.postRegistrarAsignacion(req);
+
+            call.enqueue(new Callback<AsignacionResponse>() {
+                @Override
+                public void onResponse(Call<AsignacionResponse> call, Response<AsignacionResponse> response) {
+                   // Toast.makeText(FindDoctorActivity.this, "Su solicitud ha sido enviada, volviendo al menu principal.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent();
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+                @Override
+                public void onFailure(Call<AsignacionResponse> call, Throwable t) {
+                }
+
+            });
+        }
+
 
     private void openGalery() {
         Intent pickPhoto = new Intent(Intent.ACTION_PICK,
