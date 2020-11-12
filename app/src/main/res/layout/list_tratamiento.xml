@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="30dp" />
+        app:layout_constraintGuide_begin="3dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline7"
@@ -47,6 +47,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="132dp" />
 
+
     <TextView
         android:id="@+id/text_from"
         android:layout_width="wrap_content"
@@ -55,28 +56,30 @@
         android:layout_marginLeft="8dp"
         android:fontFamily="serif"
         android:text="TextView"
-        android:textStyle="italic"
         android:textSize="18sp"
+        android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.244"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
-        app:layout_constraintVertical_bias="0.47" />
-
+        app:layout_constraintVertical_bias="0.733" />
 
     <TextView
         android:id="@+id/text_mensaje"
-        android:layout_width="285dp"
-        android:layout_height="69dp"
+        android:layout_width="257dp"
+        android:layout_height="76dp"
         android:fontFamily="sans-serif-medium"
+        android:gravity="center"
         android:text="TextView"
         android:textSize="14sp"
         app:autoSizeTextType="none"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
-        app:layout_constraintHorizontal_bias="0.064"
+        app:layout_constraintHorizontal_bias="0.381"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
@@ -84,4 +87,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="132dp" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="67dp"
+        android:layout_height="57dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/text_mensaje"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
+        app:layout_constraintVertical_bias="0.368"
+        app:srcCompat="@drawable/escudosalud" />
 </androidx.constraintlayout.widget.ConstraintLayout>

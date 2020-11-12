@@ -1,6 +1,7 @@
 package com.example.skinnerapp.ui.slideshow;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -62,6 +64,7 @@ public class UserRegisterFragment extends Fragment {
     private Integer id_ciudad = 0;
     private JSONArray jsonArray = null;
     private Spinner sp_localidades;
+    private TextView tv_titulo;
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
@@ -73,6 +76,8 @@ public class UserRegisterFragment extends Fragment {
         slideshowViewModel =
                 ViewModelProviders.of(this).get(UserRegisterViewModel.class);
         root = inflater.inflate(R.layout.fragment_user_register, container, false);
+        tv_titulo = (TextView) root.findViewById(R.id.tv_infoPersonal);
+        tv_titulo.setPaintFlags(tv_titulo.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         contexto = this.getContext();
         btnregistrar = (Button)root.findViewById(R.id.boton_registrar);
         text_nombre = (EditText) root.findViewById(R.id.text_nombre);

@@ -90,6 +90,10 @@ public class HistoryActivity extends AppCompatActivity {
             setDoctorInfo("docosde2.json");
             setDoctorInfo("hospitales.json");
         }
+        else
+        {
+            tv_datosMedico.append("No posee un médico asignado hasta este momento.");
+        }
         id_tipo = getIntent().getIntExtra("id_tipo",0);
         datos = obtenerHistorico(id_lesion);
         btn_msj.setVisibility(View.GONE);

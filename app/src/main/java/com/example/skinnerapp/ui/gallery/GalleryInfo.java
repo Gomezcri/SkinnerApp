@@ -1,5 +1,6 @@
 package com.example.skinnerapp.ui.gallery;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -14,8 +15,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.skinnerapp.R;
 
+import org.w3c.dom.Text;
+
+
 public class GalleryInfo extends Fragment {
 
+    private TextView tv_tituloFragment;
     private GalleryInfoModel galleryViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -23,7 +28,8 @@ public class GalleryInfo extends Fragment {
         galleryViewModel =
                 ViewModelProviders.of(this).get(GalleryInfoModel.class);
         View root = inflater.inflate(R.layout.fragment_info, container, false);
-
+        tv_tituloFragment = (TextView) root.findViewById(R.id.textView4);
+        tv_tituloFragment.setPaintFlags(tv_tituloFragment.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         setupHyperlink(root);
 
         return root;
