@@ -49,10 +49,10 @@ public class AdaptadorHistorico extends BaseAdapter {
         }
         txtdescripcion.setText(datos.get(i).getDescripcion());
         txtubicacion.setText(fechanueva);
-        String comentario = datos.get(i).getComentario();
+        String comentario = "";//datos.get(i).getComentario();
 
-        if(comentario == null)
-            comentario = "Sin comentario";
+      //  if(comentario == null)
+         //   comentario = "";
 
         txtfecha.setText(comentario);
 

@@ -2,6 +2,7 @@ package com.example.skinnerapp;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -73,6 +74,7 @@ public class AddLesionActivity extends AppCompatActivity {
     private EditText text_descripcion;
     private Integer id_tipo;
     private Integer id_paciente;
+    private Context contexto;
 
     public final static int REQUEST_ACTIVITY_BODY = 100;
     public final static int RESULT_ACTIVITY_BODY = 101;
@@ -84,7 +86,7 @@ public class AddLesionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_lesion);
-
+        contexto = this;
         takePictureButton = (ImageView) findViewById(R.id.button_image);
         imageView = (ImageView) findViewById(R.id.imageview);
         //textView = (TextView) findViewById(R.id.text_call);
@@ -146,7 +148,7 @@ public class AddLesionActivity extends AppCompatActivity {
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
         Date currentTime = Calendar.getInstance().getTime();
         String descripcion = null;
-        showLoadingDialog(this,"Analizando","Skinner está agregando su nueva imagen.");
+        showLoadingDialog(contexto,"Analizando","Skinner está agregando su nueva imagen.");
         if(text_descripcion.getText()!= null)
             descripcion = text_descripcion.getText().toString();
         RegistrarHistoricoRequest req = new RegistrarHistoricoRequest(id_lesion,id_doctor, text_descripcion.getText().toString(),encodedImage,currentTime.toString(),id_tipo);
@@ -210,7 +212,7 @@ public class AddLesionActivity extends AppCompatActivity {
         Retrofit retrofit = getConnection();
         String descripcion = null;
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
-        showLoadingDialog(this,"Analizando","Skinner está analizando su imagen, aguarde un momento.");
+        showLoadingDialog(contexto,"Analizando","Skinner está analizando su imagen, aguarde un momento.");
         if(text_descripcion.getText()!= null)
             descripcion = text_descripcion.getText().toString();
         RegistrarLesionRequest req = new RegistrarLesionRequest(encodedImage,bodyPart,section,id_user,descripcion,Calendar.getInstance().getTime().toString());
