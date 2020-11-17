@@ -12,31 +12,61 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="124dp"
         android:fontFamily="sans-serif-black"
         android:gravity="center_horizontal"
         android:text="Vista Trasera"
         android:textAlignment="center"
         android:textSize="18sp"
+        android:textStyle="italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="146dp"
+        android:layout_height="313dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="52dp"
+        android:src="@mipmap/skinner_body_back2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.041"></ImageView>
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginRight="60dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
         android:fontFamily="sans-serif-black"
         android:gravity="center_horizontal"
         android:text="Vista Frontal"
         android:textAlignment="center"
         android:textSize="18sp"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/back_mask"
+        android:layout_width="169dp"
+        android:layout_height="308dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:src="@mipmap/skinner_body_back_mask2"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.225"></ImageView>
 
     <ImageView
         android:id="@+id/front"
@@ -48,49 +78,49 @@
         android:src="@mipmap/skinner_body_front2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintHorizontal_bias="0.625"
         app:layout_constraintStart_toEndOf="@+id/back"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.17" />
+        app:layout_constraintVertical_bias="0.195" />
 
     <ImageView
         android:id="@+id/front_mask"
         android:layout_width="133dp"
         android:layout_height="346dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginRight="48dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:src="@mipmap/skinner_body_front_mask2"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.19"></ImageView>
+        app:layout_constraintVertical_bias="0.219"></ImageView>
 
     <ImageView
-        android:id="@+id/back"
-        android:layout_width="146dp"
-        android:layout_height="313dp"
+        android:id="@+id/imageView10"
+        android:layout_width="53dp"
+        android:layout_height="61dp"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="52dp"
-        android:src="@mipmap/skinner_body_back2"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.035"></ImageView>
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/smartphone" />
 
-    <ImageView
-        android:id="@+id/back_mask"
-        android:layout_width="169dp"
-        android:layout_height="308dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:src="@mipmap/skinner_body_back_mask2"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.199"></ImageView>
+    <TextView
+        android:id="@+id/tv_SeleccioneUbicacion"
+        android:layout_width="233dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="Seleccione la ubicación de su lesión."
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.152"
+        app:layout_constraintStart_toEndOf="@+id/imageView10"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

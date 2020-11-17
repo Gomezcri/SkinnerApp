@@ -5,10 +5,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -61,6 +63,9 @@ public class BodyActivity extends AppCompatActivity {
     private Map<Integer,String> front_map;
     private Map<Integer,String> back_map;
     private String parte = null;
+    private TextView tv1;
+    private TextView tv2;
+    private TextView tv3;
 
 
     private String body_part=null;
@@ -68,7 +73,12 @@ public class BodyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_body);
-
+        tv1 = (TextView) findViewById(R.id.tv_SeleccioneUbicacion);
+        tv2 = (TextView) findViewById(R.id.textView2);
+        tv3 = (TextView) findViewById(R.id.textView3);
+        tv1.setPaintFlags(tv1.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        tv2.setPaintFlags(tv1.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        tv3.setPaintFlags(tv1.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         iniciarMapping();
 
         frontImage = (ImageView) findViewById (R.id.front);

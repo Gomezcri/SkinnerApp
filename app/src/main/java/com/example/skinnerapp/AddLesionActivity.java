@@ -114,7 +114,6 @@ public class AddLesionActivity extends AppCompatActivity {
         btnAnalizar.setVisibility(View.GONE);
         txtMsj2.setVisibility(View.GONE);
 
-
         final Intent activityBody = new Intent(this, BodyActivity.class);
         takePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -283,7 +282,7 @@ public class AddLesionActivity extends AppCompatActivity {
     }
 
     private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        final Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(this.getPackageManager()) != null) {
             // Create the File where the photo should go
@@ -300,7 +299,21 @@ public class AddLesionActivity extends AppCompatActivity {
                         "com.example.skinnerapp.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                String[] animals = {"1- Limpie la lente","2- Use luz natural siempre que sea posible","3- Evite contraluces","4- Evite usar el flash"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                builder/*.setMessage(R.string.recomendacion_foto_mensaje)*/
+                        .setItems(animals,null)
+                        .setTitle(R.string.recomendacion_foto_titulo)
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+
             }
         }
     }
@@ -308,12 +321,13 @@ public class AddLesionActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         //ACTIVITY RESULT TAKE PICTURE
+
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TAKE_PHOTO) {
             if (resultCode == RESULT_OK) {
                 f = new File(currentPhotoPath);
                 Uri contentUri = Uri.fromFile(f);
-                Toast.makeText(this, "Recortar la imagen en donde se encuentra su lesión.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Recorte la imágen en donde se encuentra su lesión.", Toast.LENGTH_SHORT).show();
                 CropImage.activity(contentUri)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setCropShape(CropImageView.CropShape.RECTANGLE)
@@ -348,20 +362,22 @@ public class AddLesionActivity extends AppCompatActivity {
                     if (bundle.getString("bodyPart") != null) {
                         bodyPart = bundle.getString("bodyPart");
                         section = bundle.getString("section");
-                        String[] animals = {"1- Limpie la lente","2- Use luz natural siempre que sea posible","3- Evite contraluces","4- Evite usar el flash"};
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        askCameraPermissions();
+                       // String[] animals = {"1- Limpie la lente","2- Use luz natural siempre que sea posible","3- Evite contraluces","4- Evite usar el flash"};
+                        //AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-                        builder/*.setMessage(R.string.recomendacion_foto_mensaje)*/
-                                .setItems(animals,null)
-                                .setTitle(R.string.recomendacion_foto_titulo)
-                                .setCancelable(false)
-                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        askCameraPermissions();
-                                    }
-                                });
-                        AlertDialog alert = builder.create();
-                        alert.show();
+                        //builder/*.setMessage(R.string.recomendacion_foto_mensaje)*/
+                          //      .setItems(animals,null)
+                            //    .setTitle(R.string.recomendacion_foto_titulo)
+                              //  .setCancelable(false)
+                               // .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                 //   public void onClick(DialogInterface dialog, int id) {
+
+                                   // }
+                                //});
+                        //AlertDialog alert = builder.create();
+                        //alert.show();
+
 
                     }
                 }
