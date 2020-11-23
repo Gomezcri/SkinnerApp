@@ -109,21 +109,21 @@ public class BodyActivity extends AppCompatActivity {
         //MAPPING FRONT
         front_map.put(FRONT_ROSTRO,"Rostro");
         front_map.put(FRONT_CUELLO ,"Cuello");
-        front_map.put(FRONT_HOMBRO_IZQ ,"Hombro Izquierdo");
-        front_map.put(FRONT_HOMBRO_DER, "Hombro Derecho");
+        front_map.put(FRONT_HOMBRO_IZQ ,"Hombro Derecho");
+        front_map.put(FRONT_HOMBRO_DER, "Hombro Izquierdo");
         front_map.put(FRONT_PECHO, "Pecho");
-        front_map.put(FRONT_ANTEBRAZO_IZQ ,"Antebrazo Izquierdo");
-        front_map.put(FRONT_ANTEBRAZO_DER ,"Antebrazo Derecho");
-        front_map.put(FRONT_BRAZO_IZQ ,"Brazo Izquierdo");
-        front_map.put(FRONT_BRAZO_DER ,"Brazo Derecho");
-        front_map.put(FRONT_MANO_IZQ ,"Mano Izquierda");
-        front_map.put(FRONT_MANO_DER ,"Mano Derecha");
-        front_map.put(FRONT_MUSLO_IZQ ,"Muslo Izquierdo");
-        front_map.put(FRONT_MUSLO_DER ,"Muslo Derecho");
-        front_map.put(FRONT_PIERNA_IZQ ,"Pierna Izquierda");
-        front_map.put(FRONT_PIERNA_DER ,"Pierna Derecha");
-        front_map.put(FRONT_PIE_IZQ ,"Pie Izquierdo");
-        front_map.put(FRONT_PIE_DER ,"Pie Derecho");
+        front_map.put(FRONT_ANTEBRAZO_IZQ ,"Antebrazo Derecho");
+        front_map.put(FRONT_ANTEBRAZO_DER ,"Antebrazo Izquierdo");
+        front_map.put(FRONT_BRAZO_IZQ ,"Brazo Derecho");
+        front_map.put(FRONT_BRAZO_DER ,"Brazo Izquierdo");
+        front_map.put(FRONT_MANO_IZQ ,"Mano Derecha");
+        front_map.put(FRONT_MANO_DER ,"Mano Izquierda");
+        front_map.put(FRONT_MUSLO_IZQ ,"Muslo Derecho");
+        front_map.put(FRONT_MUSLO_DER ,"Muslo Izquierdo");
+        front_map.put(FRONT_PIERNA_IZQ ,"Pierna Derecha");
+        front_map.put(FRONT_PIERNA_DER ,"Pierna Izquierda");
+        front_map.put(FRONT_PIE_IZQ ,"Pie Derecho");
+        front_map.put(FRONT_PIE_DER ,"Pie Izquierdo");
         front_map.put(FRONT_ABDOMEN ,"Abdomen");
         front_map.put(FRONT_CINTURA ,"Cintura");
 
