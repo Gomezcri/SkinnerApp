@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -75,6 +76,7 @@ public class AddLesionActivity extends AppCompatActivity {
     private Integer id_tipo;
     private Integer id_paciente;
     private Context contexto;
+    private TextView tv_presioneCamara;
 
     public final static int REQUEST_ACTIVITY_BODY = 100;
     public final static int RESULT_ACTIVITY_BODY = 101;
@@ -94,12 +96,17 @@ public class AddLesionActivity extends AppCompatActivity {
         btngaleria =(Button)findViewById(R.id.btngaleria);
         btnAnalizar = (ImageView) findViewById(R.id.button_analizar);
         txtMsj2 = (TextView) findViewById(R.id.textView9);
-
+        tv_presioneCamara = (TextView) findViewById(R.id.textView11);
         id_lesion = getIntent().getIntExtra("id_lesion",0);
+
         id_doctor = getIntent().getIntExtra("id_doctor",0);
         id_tipo = getIntent().getIntExtra("id_tipo",0);
         id_user = getIntent().getIntExtra("id_user",0);
         id_paciente = getIntent().getIntExtra("id_paciente",0);
+        if(!id_lesion.equals(0))
+            txtMsj2.setText("Presione el paciente para agregar la foto a su historial");
+        tv_presioneCamara.setPaintFlags(tv_presioneCamara.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        txtMsj2.setPaintFlags(txtMsj2.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         btnAnalizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,7 +154,7 @@ public class AddLesionActivity extends AppCompatActivity {
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
         Date currentTime = Calendar.getInstance().getTime();
         String descripcion = null;
-        showLoadingDialog(contexto,"Analizando","Skinner está agregando su nueva imagen.");
+        showLoadingDialog(contexto,"Analizando","Skinner está agregando su nueva imágen.");
         if(text_descripcion.getText()!= null)
             descripcion = text_descripcion.getText().toString();
         RegistrarHistoricoRequest req = new RegistrarHistoricoRequest(id_lesion,id_doctor, text_descripcion.getText().toString(),encodedImage,currentTime.toString(),id_tipo);

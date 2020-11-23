@@ -45,12 +45,13 @@ public class AdaptadorLesion extends BaseAdapter {
         String fechanueva= "";
         try {
             fechanueva = formatDate(datos.get(i).getFecha_creacion(),"dd/MM/yyyy HH:mm");
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         txtdescripcion.setText(datos.get(i).getDescripcion());
-        txtubicacion.setText(fechanueva);
+        txtubicacion.setText(fechanueva+" Hs");
         txtfecha.setText(datos.get(i).getUbicacion());
 
         byte[] decodedString = Base64.decode(datos.get(i).getImage(), Base64.DEFAULT);
