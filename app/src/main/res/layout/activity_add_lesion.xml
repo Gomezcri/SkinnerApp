@@ -14,6 +14,7 @@
         android:layout_marginTop="5dp"
         android:text="Presione el paciente para analizar su fotografía"
         android:textColor="#000000"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_image" />
@@ -25,6 +26,7 @@
         android:layout_marginTop="20dp"
         android:text="Presione la cámara para tomar una nueva fotografía"
         android:textColor="#000000"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_from" />

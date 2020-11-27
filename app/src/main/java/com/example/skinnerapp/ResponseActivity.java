@@ -123,7 +123,7 @@ public class ResponseActivity extends AppCompatActivity {
 
         if (codigo == 404) {
         imagenDeResultado.setImageResource(R.drawable.signopregunta);
-        textoResultado.setText("No hay conexion con el servidor, porfavor intenta en unos instantes");
+        textoResultado.setText("No hay conexión con el servidor, por favor intenta en unos instantes");
         }
 
         btn_ppal.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +151,7 @@ public class ResponseActivity extends AppCompatActivity {
                     Retrofit retrofit = getConnection();
                     JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
                     btn_ppal.setVisibility(View.VISIBLE);
-                    UpdateLesionRequest req = new UpdateLesionRequest("{palmas:"+Integer.parseInt(input_palmas.getText().toString())+"}");
+                    UpdateLesionRequest req = new UpdateLesionRequest("{\"palmas\":"+Integer.parseInt(input_palmas.getText().toString())+"}");
                     Call<RegistrarLesionResponse> call = service.putLesion("/historial/" + id_historico, req);
                     call.enqueue(new Callback<RegistrarLesionResponse>() {
                         @Override
@@ -185,7 +185,7 @@ public class ResponseActivity extends AppCompatActivity {
                     Retrofit retrofit = getConnection();
                     JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
                     btn_ppal.setVisibility(View.VISIBLE);
-                    UpdateLesionRequest req = new UpdateLesionRequest("{diametro:"+Integer.parseInt(input_palmas.getText().toString())+"}");
+                    UpdateLesionRequest req = new UpdateLesionRequest("{\"diametro\":"+Integer.parseInt(input_palmas.getText().toString())+"}");
                     Call<RegistrarLesionResponse> call = service.putLesion("/historial/" + id_historico, req);
                     call.enqueue(new Callback<RegistrarLesionResponse>() {
                         @Override

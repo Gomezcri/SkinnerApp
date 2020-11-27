@@ -1,6 +1,7 @@
 package com.example.skinnerapp;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -16,6 +17,8 @@ import com.example.skinnerapp.Model.LoginUsuarioResponse;
 import com.example.skinnerapp.Model.RecuperarContraseñaRequest;
 import com.example.skinnerapp.Model.RecuperarcontraseñaResponse;
 
+import org.w3c.dom.Text;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,6 +31,7 @@ public class Recuperar_contraseña extends AppCompatActivity {
     private TextView tv_email;
     private Button recuperarContraseña;
     private String texto;
+    private TextView tv_gracias;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,8 @@ public class Recuperar_contraseña extends AppCompatActivity {
         setContentView(R.layout.recuperar_contrasenia);
         tv_email = (TextView) findViewById(R.id.tv_email_recuperarContraseña);
         recuperarContraseña = (Button) findViewById(R.id.bt_recuperarContraseña);
+        tv_gracias = (TextView) findViewById(R.id.tv_final);
+        tv_gracias.setPaintFlags(tv_gracias.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         recuperarContraseña.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +73,7 @@ public class Recuperar_contraseña extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<RecuperarcontraseñaResponse> call, Throwable t) {
-                    Toast.makeText(Recuperar_contraseña.this, "No se pudo recuperar contraseña, intenta mas tarde cuerno", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Recuperar_contraseña.this, "No se pudo recuperar su contraseña, intente más tarde por favor", Toast.LENGTH_SHORT).show();
                 }
 
             });

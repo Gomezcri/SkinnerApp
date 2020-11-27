@@ -1,5 +1,6 @@
 package com.example.skinnerapp.ui.home;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,6 +48,8 @@ public class HomeFragment extends Fragment {
     public final static int RESULT_ACTIVITY_LESION = 122;
     public final static int RESULT_ACTIVITY_HISTORICO = 123;
 
+    public ProgressDialog progressDialog_home;
+
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
@@ -59,6 +62,7 @@ public class HomeFragment extends Fragment {
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         root = inflater.inflate(R.layout.fragment_home, container, false);
         contexto = this.getContext();
+        progressDialog_home = new ProgressDialog(contexto);
         lista = (ListView) root.findViewById(R.id.lista_lesion);
         btn_add_lesion = (Button) root.findViewById(R.id.button_add_lesion);
         btn_add_lesion.setOnClickListener(new View.OnClickListener() {
@@ -101,11 +105,12 @@ public class HomeFragment extends Fragment {
 
         Retrofit retrofit = getConnection();
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
-
+        mostrarCartel_home();
         Call<ArrayList<LesionesResponse>> call= service.getLesionesById("/lesiones/paciente/"+userid);
         call.enqueue(new Callback<ArrayList<LesionesResponse>>() {
             @Override
             public void onResponse(Call<ArrayList<LesionesResponse>> call, Response<ArrayList<LesionesResponse>> response) {
+                cerrarCartel_home();
                 datos = response.body();
                 if(datos != null)
                     lista.setAdapter(new AdaptadorLesion(getContext(),datos));
@@ -116,6 +121,15 @@ public class HomeFragment extends Fragment {
             }
         });
         return datos;
+    }
+
+    private void cerrarCartel_home() {progressDialog_home.dismiss();
+    }
+
+    private void mostrarCartel_home() {
+        progressDialog_home.show();
+        progressDialog_home.setContentView(R.layout.progress_dialog_home);
+        progressDialog_home.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
 
     private void openAddLesionActivity(){

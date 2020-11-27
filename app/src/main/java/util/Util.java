@@ -1,7 +1,9 @@
 package util;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 
 import com.example.skinnerapp.Model.HistoricoResponse;
 
@@ -49,7 +51,6 @@ public class Util {
     }
 
     public static void dismissLoadingDialog() {
-
         if (progress != null && progress.isShowing()) {
             progress.dismiss();
         }

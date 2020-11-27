@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -242,11 +243,13 @@ public class HistoryActivity extends AppCompatActivity {
         Retrofit retrofit = getConnection();
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
 
+
         Call<ArrayList<HistoricoResponse>> call= service.getHistoricoByLesionId("/historial/lesion/"+id_lesion);
         call.enqueue(new Callback<ArrayList<HistoricoResponse>>() {
             @Override
             public void onResponse(Call<ArrayList<HistoricoResponse>> call, Response<ArrayList<HistoricoResponse>> response) {
                 datos = response.body();
+                Log.d("ID_TIPO_HISTORYACTIVITY",id_tipo.toString());
                 if(datos != null)
                     lista.setAdapter(new AdaptadorHistorico(contexto,datos));
             }
@@ -286,6 +289,7 @@ public class HistoryActivity extends AppCompatActivity {
         resultIntent.putExtra("id_lesion", id_lesion);  // put data that you want returned to activity A
         resultIntent.putExtra("id_doctor", id_doctor);  // put data that you want returned to activity A
         resultIntent.putExtra("id_paciente", id_paciente);
+        resultIntent.putExtra("id_tipo", id_tipo);
         startActivityForResult(resultIntent,RESULT_ACTIVITY_LESION);
     }
 

@@ -43,12 +43,12 @@ public class AdaptadorHistorico extends BaseAdapter {
         ImageView imagen = (ImageView) vista.findViewById(R.id.image_lesion);
         String fechanueva= "";
         try {
-            fechanueva = formatDate(datos.get(i).getFecha(),"dd/MM/yyyy HH:mm a");
+            fechanueva = formatDate(datos.get(i).getFecha(),"dd/MM/yyyy HH:mm");
         } catch (ParseException e) {
             e.printStackTrace();
         }
         txtdescripcion.setText(datos.get(i).getDescripcion());
-        txtubicacion.setText(fechanueva);
+        txtubicacion.setText(fechanueva+ " Hs");
         String comentario = "";//datos.get(i).getComentario();
 
       //  if(comentario == null)

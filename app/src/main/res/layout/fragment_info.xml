@@ -150,7 +150,7 @@
         android:layout_height="165dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="La piel es el órgano más extenso del cuerpo. El revestimiento cutáneo es resistente y flexible, recubriendo toda la superficie de nuestro cuerpo. Nos protege del ambiente que nos rodea y al mismo tiempo nos permite interactuar con él, actuando como protección contra agentes externos, regulando la temperatura corporal ante el frío y el calor, reparando heridas gracias a su regeneración, entre otras. ¡Cuídela!"
+        android:text="La piel es el órgano más extenso del cuerpo, es resistente y flexible, recubriendo toda la superficie de nuestro organismo. Nos protege del ambiente que nos rodea y al mismo tiempo nos permite interactuar con él, actuando como protección contra agentes externos, regulando la temperatura corporal ante el frío y el calor, reparando heridas gracias a su regeneración. ¡Cuídela!"
         android:textColor="#000000"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"

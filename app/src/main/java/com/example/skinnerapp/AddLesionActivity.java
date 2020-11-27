@@ -1,16 +1,20 @@
 package com.example.skinnerapp;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -51,7 +55,7 @@ import retrofit2.Retrofit;
 
 import static util.Util.dismissLoadingDialog;
 import static util.Util.getConnection;
-import static util.Util.showLoadingDialog;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AddLesionActivity extends AppCompatActivity {
@@ -75,6 +79,12 @@ public class AddLesionActivity extends AppCompatActivity {
     private Integer id_tipo;
     private Integer id_paciente;
     private Context contexto;
+    private TextView tv_presioneCamara;
+    private static ProgressDialog progress;
+    public static Activity activity = null;
+    public ProgressDialog progressDialog_new;
+    public ProgressDialog progressDialog_history;
+
 
     public final static int REQUEST_ACTIVITY_BODY = 100;
     public final static int RESULT_ACTIVITY_BODY = 101;
@@ -86,6 +96,8 @@ public class AddLesionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_lesion);
+        progressDialog_new = new ProgressDialog(this);
+        progressDialog_history = new ProgressDialog(this);
         contexto = this;
         takePictureButton = (ImageView) findViewById(R.id.button_image);
         imageView = (ImageView) findViewById(R.id.imageview);
@@ -94,12 +106,17 @@ public class AddLesionActivity extends AppCompatActivity {
         btngaleria =(Button)findViewById(R.id.btngaleria);
         btnAnalizar = (ImageView) findViewById(R.id.button_analizar);
         txtMsj2 = (TextView) findViewById(R.id.textView9);
-
+        tv_presioneCamara = (TextView) findViewById(R.id.textView11);
         id_lesion = getIntent().getIntExtra("id_lesion",0);
+
         id_doctor = getIntent().getIntExtra("id_doctor",0);
         id_tipo = getIntent().getIntExtra("id_tipo",0);
         id_user = getIntent().getIntExtra("id_user",0);
         id_paciente = getIntent().getIntExtra("id_paciente",0);
+        if(!id_lesion.equals(0))
+            txtMsj2.setText("Presione el paciente para agregar la foto a su historial");
+        tv_presioneCamara.setPaintFlags(tv_presioneCamara.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        txtMsj2.setPaintFlags(txtMsj2.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         btnAnalizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,16 +164,19 @@ public class AddLesionActivity extends AppCompatActivity {
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
         Date currentTime = Calendar.getInstance().getTime();
         String descripcion = null;
-        showLoadingDialog(contexto,"Analizando","Skinner está agregando su nueva imagen.");
+        //showLoadingDialog(contexto,"Analizando","Skinner está agregando su nueva imagen.");
+        mostrarCartel_history();
         if(text_descripcion.getText()!= null)
             descripcion = text_descripcion.getText().toString();
         RegistrarHistoricoRequest req = new RegistrarHistoricoRequest(id_lesion,id_doctor, text_descripcion.getText().toString(),encodedImage,currentTime.toString(),id_tipo);
+        Log.d("ID_TIPO_ENADDLESION",id_tipo.toString());
         Call<RegistrarHistoricoResponse> call= service.postRegistrarHistorico(req);
         call.enqueue(new Callback<RegistrarHistoricoResponse>() {
             @Override
             public void onResponse(Call<RegistrarHistoricoResponse> call, Response<RegistrarHistoricoResponse> response) {
 
-                dismissLoadingDialog();
+                //dismissLoadingDialog();
+                cerrarCartel_history();
                 Intent resultIntent = new Intent(AddLesionActivity.this, ResponseActivity.class);
                 resultIntent.putExtra("respuestaServidor", response.body().getId().toString());  // put data that you want returned to activity A
                 resultIntent.putExtra("estado", response.code());  // put data that you want returned to activity A
@@ -164,6 +184,8 @@ public class AddLesionActivity extends AppCompatActivity {
                 if(id_doctor != 0)
                     addAsignacion();
             }
+
+
             @Override
             public void onFailure(Call<RegistrarHistoricoResponse> call, Throwable t) {
               //  textView.setText(t.getMessage());
@@ -177,8 +199,7 @@ public class AddLesionActivity extends AppCompatActivity {
         });
     }
 
-
-        private void addAsignacion() {
+    private void addAsignacion() {
             Retrofit retrofit = getConnection();
             JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
 
@@ -211,7 +232,8 @@ public class AddLesionActivity extends AppCompatActivity {
         Retrofit retrofit = getConnection();
         String descripcion = null;
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
-        showLoadingDialog(contexto,"Analizando","Skinner está analizando su imagen, aguarde un momento.");
+        //showLoadingDialog(contexto,"Analizando","Skinner está analizando su imagen, aguarde un momento.");
+        mostrarCartel_new();
         if(text_descripcion.getText()!= null)
             descripcion = text_descripcion.getText().toString();
         RegistrarLesionRequest req = new RegistrarLesionRequest(encodedImage,bodyPart,section,id_user,descripcion,Calendar.getInstance().getTime().toString());
@@ -219,7 +241,8 @@ public class AddLesionActivity extends AppCompatActivity {
         call.enqueue(new Callback<LesionesResponse>() {
             @Override
             public void onResponse(Call<LesionesResponse> call, Response<LesionesResponse> response) {
-                dismissLoadingDialog();
+                //dismissLoadingDialog();
+                cerrarCartel_new();
                 Intent resultIntent = new Intent(AddLesionActivity.this, ResponseActivity.class);
                 resultIntent.putExtra("id_tipo", response.body().getId_tipo());  // put data that you want returned to activity A
                 resultIntent.putExtra("id_paciente", response.body().getId_paciente());  // put data that you want returned to activity A
@@ -327,7 +350,7 @@ public class AddLesionActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 f = new File(currentPhotoPath);
                 Uri contentUri = Uri.fromFile(f);
-                Toast.makeText(this, "Recorte la imágen en donde se encuentra su lesión.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Recorte la imagen en donde se encuentra su lesión.", Toast.LENGTH_SHORT).show();
                 CropImage.activity(contentUri)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setCropShape(CropImageView.CropShape.RECTANGLE)
@@ -426,4 +449,27 @@ public class AddLesionActivity extends AppCompatActivity {
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
+
+    private void mostrarCartel_history() {
+        progressDialog_history.show();
+        progressDialog_history.setContentView(R.layout.progress_dialog_history);
+        progressDialog_history.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+    }
+
+    private void cerrarCartel_history() {
+        progressDialog_history.dismiss();
+    }
+
+    private void mostrarCartel_new() {
+        progressDialog_new.show();
+        progressDialog_new.setContentView(R.layout.progress_dialog_new);
+        progressDialog_new.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+    }
+
+    private void cerrarCartel_new() {
+        progressDialog_new.dismiss();
+    }
+
+
 }
+

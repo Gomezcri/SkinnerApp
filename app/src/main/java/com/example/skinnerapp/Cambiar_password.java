@@ -3,6 +3,7 @@ package com.example.skinnerapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ public class Cambiar_password extends AppCompatActivity {
     private EditText password2;
     private String strusername;
     private String struseremail;
+    private TextView tv_gracias;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,8 @@ public class Cambiar_password extends AppCompatActivity {
         btn_cambiar_psw  = (Button) findViewById(R.id.btn_cambiar_psw);
         password1 = (EditText) findViewById(R.id.new_password1);
         password2 = (EditText) findViewById(R.id.new_password2);
+        tv_gracias = (TextView) findViewById(R.id.tv_final2);
+        tv_gracias.setPaintFlags(tv_gracias.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         btn_cambiar_psw.setOnClickListener(new View.OnClickListener() {
             @Override

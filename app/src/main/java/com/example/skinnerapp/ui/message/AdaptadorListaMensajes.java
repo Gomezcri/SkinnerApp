@@ -54,7 +54,7 @@ public class AdaptadorListaMensajes extends BaseAdapter {
         }
 
         text_from.setText(datos.get(i).getNombre_destino() +" "+datos.get(i).getApellido_destino());
-        text_fecha.setText(fechanueva);
+        text_fecha.setText(fechanueva+" Hs");
         text_mensaje.setText(datos.get(i).getMensaje());
         text_descripcion.setText(datos.get(i).getDescripcion());
         tv_medico.setPaintFlags(tv_medico.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);

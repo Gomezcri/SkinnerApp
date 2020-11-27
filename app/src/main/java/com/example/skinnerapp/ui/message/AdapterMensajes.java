@@ -74,7 +74,7 @@ public class AdapterMensajes extends RecyclerView.Adapter<HolderMensaje> {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        holder.getHora().setText(fechanueva);
+        holder.getHora().setText(fechanueva+" Hs");
     }
 
     @Override

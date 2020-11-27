@@ -1,5 +1,6 @@
 package com.example.skinnerapp.ui.slideshow;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -65,6 +66,8 @@ public class UserRegisterFragment extends Fragment {
     private JSONArray jsonArray = null;
     private Spinner sp_localidades;
     private TextView tv_titulo;
+    public ProgressDialog progressDialog_datos;
+
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
@@ -76,9 +79,11 @@ public class UserRegisterFragment extends Fragment {
         slideshowViewModel =
                 ViewModelProviders.of(this).get(UserRegisterViewModel.class);
         root = inflater.inflate(R.layout.fragment_user_register, container, false);
+
         tv_titulo = (TextView) root.findViewById(R.id.tv_infoPersonal);
         tv_titulo.setPaintFlags(tv_titulo.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         contexto = this.getContext();
+        progressDialog_datos = new ProgressDialog(contexto);
         btnregistrar = (Button)root.findViewById(R.id.boton_registrar);
         text_nombre = (EditText) root.findViewById(R.id.text_nombre);
         text_apellido = (EditText) root.findViewById(R.id.text_apellido);
@@ -181,7 +186,8 @@ public class UserRegisterFragment extends Fragment {
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
 
         Call<ObtenerUsuarioResponse> call= service.getUserById("/usuarios/"+userid);
-        showLoadingDialog(getContext(),"Datos usuario","Skinner está recuperando sus datos de usuario, aguarde un momento.");
+        //showLoadingDialog(getContext(),"Datos usuario","Skinner está recuperando sus datos de usuario, aguarde un momento.");
+        mostrarCartel_datos();
         call.enqueue(new Callback<ObtenerUsuarioResponse>() {
             @Override
             public void onResponse(Call<ObtenerUsuarioResponse> call, Response<ObtenerUsuarioResponse> response) {
@@ -223,6 +229,12 @@ public class UserRegisterFragment extends Fragment {
         });
     }
 
+    private void mostrarCartel_datos() {
+        progressDialog_datos.show();
+        progressDialog_datos.setContentView(R.layout.progress_dialog_datos);
+        progressDialog_datos.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+    }
+
     private void autoCompletarDatosUsuario() {
         text_nombre.setText(userData.getNombre());
         text_apellido.setText(userData.getApellido());
@@ -231,7 +243,12 @@ public class UserRegisterFragment extends Fragment {
         text_usuario.setText(userData.getEmail());
 
 
-        dismissLoadingDialog();
+        //dismissLoadingDialog();
+        cerrarCartel_datos();
+    }
+
+    private void cerrarCartel_datos() {
+        progressDialog_datos.dismiss();
     }
 
     private Boolean datosValidos(){

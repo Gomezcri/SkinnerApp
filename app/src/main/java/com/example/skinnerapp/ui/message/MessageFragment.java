@@ -1,5 +1,6 @@
 package com.example.skinnerapp.ui.message;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,6 +47,8 @@ public class MessageFragment extends Fragment {
     private Integer id_paciente;
     private ArrayList<MensajesPorPacienteResponse> datos;
     private ListView lista;
+    public ProgressDialog progressDialog_msj;
+
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
@@ -58,7 +61,8 @@ public class MessageFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_message, container, false);
         lista = (ListView) root.findViewById(R.id.lista_mensajes);
         contexto = this.getContext();
-        id_paciente = resultreceiver.getResultId();;
+        progressDialog_msj= new ProgressDialog(contexto);
+        id_paciente = resultreceiver.getResultId();
         datos = obtenerMensajesPorPaciente(id_paciente);
 
         lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -79,15 +83,18 @@ public class MessageFragment extends Fragment {
     private ArrayList<MensajesPorPacienteResponse> obtenerMensajesPorPaciente(int userid) {
         Retrofit retrofit = getConnection();
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
-
+        mostrarCartel_mensajes();
         Call<ArrayList<MensajesPorPacienteResponse>> call= service.getMensajesByPacienteId("/mensajes/paciente/"+userid);
         call.enqueue(new Callback<ArrayList<MensajesPorPacienteResponse>>() {
             @Override
             public void onResponse(Call<ArrayList<MensajesPorPacienteResponse>> call, Response<ArrayList<MensajesPorPacienteResponse>> response) {
+                cerrarCartel_mensajes();
                 datos = response.body();
                 if(datos != null)
                     lista.setAdapter(new AdaptadorListaMensajes(getContext(),datos));
+
             }
+
             @Override
             public void onFailure(Call<ArrayList<MensajesPorPacienteResponse>> call, Throwable t) {
                 Toast.makeText(contexto, "Error al obtener lesiones, el servicio no se encuentra disponible. "+ t.getMessage(), Toast.LENGTH_SHORT).show();
@@ -95,6 +102,16 @@ public class MessageFragment extends Fragment {
         });
         return datos;
 
+    }
+
+    private void cerrarCartel_mensajes() {
+        progressDialog_msj.dismiss();
+    }
+
+    private void mostrarCartel_mensajes() {
+            progressDialog_msj.show();
+            progressDialog_msj.setContentView(R.layout.progress_dialog_msj);
+            progressDialog_msj.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
