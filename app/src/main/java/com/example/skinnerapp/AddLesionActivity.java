@@ -80,14 +80,11 @@ public class AddLesionActivity extends AppCompatActivity {
     private Integer id_paciente;
     private Context contexto;
     private TextView tv_presioneCamara;
-<<<<<<< HEAD
     private static ProgressDialog progress;
     public static Activity activity = null;
     public ProgressDialog progressDialog_new;
     public ProgressDialog progressDialog_history;
 
-=======
->>>>>>> master
 
     public final static int REQUEST_ACTIVITY_BODY = 100;
     public final static int RESULT_ACTIVITY_BODY = 101;
@@ -167,12 +164,8 @@ public class AddLesionActivity extends AppCompatActivity {
         JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
         Date currentTime = Calendar.getInstance().getTime();
         String descripcion = null;
-<<<<<<< HEAD
         //showLoadingDialog(contexto,"Analizando","Skinner está agregando su nueva imagen.");
         mostrarCartel_history();
-=======
-        showLoadingDialog(contexto,"Analizando","Skinner está agregando su nueva imágen.");
->>>>>>> master
         if(text_descripcion.getText()!= null)
             descripcion = text_descripcion.getText().toString();
         RegistrarHistoricoRequest req = new RegistrarHistoricoRequest(id_lesion,id_doctor, text_descripcion.getText().toString(),encodedImage,currentTime.toString(),id_tipo);
