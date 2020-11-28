@@ -178,8 +178,13 @@ public class AddLesionActivity extends AppCompatActivity {
                 //dismissLoadingDialog();
                 cerrarCartel_history();
                 Intent resultIntent = new Intent(AddLesionActivity.this, ResponseActivity.class);
+                resultIntent.putExtra("id_tipo", response.body().getId_tipo());
+                resultIntent.putExtra("id_lesion", response.body().getId_lesion());
+                resultIntent.putExtra("id_historial", response.body().getId());
                 resultIntent.putExtra("respuestaServidor", response.body().getId().toString());  // put data that you want returned to activity A
                 resultIntent.putExtra("estado", response.code());  // put data that you want returned to activity A
+                resultIntent.putExtra("pantalla_historial", 1);
+
                 startActivityForResult(resultIntent,RESULT_ACTIVITY_RESPONSE);
                 if(id_doctor != 0)
                     addAsignacion();
@@ -189,7 +194,8 @@ public class AddLesionActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<RegistrarHistoricoResponse> call, Throwable t) {
               //  textView.setText(t.getMessage());
-                dismissLoadingDialog();
+                //dismissLoadingDialog();
+                cerrarCartel_history();
                 Intent resultIntent = new Intent(AddLesionActivity.this,ResponseActivity.class);
                 resultIntent.putExtra("respuestaServidor", t.getMessage());  // put data that you want returned to activity A
                 resultIntent.putExtra("estado", 404);  // put data that you want returned to activity A
@@ -255,7 +261,8 @@ public class AddLesionActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<LesionesResponse> call, Throwable t) {
                 //textView.setText(t.getMessage());
-                dismissLoadingDialog();
+                //dismissLoadingDialog();
+                cerrarCartel_new();
                 Intent resultIntent = new Intent(AddLesionActivity.this,ResponseActivity.class);
                 resultIntent.putExtra("respuestaServidor", t.getMessage());  // put data that you want returned to activity A
                 resultIntent.putExtra("estado", 404);  // put data that you want returned to activity A

@@ -54,6 +54,7 @@ public class ResponseActivity extends AppCompatActivity {
     private Button btn_map;
     public final static int RESULT_ACTIVITY_GPS = 199;
     private Button btn_ppal;
+    private Integer agregar_historial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ public class ResponseActivity extends AppCompatActivity {
         id_lesion = getIntent().getIntExtra("id_lesion", 0);
         id_historico = getIntent().getIntExtra("id_historial", 0);
         btn_ppal = (Button) findViewById(R.id.btn_ppal);
+        agregar_historial = getIntent().getIntExtra("pantalla_historial", 0);
 
         imagenDeResultado = (ImageView) findViewById(R.id.imagenResultado);
         textoResultado = (TextView) findViewById(R.id.textoResultado);
@@ -77,29 +79,32 @@ public class ResponseActivity extends AppCompatActivity {
         input_palmas.setVisibility(View.GONE);
         btn_map.setVisibility(View.GONE);
         btn_ppal.setVisibility(View.GONE);
-        if (codigo == 200 && id_lesion !=0) {
+
+        if (codigo == 200 && id_lesion !=0 ) {
+
             imagenDeResultado.setImageResource(R.drawable.checkverde);
 
             switch (id_tipo) {
                 case 1://melanoma
                     LunarMelanomaController(getString(R.string.mensaje_melanoma));
-                    btn_map.setVisibility(View.VISIBLE);
+                    //btn_map.setVisibility(View.VISIBLE);
                     break;
                 case 2://vitiligo
                     textoResultado.setText(getString(R.string.mensaje_vitiligo));
                     btn_ppal.setVisibility(View.VISIBLE);
-                    btn_map.setVisibility(View.VISIBLE);
+                    //btn_map.setVisibility(View.VISIBLE);
                     break;
                 case 3://psoriasis
                     PsoriasisControler();
                     break;
                 case 4://lunar
                     LunarMelanomaController(getString(R.string.mensaje_lunar));
-                    btn_map.setVisibility(View.VISIBLE);
+                    //btn_map.setVisibility(View.VISIBLE);
                     break;
                 case 5://nada
                     textoResultado.setText(getString(R.string.mensaje_sin_enfermedad));
                     btn_ppal.setVisibility(View.VISIBLE);
+                    btn_map.setVisibility(View.VISIBLE);
                     break;
             }
 
@@ -113,17 +118,17 @@ public class ResponseActivity extends AppCompatActivity {
                 }
             });
         }
-        else
-            if (codigo == 200 && id_lesion ==0)
+        /*else
+            if (codigo == 200 && agregar_historial==1)
             {
                 btn_ppal.setVisibility(View.VISIBLE);
                 imagenDeResultado.setImageResource(R.drawable.checkverde);
                 textoResultado.setText(getString(R.string.mensaje_nuevo_historico));
-            }
+            }*/
 
         if (codigo == 404) {
         imagenDeResultado.setImageResource(R.drawable.signopregunta);
-        textoResultado.setText("No hay conexión con el servidor, por favor intenta en unos instantes");
+        textoResultado.setText("No hay conexión con el servidor, por favor intente en unos instantes");
         }
 
         btn_ppal.setOnClickListener(new View.OnClickListener() {
@@ -181,17 +186,30 @@ public class ResponseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (input_palmas.getText() != null) {
-                    textoResultado.setText(mensaje);
+
                     Retrofit retrofit = getConnection();
                     JsonPlaceHolderApi service = retrofit.create(JsonPlaceHolderApi.class);
-                    btn_ppal.setVisibility(View.VISIBLE);
+                    //btn_ppal.setVisibility(View.VISIBLE);
                     UpdateLesionRequest req = new UpdateLesionRequest("{\"diametro\":"+Integer.parseInt(input_palmas.getText().toString())+"}");
                     Call<RegistrarLesionResponse> call = service.putLesion("/historial/" + id_historico, req);
                     call.enqueue(new Callback<RegistrarLesionResponse>() {
                         @Override
                         public void onResponse(Call<RegistrarLesionResponse> call, Response<RegistrarLesionResponse> response) {
-                            btn_update_lesion.setVisibility(View.GONE);
-                            btn_map.setVisibility(View.VISIBLE);
+                            if(agregar_historial!=1) {      // primera foto que se carga
+                                textoResultado.setText(mensaje);
+                                input_palmas.setVisibility(View.GONE);
+                                btn_update_lesion.setVisibility(View.GONE);
+                                btn_map.setVisibility(View.VISIBLE);
+                                btn_ppal.setVisibility(View.VISIBLE);
+                            }
+                            else
+                            {               // agregue historial
+                                btn_ppal.setVisibility(View.VISIBLE);
+                                input_palmas.setVisibility(View.GONE);
+                                btn_update_lesion.setVisibility(View.GONE);
+                                imagenDeResultado.setImageResource(R.drawable.checkverde);
+                                textoResultado.setText(getString(R.string.mensaje_nuevo_historico));
+                            }
                         }
 
                         @Override

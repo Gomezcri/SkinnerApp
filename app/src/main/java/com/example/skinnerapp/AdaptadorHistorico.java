@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,8 @@ public class AdaptadorHistorico extends BaseAdapter {
         TextView txtdescripcion = (TextView) vista.findViewById(R.id.text_from);
         TextView txtfecha = (TextView) vista.findViewById(R.id.text_fecha);
         TextView txtubicacion = (TextView) vista.findViewById(R.id.text_mensaje);
+
+        txtdescripcion.setPaintFlags(txtdescripcion.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         ImageView imagen = (ImageView) vista.findViewById(R.id.image_lesion);
         String fechanueva= "";

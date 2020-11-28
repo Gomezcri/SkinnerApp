@@ -80,6 +80,7 @@ public class MiFirebaseMessaggingService extends FirebaseMessagingService {
                 .setContentIntent(contentIntent);
 
         if(notificationManager!=null){
+            int id = (int) System.currentTimeMillis();
             notificationManager.notify(0,notificationBuilder.build());
         }
     }
